@@ -1,2 +1,2 @@
 # OpenEpaperLinkHATagSources
-Home-Assistant BLE Tags Yaml Scripte for Open Epaperlink 
+Home-Assistant BLE Tags Yaml Scripts for OpenEpaperLink 
