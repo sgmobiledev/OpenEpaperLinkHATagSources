@@ -1,0 +1,403 @@
+alias: OpenEPaperLink_DWD_Pollenflug_View
+description: Übersicht von Pollenflug Daten basierend auf DWD Wetterdienst
+trigger:
+  - platform: time_pattern
+    hours: /3
+condition:
+  - condition: time
+    after: "07:00:00"
+    before: "20:00:00"
+    weekday:
+      - sat
+      - fri
+      - thu
+      - wed
+      - tue
+      - mon
+      - sun
+action:
+  - service: open_epaper_link.drawcustom
+    target:
+      entity_id:
+        - open_epaper_link.yourtagname
+    data:
+      background: white
+      rotate: 0
+      payload:
+        - type: icon
+          value: leaf
+          x: 100
+          "y": 5
+          size: 14
+          color: black
+        - type: text
+          value: DWD Pollen
+          font: ppb.ttf
+          x: 0
+          "y": 10
+          size: 16
+          color: red
+        - type: icon
+          value: update
+          x: 165
+          "y": 5
+          size: 14
+          color: black
+        - type: text
+          value: >-
+            {{ states('sensor.yourtagname_next_checkin') | as_timestamp() |
+            timestamp_custom('%H:%M')}}
+          font: ppb.ttf
+          x: 190
+          "y": 10
+          size: 10
+          color: red
+        - type: text
+          value: Ambrosia
+          font: ppb.ttf
+          x: 0
+          "y": 30
+          size: 12
+        - type: text
+          value: >-
+            {{ state_attr('sensor.dwd_pollen_ambrosia','today') | string }}/{{
+            state_attr('sensor.dwd_pollen_ambrosia','tomorrow') }}
+          font: ppb.ttf
+          x: 70
+          "y": 28
+          size: 12
+          color: black
+        - type: text
+          value: Bleifuss
+          font: ppb.ttf
+          x: 0
+          "y": 45
+          size: 12
+        - type: text
+          value: >-
+            {{ state_attr('sensor.dwd_pollen_beifuss','today') | string }}/{{
+            state_attr('sensor.dwd_pollen_beifuss','tomorrow') }}
+          font: ppb.ttf
+          x: 70
+          "y": 43
+          size: 12
+          color: black
+        - type: text
+          value: Birke
+          font: ppb.ttf
+          x: 0
+          "y": 60
+          size: 12
+        - type: text
+          value: >-
+            {{ state_attr('sensor.dwd_pollen_birke','today') | string }}/{{
+            state_attr('sensor.dwd_pollen_birke','tomorrow') }}
+          font: ppb.ttf
+          x: 70
+          "y": 58
+          size: 12
+          color: black
+        - type: text
+          value: Erle
+          font: ppb.ttf
+          x: 0
+          "y": 75
+          size: 12
+        - type: text
+          value: >-
+            {{ state_attr('sensor.dwd_pollen_erle','today') | string }}/{{
+            state_attr('sensor.dwd_pollen_erle','tomorrow') }}
+          font: ppb.ttf
+          x: 70
+          "y": 73
+          size: 12
+          color: black
+        - type: text
+          value: Esche
+          font: ppb.ttf
+          x: 100
+          "y": 30
+          size: 12
+        - type: text
+          value: >-
+            {{ state_attr('sensor.dwd_pollen_esche','today') | string }}/{{
+            state_attr('sensor.dwd_pollen_esche','tomorrow') }}
+          font: ppb.ttf
+          x: 152
+          "y": 28
+          size: 12
+          color: black
+        - type: text
+          value: Gräser
+          font: ppb.ttf
+          x: 100
+          "y": 45
+          size: 12
+        - type: text
+          value: >-
+            {{ state_attr('sensor.dwd_pollen_graeser','today') | string }}/{{
+            state_attr('sensor.dwd_pollen_graeser','tomorrow') }}
+          font: ppb.ttf
+          x: 152
+          "y": 43
+          size: 12
+          color: black
+        - type: text
+          value: Hasel
+          font: ppb.ttf
+          x: 100
+          "y": 60
+          size: 12
+        - type: text
+          value: >-
+            {{ state_attr('sensor.dwd_pollen_hasel','today') | string }}/{{
+            state_attr('sensor.dwd_pollen_hasel','tomorrow') }}
+          font: ppb.ttf
+          x: 152
+          "y": 58
+          size: 12
+          color: black
+        - type: text
+          value: Roggen
+          font: ppb.ttf
+          x: 100
+          "y": 75
+          size: 12
+        - type: text
+          value: >-
+            {{ state_attr('sensor.dwd_pollen_roggen','today') | string }}/{{
+            state_attr('sensor.dwd_pollen_roggen','tomorrow') }}
+          font: ppb.ttf
+          x: 153
+          "y": 74
+          size: 12
+          color: black
+        - type: text
+          value: Historie
+          font: ppb.ttf
+          x: 180
+          "y": 20
+          size: 11
+        - type: icon
+          value: >
+            {{ 'battery-100' if is_state('sensor.yourtagname_battery',
+            '100') else 'battery-50' }}
+          x: 230
+          "y": 5
+          size: 14
+          color: >
+            {{ 'black' if is_state('sensor.yourtagname_battery', '100')
+            else 'red' }}
+        - type: line
+          x_start: 180
+          x_end: 240
+          y_start: 111
+          y_end: 111
+          width: 1
+          fill: black
+        - type: line
+          x_start: 180
+          x_end: 180
+          y_start: 106
+          y_end: 111
+          width: 1
+          fill: black
+        - type: line
+          x_start: 210
+          x_end: 210
+          y_start: 106
+          y_end: 111
+          width: 1
+          fill: black
+        - type: line
+          x_start: 240
+          x_end: 240
+          y_start: 106
+          y_end: 111
+          width: 1
+          fill: black
+        - type: text
+          value: "0"
+          font: ppb.ttf
+          x: 180
+          "y": 117
+          size: 9
+          color: black
+          anchor: mm
+        - type: text
+          value: "3"
+          font: ppb.ttf
+          x: 210
+          "y": 117
+          size: 9
+          color: black
+          anchor: mm
+        - type: text
+          value: "6"
+          font: ppb.ttf
+          x: 240
+          "y": 117
+          size: 9
+          color: black
+          anchor: mm
+        - type: rectangle
+          x_start: 180
+          x_end: >-
+            {{ 180 + (state_attr('sensor.dwd_pollen_ambrosia','today') | int ) *
+            10 }}
+          y_start: 30
+          y_end: 35
+          fill: null
+          width: 1
+          outline: black
+        - type: rectangle
+          x_start: 180
+          x_end: >-
+            {{ 180 + (state_attr('sensor.dwd_pollen_ambrosia','tomorrow') | int
+            ) * 10 }}
+          y_start: 31
+          y_end: 34
+          fill: red
+          width: 1
+          outline: red
+        - type: rectangle
+          x_start: 180
+          x_end: >-
+            {{ 180 + (state_attr('sensor.dwd_pollen_beifuss','today') | int ) *
+            10 }}
+          y_start: 40
+          y_end: 45
+          fill: null
+          width: 1
+          outline: black
+        - type: rectangle
+          x_start: 180
+          x_end: >-
+            {{ 180 + (state_attr('sensor.dwd_pollen_beifuss','tomorrow') | int )
+            * 10 }}
+          y_start: 41
+          y_end: 44
+          fill: red
+          width: 1
+          outline: red
+        - type: rectangle
+          x_start: 180
+          x_end: >-
+            {{ 180 + (state_attr('sensor.dwd_pollen_birke','today') | int ) * 10
+            }}
+          y_start: 50
+          y_end: 55
+          fill: null
+          width: 1
+          outline: black
+        - type: rectangle
+          x_start: 180
+          x_end: >-
+            {{ 180 + (state_attr('sensor.dwd_pollen_birke','tomorrow') | int ) *
+            10 }}
+          y_start: 51
+          y_end: 54
+          fill: red
+          width: 1
+          outline: red
+        - type: rectangle
+          x_start: 180
+          x_end: >-
+            {{ 180 + (state_attr('sensor.dwd_pollen_erle','today') | int ) * 10
+            }}
+          y_start: 60
+          y_end: 65
+          fill: null
+          width: 1
+          outline: black
+        - type: rectangle
+          x_start: 180
+          x_end: >-
+            {{ 180 + (state_attr('sensor.dwd_pollen_erle','tomorrow') | int ) *
+            10 }}
+          y_start: 61
+          y_end: 64
+          fill: red
+          width: 1
+          outline: red
+        - type: rectangle
+          x_start: 180
+          x_end: >-
+            {{ 180 + (state_attr('sensor.dwd_pollen_esche','today') | int ) * 10
+            }}
+          y_start: 70
+          y_end: 75
+          fill: null
+          width: 1
+          outline: black
+        - type: rectangle
+          x_start: 180
+          x_end: >-
+            {{ 180 + (state_attr('sensor.dwd_pollen_esche','today') | int ) * 10
+            }}
+          y_start: 71
+          y_end: 74
+          fill: red
+          width: 1
+          outline: red
+        - type: rectangle
+          x_start: 180
+          x_end: >-
+            {{ 180 + (state_attr('sensor.dwd_pollen_graeser','today') | int ) *
+            10 }}
+          y_start: 80
+          y_end: 85
+          fill: null
+          width: 1
+          outline: black
+        - type: rectangle
+          x_start: 180
+          x_end: >-
+            {{ 180 + (state_attr('sensor.dwd_pollen_graeser','tomorrow') | int )
+            * 10 }}
+          y_start: 81
+          y_end: 84
+          fill: red
+          width: 1
+          outline: red
+        - type: rectangle
+          x_start: 180
+          x_end: >-
+            {{ 180 + (state_attr('sensor.dwd_pollen_hasel','today') | int ) * 10
+            }}
+          y_start: 90
+          y_end: 95
+          fill: null
+          width: 1
+          outline: black
+        - type: rectangle
+          x_start: 180
+          x_end: >-
+            {{ 180 + (state_attr('sensor.dwd_pollen_hasel','tomorrow') | int ) *
+            10 }}
+          y_start: 91
+          y_end: 94
+          fill: red
+          width: 1
+          outline: red
+        - type: rectangle
+          x_start: 180
+          x_end: >-
+            {{ 180 + (state_attr('sensor.dwd_pollen_roggen','today') | int ) *
+            10 }}
+          y_start: 100
+          y_end: 105
+          fill: null
+          width: 1
+          outline: black
+        - type: rectangle
+          x_start: 180
+          x_end: >-
+            {{ 180 + (state_attr('sensor.dwd_pollen_roggen','tomorrow') | int )
+            * 10 }}
+          y_start: 101
+          y_end: 104
+          fill: red
+          width: 1
+          outline: red
+mode: single
