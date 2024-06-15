@@ -1,0 +1,335 @@
+alias: OpenEPaperLink_Accu_Weather
+description: ""
+trigger:
+  - platform: time_pattern
+    hours: /2
+condition:
+  - condition: time
+    after: "07:00:00"
+    before: "20:00:00"
+    weekday:
+      - sat
+      - fri
+      - thu
+      - wed
+      - tue
+      - mon
+      - sun
+action:
+  - service: open_epaper_link.drawcustom
+    target:
+      entity_id:
+        - open_epaper_link.yourtagname
+    data:
+      background: white
+      rotate: 0
+      payload:
+        - type: text
+          value: Wind km/h
+          font: ppb.ttf
+          x: 25
+          "y": 16
+          size: 8
+        - type: plot
+          x_start: 14
+          y_start: 25
+          x_end: 100
+          y_end: 48
+          duration: 86400
+          low: 0
+          high: 50
+          ylegend:
+            position: right
+            color: red
+          yaxis:
+            grid: 10
+          data:
+            - entity: sensor.home_windgeschwindigkeit
+              width: 2
+              joint: curve
+            - entity: sensor.home_windgeschwindigkeit_heute
+              joint: curve
+          color: red
+        - type: icon
+          value: weather-windy
+          x: 0
+          "y": 33
+          size: 14
+          color: black
+        - type: text
+          value: Temperaturen
+          font: ppb.ttf
+          x: 18
+          "y": 52
+          size: 8
+        - type: plot
+          x_start: 14
+          y_start: 60
+          x_end: 100
+          y_end: 88
+          duration: 86400
+          low: 0
+          high: 45
+          ylegend:
+            position: right
+            color: red
+          yaxis:
+            grid: 10
+          data:
+            - entity: sensor.home_realfeel_temperatur
+              joint: curve
+              width: 2
+            - entity: sensor.home_realfeel_temperatur_max_heute
+              joint: curve
+            - entity: sensor.home_realfeel_temperatur_min_heute
+              joint: curve
+            - entity: sensor.home_realfeel_temperatur_max_tag_1
+              joint: curve
+            - entity: sensor.home_realfeel_temperatur_min_tag_1
+              joint: curve
+          color: red
+        - type: icon
+          value: temperature
+          x: 0
+          "y": 65
+          size: 14
+          color: black
+        - type: text
+          value: Niederschlag
+          font: ppb.ttf
+          x: 25
+          "y": 90
+          size: 8
+        - type: plot
+          x_start: 14
+          y_start: 100
+          x_end: 100
+          y_end: 122
+          duration: 86400
+          ylegend:
+            position: right
+            color: red
+          yaxis:
+            grid: 10
+          data:
+            - entity: sensor.home_niederschlag
+              joint: curve
+              width: 2
+          color: red
+        - type: icon
+          value: weather-pouring
+          x: 0
+          "y": 105
+          size: 12
+          color: black
+        - type: text
+          value: Sonnenstunden
+          font: ppb.ttf
+          x: 115
+          "y": 16
+          size: 8
+        - type: plot
+          x_start: 114
+          y_start: 25
+          x_end: 200
+          y_end: 50
+          duration: 86400
+          ylegend:
+            position: right
+            color: red
+          yaxis:
+            grid: 10
+          data:
+            - entity: sensor.home_sonnenstunden_heute
+              width: 2
+              joint: curve
+            - entity: sensor.home_sonnenstunden_tag_1
+              joint: curve
+            - entity: sensor.home_sonnenstunden_tag_2
+              joint: curve
+            - entity: sensor.home_sonnenstunden_tag_3
+              joint: curve
+            - entity: sensor.home_sonnenstunden_tag_4
+              joint: curve
+          color: red
+        - type: icon
+          value: weather-sunset
+          x: 100
+          "y": 30
+          size: 14
+          color: black
+        - type: text
+          value: Gewitter
+          font: ppb.ttf
+          x: 125
+          "y": 50
+          size: 8
+        - type: plot
+          x_start: 114
+          y_start: 60
+          x_end: 200
+          y_end: 88
+          duration: 86400
+          low: 0
+          high: 100
+          ylegend:
+            position: right
+            color: red
+          yaxis:
+            grid: 10
+          data:
+            - entity: sensor.home_gewitterwahrscheinlichkeit_heute
+              joint: curve
+              width: 2
+            - entity: sensor.home_gewitterwahrscheinlichkeit_tag_1
+              joint: curve
+            - entity: sensor.home_gewitterwahrscheinlichkeit_tag_2
+              joint: curve
+            - entity: sensor.home_gewitterwahrscheinlichkeit_tag_3
+              joint: curve
+            - entity: sensor.home_gewitterwahrscheinlichkeit_tag_4
+              joint: curve
+          color: red
+        - type: icon
+          value: weather-lightning
+          x: 100
+          "y": 65
+          size: 14
+          color: black
+        - type: text
+          value: UV-Index
+          font: ppb.ttf
+          x: 125
+          "y": 90
+          size: 8
+        - type: plot
+          x_start: 114
+          y_start: 100
+          x_end: 200
+          y_end: 120
+          duration: 86400
+          ylegend:
+            position: right
+            color: red
+          yaxis:
+            grid: 10
+          data:
+            - entity: sensor.home_uv_index
+              joint: curve
+              width: 2
+            - entity: sensor.home_uv_index_heute
+              joint: curve
+            - entity: sensor.home_uv_index_tag_1
+              joint: curve
+            - entity: sensor.home_uv_index_tag_2
+              joint: curve
+            - entity: sensor.home_uv_index_tag_3
+              joint: curve
+            - entity: sensor.home_uv_index_tag_4
+              joint: curve
+          color: red
+        - type: icon
+          value: shield-sun-outline
+          x: 100
+          "y": 105
+          size: 12
+          color: black
+        - type: icon
+          value: weather-sunny
+          x: 120
+          "y": 0
+          size: 12
+          color: black
+        - type: text
+          value: Accu-Weather
+          font: ppb.ttf
+          x: 0
+          "y": 0
+          size: 14
+          color: red
+        - type: icon
+          value: update
+          x: 235
+          "y": 0
+          size: 12
+          color: black
+        - type: text
+          value: >-
+            {{ states('sensor.yourtagname_next_checkin') | as_timestamp() |
+            timestamp_custom('%H:%M')}}
+          font: ppb.ttf
+          x: 250
+          "y": 2
+          size: 10
+          color: red
+        - type: icon
+          value: >
+            {{ 'battery-100' if is_state('sensor.yourtagname_battery',
+            '100') else 'battery-50' }}
+          x: 285
+          "y": 0
+          size: 14
+          color: >
+            {{ 'black' if is_state('sensor.yourtagname_battery', '100')
+            else 'red' }}
+        - type: line
+          x_start: 0
+          x_end: 296
+          y_start: 14
+          y_end: 14
+          width: 1
+          fill: black
+        - type: line
+          x_start: 210
+          x_end: 210
+          y_start: 16
+          y_end: 128
+          width: 1
+          fill: black
+          outline: red
+        - type: multiline
+          value: >-
+            {{ states('sensor.yoursensor_temperature') }}*{{
+            states('sensor.yoursensor_pressure') }}*{{
+            states('sensor.yoursensor_relative_humidity') }}*{{
+            states('sensor.yoursensor_wind_speed') }}*{{
+            states('sensor.yoursensor_wind_gust') }}
+          delimiter: "*"
+          font: advanced_led_board-7.ttf
+          offset_y: 20
+          x: 230
+          size: 18
+          color: black
+          y_padding: 10
+          align: right
+        - type: icon
+          value: temperature-celsius
+          x: 212
+          "y": 16
+          size: 14
+          color: black
+        - type: icon
+          value: swap-vertical
+          x: 212
+          "y": 38
+          size: 14
+          color: black
+        - type: icon
+          value: water-percent
+          x: 212
+          "y": 56
+          size: 14
+          color: black
+        - type: icon
+          value: weather-windy
+          x: 212
+          "y": 76
+          size: 14
+          color: black
+        - type: icon
+          value: weather-dust
+          x: 212
+          "y": 96
+          size: 14
+          color: black
+mode: single
