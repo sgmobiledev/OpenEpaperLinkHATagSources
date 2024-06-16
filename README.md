@@ -21,14 +21,16 @@ Home-Assistant BLE Tags Yaml Scripts for OpenEpaperLink
 
 ## Instructions and Informations
 
-# Designed for display size:
+### Designed for display size:
     - (2.13") 250x132 
     - (2.9")  296x128
 
-# Installation instructions
+### Installation instructions
 
     In order to use the font in script, 
-    the font file must be copied into the Home Assistant instance used under the following file folder. 
-    Source folder: /media/
-    Destination folder: 
-    /homeassistant/custom_components/open_epaper_link/
+    the font file must be copied into the Home Assistant instance used under the following file folder.
+
+    - Source folder: 
+      /media/
+    - Destination folder: 
+      /homeassistant/custom_components/open_epaper_link/
