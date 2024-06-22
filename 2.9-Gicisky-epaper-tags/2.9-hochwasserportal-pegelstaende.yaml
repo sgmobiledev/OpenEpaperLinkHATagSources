@@ -1,0 +1,323 @@
+alias: OpenEPaperLink_Hochwasserportal_Pegelstaende
+description: ""
+trigger:
+  - platform: time_pattern
+    hours: /4
+condition:
+  - condition: time
+    after: "06:00:00"
+    before: "20:00:00"
+    weekday:
+      - sat
+      - fri
+      - thu
+      - wed
+      - tue
+      - mon
+      - sun
+action:
+  - service: open_epaper_link.drawcustom
+    target:
+      entity_id:
+        - open_epaper_link.4033FFFF92937837
+    data:
+      background: white
+      rotate: 0
+      payload:
+        - type: text
+          value: Pegelstände der Region
+          font: ppb.ttf
+          x: 0
+          "y": 0
+          size: 14
+          color: red
+        - type: icon
+          value: update
+          x: 235
+          "y": 0
+          size: 12
+          color: black
+        - type: text
+          value: >-
+            {{ states('sensor.4033FFFF92937837_next_checkin') | as_timestamp() |
+            timestamp_custom('%H:%M')}}
+          font: ppb.ttf
+          x: 250
+          "y": 2
+          size: 10
+          color: red
+        - type: text
+          value: Bamberg MDK
+          font: ppb.ttf
+          x: 0
+          "y": 30
+          size: 12
+        - type: line
+          x_start: 124
+          x_end: 166
+          y_start: 35
+          y_end: >-
+            {{ 124 - (((states('sensor.bamberg_main_donau_kanal_pegelstand') |
+            float ) / 100) * 10) }}
+          width: 1
+          fill: red
+        - type: text
+          value: Brombachsee
+          font: ppb.ttf
+          x: 0
+          "y": 45
+          size: 12
+        - type: line
+          x_start: 124
+          x_end: 166
+          y_start: 50
+          y_end: >-
+            {{ 124 - (((states('sensor.brombachsee_brombachsee_pegelstand') |
+            float ) / 100) * 10) }}
+          width: 1
+          fill: red
+        - type: text
+          value: Lauf/Pegnitz
+          font: ppb.ttf
+          x: 0
+          "y": 58
+          size: 12
+        - type: line
+          x_start: 124
+          x_end: 166
+          y_start: 65
+          y_end: >-
+            {{ 124 - (((states('sensor.lauf_pegnitz_pegelstand') | float ) /
+            100) * 10) }}
+          width: 1
+          fill: red
+        - type: text
+          value: Lederersteg/Pegn.
+          font: ppb.ttf
+          x: 0
+          "y": 75
+          size: 12
+        - type: line
+          x_start: 124
+          x_end: 166
+          y_start: 80
+          y_end: >-
+            {{ 124 - (((states('sensor.nurnberg_lederersteg_pegnitz_pegelstand')
+            | float ) / 100) * 10) }}
+          width: 1
+          fill: red
+        - type: text
+          value: Rothsee
+          font: ppb.ttf
+          x: 0
+          "y": 95
+          size: 12
+        - type: line
+          x_start: 124
+          x_end: 166
+          y_start: 100
+          y_end: >-
+            {{ 124 - (((states('sensor.rothsee_hauptsperre_rothsee_pegelstand')
+            | float ) / 100) * 10) }}
+          width: 1
+          fill: red
+        - type: text
+          value: Pegel
+          font: ppb.ttf
+          x: 180
+          "y": 15
+          size: 11
+        - type: icon
+          value: >
+            {{ 'battery-100' if is_state('sensor.4033ffff92937837_battery',
+            '100') else 'battery-50' }}
+          x: 280
+          "y": 0
+          size: 12
+          color: >
+            {{ 'black' if is_state('sensor.4033FFFF92937837_battery', '100')
+            else 'red' }}
+        - type: dlimg
+          url: /media/Wasserstand.png
+          x: 220
+          "y": 40
+          xsize: 65
+          ysize: 65
+          rotate: 0
+        - type: text
+          value: 0 m
+          font: ppb.ttf
+          x: 205
+          "y": 114
+          size: 9
+          color: black
+          anchor: mm
+        - type: text
+          value: 5 m
+          font: ppb.ttf
+          x: 205
+          "y": 72
+          size: 10
+          color: black
+          anchor: mm
+        - type: text
+          value: 9 m
+          font: ppb.ttf
+          x: 205
+          "y": 34
+          size: 9
+          color: black
+          anchor: mm
+        - type: rectangle
+          x_start: 169
+          x_end: 191
+          y_start: 30
+          y_end: 116
+          fill: null
+          width: 1
+          outline: black
+        - type: rectangle
+          x_start: 170
+          x_end: "{{ 170 +  10 }}"
+          y_start: 30
+          y_end: 35
+          fill: null
+          width: 1
+          outline: black
+        - type: rectangle
+          x_start: 180
+          x_end: "{{ 180 +  10 }}"
+          y_start: 30
+          y_end: 35
+          fill: red
+          width: 1
+          outline: black
+        - type: rectangle
+          x_start: 170
+          x_end: "{{ 170 +  10 }}"
+          y_start: 40
+          y_end: 45
+          fill: red
+          width: 1
+          outline: black
+        - type: rectangle
+          x_start: 180
+          x_end: "{{ 180 + 10 }}"
+          y_start: 40
+          y_end: 45
+          fill: null
+          width: 1
+          outline: black
+        - type: rectangle
+          x_start: 170
+          x_end: "{{ 170 +  10 }}"
+          y_start: 50
+          y_end: 55
+          fill: null
+          width: 1
+          outline: black
+        - type: rectangle
+          x_start: 180
+          x_end: "{{ 180 +  10 }}"
+          y_start: 50
+          y_end: 55
+          fill: red
+          width: 1
+          outline: black
+        - type: rectangle
+          x_start: 170
+          x_end: "{{ 170 + 10 }}"
+          y_start: 60
+          y_end: 65
+          fill: red
+          width: 1
+          outline: black
+        - type: rectangle
+          x_start: 180
+          x_end: "{{ 180 + 10 }}"
+          y_start: 60
+          y_end: 65
+          fill: null
+          width: 1
+          outline: black
+        - type: rectangle
+          x_start: 170
+          x_end: "{{ 170 + 10 }}"
+          y_start: 70
+          y_end: 75
+          fill: null
+          width: 1
+          outline: black
+        - type: rectangle
+          x_start: 180
+          x_end: "{{ 180 + 10 }}"
+          y_start: 70
+          y_end: 75
+          fill: red
+          width: 1
+          outline: black
+        - type: rectangle
+          x_start: 170
+          x_end: "{{ 170 +  10 }}"
+          y_start: 80
+          y_end: 85
+          fill: red
+          width: 1
+          outline: black
+        - type: rectangle
+          x_start: 180
+          x_end: "{{ 180 +  10 }}"
+          y_start: 80
+          y_end: 85
+          fill: null
+          width: 1
+          outline: black
+        - type: rectangle
+          x_start: 170
+          x_end: "{{ 170 + 10 }}"
+          y_start: 90
+          y_end: 95
+          fill: null
+          width: 1
+          outline: black
+        - type: rectangle
+          x_start: 180
+          x_end: "{{ 180 + 10 }}"
+          y_start: 90
+          y_end: 95
+          fill: red
+          width: 1
+          outline: black
+        - type: rectangle
+          x_start: 170
+          x_end: "{{ 170 + 10 }}"
+          y_start: 100
+          y_end: 105
+          fill: red
+          width: 1
+          outline: black
+        - type: rectangle
+          x_start: 180
+          x_end: "{{ 180 + 10 }}"
+          y_start: 100
+          y_end: 105
+          fill: null
+          width: 1
+          outline: black
+        - type: rectangle
+          x_start: 170
+          x_end: "{{ 170 + 10 }}"
+          y_start: 110
+          y_end: 115
+          fill: null
+          width: 1
+          outline: black
+        - type: rectangle
+          x_start: 180
+          x_end: "{{ 180 + 10 }}"
+          y_start: 110
+          y_end: 115
+          fill: red
+          width: 1
+          outline: black
+mode: single

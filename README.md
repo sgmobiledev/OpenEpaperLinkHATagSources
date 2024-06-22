@@ -10,7 +10,11 @@ Home-Assistant BLE Tags Yaml Scripts for OpenEpaperLink
     # 2.13-Gicisky-epaper-tags
 
     Sources only tested with Gicisky BLE TFT 2.9 E-Tags.
-
+      - 2.9-accu-weather.yaml
+        Implementation from HACS Integration of Weathercloudservice Accu Weather.
+      - 2.9-hochwasserportal-pegelstaende.yaml
+        Implementation from HACS Integration of Hochwasserportal Service.
+    
     # media
 
     The font is currently only required for the Accu Weather Script.
