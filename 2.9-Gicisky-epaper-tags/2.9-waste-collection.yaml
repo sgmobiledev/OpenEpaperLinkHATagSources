@@ -1,0 +1,169 @@
+alias: OpenEPaperLink_Muellkalender
+description: Müllkalender
+trigger:
+  - platform: time_pattern
+    hours: /12
+condition:
+  - condition: time
+    after: "06:00:00"
+    before: "20:00:00"
+    weekday:
+      - sat
+      - fri
+      - thu
+      - wed
+      - tue
+      - mon
+      - sun
+action:
+  - service: open_epaper_link.drawcustom
+    target:
+      entity_id:
+        - open_epaper_link.4033FFFF92938888
+    data:
+      background: white
+      rotate: 0
+      payload:
+        - type: text
+          value: "{{  'Müllkalender: ' + states('sensor.abfallnaechster') }}"
+          font: ppb.ttf
+          x: 0
+          "y": 0
+          size: 14
+          color: red
+        - type: icon
+          value: update
+          x: 235
+          "y": 0
+          size: 12
+          color: black
+        - type: text
+          value: >-
+            {{ states('sensor.4033FFFF92938888_next_checkin') | as_timestamp() |
+            timestamp_custom('%H:%M')}}
+          font: ppb.ttf
+          x: 250
+          "y": 2
+          size: 10
+          color: red
+        - type: icon
+          value: >
+            {{ 'battery-100' if is_state('sensor.4033FFFF92938888_battery',
+            '100') else 'battery-50' }}
+          x: 280
+          "y": 0
+          size: 12
+          color: >
+            {{ 'black' if is_state('sensor.4033FFFF92938888_battery', '100')
+            else 'red' }}
+        - type: text
+          value: Biotonne
+          font: ppb.ttf
+          x: 5
+          "y": 30
+          size: 12
+        - type: text
+          value: "{{ states('sensor.bioabfall') }}"
+          font: ppb.ttf
+          x: 10
+          "y": 100
+          size: 12
+        - type: icon
+          value: >
+            {% set bioabfall_wert = states('sensor.bioabfall') | string %}
+            {% if bioabfall_wert == '1 Tage' %}
+              delete-alert-outline
+            {% elif bioabfall_wert == '2 Tage' %}
+              delete-clock-outline
+            {% elif bioabfall_wert == '3 Tage' %}
+              delete-empty-outline
+            {% elif bioabfall_wert == '4 Tage' %}
+              delete-variant
+            {% elif bioabfall_wert == '5 Tage' %}
+              delete-outline
+            {% else %}
+               delete-sweep-outline
+            {% endif %}                  
+          x: 10
+          "y": 40
+          size: 60
+          color: black
+        - type: text
+          value: Gelber Sack
+          font: ppb.ttf
+          x: 80
+          "y": 30
+          size: 12
+        - type: text
+          value: "{{ states('sensor.gelbetonne') }}"
+          font: ppb.ttf
+          x: 90
+          "y": 100
+          size: 12
+        - type: icon
+          value: >
+            {% set gelbetonne_wert = states('sensor.gelbetonne') | string %}
+            {% if gelbetonne_wert == '1 Tage' %}
+              delete-alert-outline
+            {% elif gelbetonne_wert == '2 Tage' %}
+              delete-clock-outline
+            {% elif gelbetonne_wert == '3 Tage' %}
+              delete-empty-outline
+            {% elif gelbetonne_wert == '4 Tage' %}
+              delete-variant
+            {% elif gelbetonne_wert == '5 Tage' %}
+              delete-outline
+            {% else %}
+               delete-sweep-outline
+            {% endif %}                  
+          x: 85
+          "y": 40
+          size: 60
+          color: black
+        - type: text
+          value: Restmüll
+          font: ppb.ttf
+          x: 170
+          "y": 30
+          size: 12
+        - type: text
+          value: "{{ states('sensor.restabfall') }}"
+          font: ppb.ttf
+          x: 175
+          "y": 100
+          size: 12
+        - type: icon
+          value: >
+            {% set restabfall_wert = states('sensor.restabfall') | string %}
+            {% if restabfall_wert == '1 Tage' %}
+              delete-alert-outline
+            {% elif restabfall_wert == '2 Tage' %}
+              delete-clock-outline
+            {% elif restabfall_wert == '3 Tage' %}
+              delete-empty-outline
+            {% elif restabfall_wert == '4 Tage' %}
+              delete-variant
+            {% elif restabfall_wert == '5 Tage' %}
+              delete-outline
+            {% else %}
+               delete-sweep-outline
+            {% endif %}                  
+          x: 175
+          "y": 40
+          size: 60
+          color: black
+        - type: icon
+          value: |
+            {{ 'calendar-multiselect' }}
+          x: 240
+          "y": 20
+          size: 50
+          color: black
+        - type: icon
+          value: |
+            {{ 'recycle' }}
+          x: 240
+          "y": 70
+          size: 50
+          color: black
+mode: single

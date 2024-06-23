@@ -14,6 +14,9 @@ Home-Assistant BLE Tags Yaml Scripts for OpenEpaperLink
         Implementation from HACS Integration of Weathercloudservice Accu Weather.
       - 2.9-hochwasserportal-pegelstaende.yaml
         Implementation from HACS Integration of Hochwasserportal Service.
+      - 2.9-waste-collection.yaml
+        Implementation from HACS Integration of Müllkalender.
+        Dieser muss eingerichtet sein nach der jeweiligen Region  
     
     # media
 
