@@ -16,7 +16,7 @@ Home-Assistant BLE Tags Yaml Scripts for OpenEpaperLink
         Implementation from HACS Integration of Hochwasserportal Service.
       - 2.9-waste-collection.yaml
         Implementation from HACS Integration of Müllkalender.
-        Dieser muss eingerichtet sein nach der jeweiligen Region  
+        This integration must config to your region for waste calender.  
     
     # media
 
