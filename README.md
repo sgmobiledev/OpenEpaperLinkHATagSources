@@ -17,7 +17,8 @@ Home-Assistant BLE Tags Yaml Scripts for OpenEpaperLink
       - 2.9-waste-collection.yaml
         Implementation from HACS Integration of Müllkalender.
         This integration must config to your region for waste calender.  
-    
+      - 3.5-dwd-weather-warning.yaml
+        Implementation from HACS Integration of DWD Weather Warning.
     # media
 
     The font is currently only required for the Accu Weather Script.
@@ -29,9 +30,11 @@ Home-Assistant BLE Tags Yaml Scripts for OpenEpaperLink
 ## Instructions and Informations
 
 ### Designed for display size:
+    - (1.54") 152x152 
     - (2.13") 250x132 
     - (2.9")  296x128
-
+    - (3.5")  384x184
+    - (4.2")  400x300
 ### Installation instructions
 
     In order to use the font in script, 
