@@ -51,10 +51,13 @@ action:
           size: 14
           color: red
         - type: text
-          value: >-
-            {{
-            state_attr('sensor.dwd_weather_warnings_709564009_aktuelle_warnstufe','region_name')
-            }} 
+          value: |-
+            {% set region_text =
+              state_attr('sensor.dwd_weather_warnings_709564009_aktuelle_warnstufe','region_name') %} {% if region_text %}
+              {{ region_text }}
+            {% else %}
+              Keine Regionsdaten verfügbar
+            {% endif %}
           font: ppb.ttf
           x: 0
           "y": 140
@@ -95,58 +98,69 @@ action:
           "y": 30
           size: 10
         - type: text
-          value: >-
-            {{
-            state_attr('sensor.dwd_weather_warnings_709564009_aktuelle_warnstufe','warning_1_start')
-            | as_timestamp() | timestamp_custom('%d.%m.%Y %H:%M') }}
+          value: |-
+            {% set warning_start_text =
+              state_attr('sensor.dwd_weather_warnings_709564009_aktuelle_warnstufe','warning_1_start') %} {% if warning_start_text %}
+              {{ warning_start_text | as_timestamp() | timestamp_custom('%d.%m.%Y %H:%M') }}
+            {% else %}
+              Keine Daten verfügbar
+            {% endif %}
           font: ppb.ttf
           x: 10
           "y": 100
           size: 12
         - type: text
-          value: >-
-            {{
-            state_attr('sensor.dwd_weather_warnings_709564009_aktuelle_warnstufe','warning_1_end')
-            | as_timestamp() | timestamp_custom('%d.%m.%Y %H:%M') }}
+          value: |-
+            {% set warning_end_text =
+              state_attr('sensor.dwd_weather_warnings_709564009_aktuelle_warnstufe','warning_1_end') %} {% if warning_end_text %}
+              {{ warning_start_text | as_timestamp() | timestamp_custom('%d.%m.%Y %H:%M') }}
+            {% else %}
+              Keine Daten verfügbar
+            {% endif %}  
           font: ppb.ttf
           x: 10
           "y": 115
           size: 12
         - type: icon
-          value: >-
-            {% set warning_level =
-            state_attr('sensor.dwd_weather_warnings_709564009_aktuelle_warnstufe',
-            'warning_1_level') | int %} {% set warning_type =
-            state_attr('sensor.dwd_weather_warnings_709564009_aktuelle_warnstufe',
-            'warning_1_type') | int %} {% set icon_warning_level = (
-                'alert-circle-check-outline' if warning_level == 0 else
-                'delete-clock-outline' if warning_level == 1 else
-                'weather-lightning' if warning_level == 2 else
-                'weather-partly-lightning' if warning_level == 3 else
-                'weather-lightning-rainy' if warning_level == 4 else
-                'alert-circle-check-outline'
-            ) %} {% set icon_warning_type = (
-                'alert-circle-check-outline' if warning_type < 22 or warning_type > 89 else
-                'delete-clock-outline' if warning_level == 1 and warning_type == 31 else
-                'snowflake-alert' if warning_level == 2 and warning_type == 82 else
-                'snowflake-variant' if warning_level == 1 and warning_type == 22 else
-                'car-electric-outline' if warning_level == 1 and warning_type == 84 else
-                'truck-alert' if warning_level == 2 and warning_type == 87 else
-                'truck-alert-outline' if warning_level == 3 and warning_type == 86 else
-                'plane-car' if warning_level == 4 and warning_type == 86 else
-                'weather-lightning' if warning_level == 2 and warning_type >= 33 and warning_type <= 38 else
-                'weather-partly-lightning' if warning_level == 3 and warning_type in [40, 42, 44, 46, 48] else
-                'weather-lightning-rainy' if warning_level == 4 and warning_type in [41, 45, 49] else
-                'weather-pouring' if warning_level == 2 and warning_type [61, 63] else
-                'weather-rainy' if warning_level == 3 and warning_type in [62, 64] else
-                'weather-partly-rainy' if warning_level == 4 and warning_type in [65, 66] else
-                'windsock' if warning_level == 1 and warning_type == 51 else
-                'weather-windy' if warning_level == 2 and warning_type in [52, 53] else
-                'weather-windy-variant' if warning_level == 3 and warning_type in [54, 55] else
-                'weather-tornado' if warning_level == 4 and warning_type == 55 else
-                'alert-circle-check-outline'
-            ) %} {% set final_icon = icon_warning_level if warning_level >=
-            warning_type else icon_warning_type %} {{ final_icon }}
+          value: |-
+            {% set noneCheck =
+              state_attr('sensor.dwd_weather_warnings_709564009_aktuelle_warnstufe','warning_1_level') %} {% if noneCheck %}
+              {% set warning_level =
+              state_attr('sensor.dwd_weather_warnings_709564009_aktuelle_warnstufe',
+              'warning_1_level') | int %} {% set warning_type =
+              state_attr('sensor.dwd_weather_warnings_709564009_aktuelle_warnstufe',
+              'warning_1_type') | int %} {% set icon_warning_level = (
+                  'alert-circle-check-outline' if warning_level == 0 else
+                  'delete-clock-outline' if warning_level == 1 else
+                  'weather-lightning' if warning_level == 2 else
+                  'weather-partly-lightning' if warning_level == 3 else
+                  'weather-lightning-rainy' if warning_level == 4 else
+                  'alert-circle-check-outline'
+              ) %} {% set icon_warning_type = (
+                  'alert-circle-check-outline' if warning_type < 22 or warning_type > 89 else
+                  'delete-clock-outline' if warning_level == 1 and warning_type == 31 else
+                  'snowflake-alert' if warning_level == 2 and warning_type == 82 else
+                  'snowflake-variant' if warning_level == 1 and warning_type == 22 else
+                  'car-electric-outline' if warning_level == 1 and warning_type == 84 else
+                  'truck-alert' if warning_level == 2 and warning_type == 87 else
+                  'truck-alert-outline' if warning_level == 3 and warning_type == 86 else
+                  'plane-car' if warning_level == 4 and warning_type == 86 else
+                  'weather-lightning' if warning_level == 2 and warning_type >= 33 and warning_type <= 38 else
+                  'weather-partly-lightning' if warning_level == 3 and warning_type in [40, 42, 44, 46, 48] else
+                  'weather-lightning-rainy' if warning_level == 4 and warning_type in [41, 45, 49] else
+                  'weather-pouring' if warning_level == 2 and warning_type [61, 63] else
+                  'weather-rainy' if warning_level == 3 and warning_type in [62, 64] else
+                  'weather-partly-rainy' if warning_level == 4 and warning_type in [65, 66] else
+                  'windsock' if warning_level == 1 and warning_type == 51 else
+                  'weather-windy' if warning_level == 2 and warning_type in [52, 53] else
+                  'weather-windy-variant' if warning_level == 3 and warning_type in [54, 55] else
+                  'weather-tornado' if warning_level == 4 and warning_type == 55 else
+                  'alert-circle-check-outline'
+              ) %} {% set final_icon = icon_warning_level if warning_level >=
+              warning_type else icon_warning_type %} {{ final_icon }}  
+            {% else %}
+              {{ 'bell-off-outline' }}
+            {% endif %}              
           x: 10
           "y": 40
           size: 60
