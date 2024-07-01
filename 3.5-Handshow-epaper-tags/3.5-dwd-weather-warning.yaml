@@ -113,7 +113,7 @@ action:
           value: |-
             {% set warning_end_text =
               state_attr('sensor.dwd_weather_warnings_709564009_aktuelle_warnstufe','warning_1_end') %} {% if warning_end_text %}
-              {{ warning_start_text | as_timestamp() | timestamp_custom('%d.%m.%Y %H:%M') }}
+              {{ warning_end_text | as_timestamp() | timestamp_custom('%d.%m.%Y %H:%M') }}
             {% else %}
               Keine Daten verfügbar
             {% endif %}  
