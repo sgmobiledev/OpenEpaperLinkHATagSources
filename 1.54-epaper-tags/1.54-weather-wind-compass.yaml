@@ -1,0 +1,145 @@
+alias: OpenEPaperLink_Wind_compass
+description: "Ecowitt Weatherstation Wind compass for 1.54 E-Paper Tags"
+trigger:
+  - platform: time_pattern
+    hours: /2
+condition:
+  - condition: time
+    after: "06:00:00"
+    before: "20:00:00"
+    weekday:
+      - sat
+      - fri
+      - thu
+      - wed
+      - tue
+      - mon
+      - sun
+action:
+  - service: open_epaper_link.drawcustom
+    target:
+      entity_id:
+        - open_epaper_link.0000021ff0583418
+    data:
+      background: white
+      rotate: 0
+      payload:
+        - type: text
+          value: Wind
+          font: ppb.ttf
+          x: 45
+          "y": 0
+          size: 20
+          color: red
+        - type: text
+          value: >-
+            {{"Last Update: " +
+            states('sensor.inurem165_local_observation_time') | as_timestamp() |
+            timestamp_custom('%H:%M')}}
+          font: ppb.ttf
+          x: 15
+          "y": 20
+          size: 12
+          color: red
+        - type: icon
+          value: "{{ 'compass-outline' }}"
+          x: 18
+          "y": 0
+          size: 20
+          color: red
+        - type: icon
+          value: "{{ 'dots-circle' }}"
+          x: 24
+          "y": 30
+          size: 105
+          color: red
+        - type: text
+          value: "{{ states('sensor.inurem165_wind_direction_degrees') }}°"
+          font: ppb.ttf
+          x: 62
+          "y": 57
+          size: 14
+          color: black
+        - type: text
+          value: "{{ states('sensor.inurem165_wind_direction_cardinal') }}"
+          font: ppb.ttf
+          x: 60
+          "y": 90
+          size: 12
+          color: black
+        - type: text
+          value: "{{ states('sensor.inurem165_wind_gust') }} Km/h"
+          font: ppb.ttf
+          x: 2
+          "y": 125
+          size: 16
+          color: black
+        - type: icon
+          value: weather-dust
+          x: 2
+          "y": 100
+          size: 20
+          color: black
+        - type: text
+          value: "{{ states('sensor.inurem165_wind_speed') }} Km/h"
+          font: ppb.ttf
+          x: 90
+          "y": 125
+          size: 16
+        - type: icon
+          value: weather-windy
+          x: 130
+          "y": 100
+          size: 20
+          color: black
+        - type: icon
+          value: >
+            {{
+            ["arrow-down","arrow-bottom-left","arrow-left","arrow-top-left","arrow-up","arrow-top-right","arrow-right","arrow-bottom-right"]
+            [(states('sensor.inurem165_wind_direction_degrees') | int / 45) |
+            round(0) % 8] }}
+          x: 65
+          "y": 60
+          size: 28
+          color: black
+        - type: icon
+          value: >
+            {% set windspeed_scala_index = states('sensor.inurem165_wind_speed')
+            | float | round(0) %} {% if windspeed_scala_index <1 %}
+              wind-turbine-check
+            {% elif windspeed_scala_index >=1 and windspeed_scala_index < 19 %}
+              windsock
+            {% elif windspeed_scala_index >= 20 and windspeed_scala_index < 28
+            %}
+              wind-turbine
+            {% elif windspeed_scala_index >= 29 and windspeed_scala_index < 38
+            %}
+              wind-power-outline
+            {% elif windspeed_scala_index >= 39 and windspeed_scala_index < 49
+            %}
+              wind-power
+            {% elif windspeed_scala_index >= 50 and windspeed_scala_index < 61
+            %}
+              wind-turbine-alert  
+            {% elif windspeed_scala_index >= 62 and windspeed_scala_index < 74
+            %}
+              alert-outline  
+            {% elif windspeed_scala_index >= 75 and windspeed_scala_index < 88
+            %}
+              alert-plus-outline  
+            {% elif windspeed_scala_index >= 89 and windspeed_scala_index < 102
+            %}
+              alert-plus
+            {% elif windspeed_scala_index >= 103 and windspeed_scala_index < 117
+            %}
+              smoke-detector-variant-alert    
+            {% elif windspeed_scala_index >= 117 %}
+              weather-windy
+            {% else %}
+               info
+            {% endif %}
+          x: 118
+          "y": 35
+          size: 40
+          color: black
+mode: single

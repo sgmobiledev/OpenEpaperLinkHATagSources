@@ -2,7 +2,10 @@
 Home-Assistant BLE Tags Yaml Scripts for OpenEpaperLink
 
 ## Folder Structure
-
+    # 1.54 Epaper-tags
+    Sources only tested with SoluM-1-54 E-Tags.
+          - 1.54-weather-wind-compass.yaml
+            Implementation from HACS Integration of Weather Cloudservice Wundergroundpws with my ecowitt weatherstation.    
     # 2.9-Gicisky-epaper-tags
 
     Sources only tested with Gicisky BLE EPD BWR 2.9 E-Tags.
