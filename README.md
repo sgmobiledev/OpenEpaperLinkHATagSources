@@ -4,8 +4,8 @@ Home-Assistant BLE Tags Yaml Scripts for OpenEpaperLink
 ## Folder Structure
     # 1.54 Epaper-tags
     Sources only tested with SoluM-1-54 E-Tags.
-          - 1.54-weather-wind-compass.yaml
-            Implementation from HACS Integration of Weather Cloudservice Wundergroundpws with my ecowitt weatherstation.    
+        - 1.54-weather-wind-compass.yaml
+          Implementation from HACS Integration of Weather Cloudservice Wundergroundpws with my ecowitt weatherstation.    
     # 2.9-Gicisky-epaper-tags
 
     Sources only tested with Gicisky BLE EPD BWR 2.9 E-Tags.
@@ -20,8 +20,18 @@ Home-Assistant BLE Tags Yaml Scripts for OpenEpaperLink
       - 2.9-waste-collection.yaml
         Implementation from HACS Integration of Müllkalender.
         This integration must config to your region for waste calender.  
+    Sources only tested with Handshow 3.5 E-Tags.
       - 3.5-dwd-weather-warning.yaml
         Implementation from HACS Integration of DWD Weather Warning.
+    Sources only tested with Solumn 4.2 E-Tags.
+      - 4.2-flight-radar.yaml
+        Implementation from HACS Integration of Flightradar24.
+        this ist automation script, you must changed for your usecae.
+        https://github.com/AlexandrErohin/home-assistant-flightradar24?tab=readme-ov-file#flight
+      - ha-template-sensors.yaml
+        add template sensors to your HomeAssistant configuration.yaml or sensors.yaml
+
+
     # media
 
     The font is currently only required for the Accu Weather Script.

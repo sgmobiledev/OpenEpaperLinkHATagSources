@@ -1,0 +1,178 @@
+alias: OpenEPaperlink_FlightRadar
+description: ""
+trigger:
+  - platform: event
+    event_type: flightradar24_entry
+condition:
+  - condition: state
+    entity_id: sensor.flightradar24_current_flight_aircraft_registration
+    state: available
+action:
+  - service: open_epaper_link.drawcustom
+    target:
+      entity_id:
+        - open_epaper_link.000001844FCE4110
+    data:
+      background: white
+      rotate: 0
+      payload:
+        - type: text
+          value: Flughafen Nürnberg
+          x: 60
+          "y": 7
+          size: 25
+          color: red
+          align: center
+        - type: rectangle
+          x_start: 5
+          x_end: 390
+          y_start: 40
+          y_end: 250
+          width: 1
+          fill: null
+          outline: black
+        - type: text
+          value: >-
+            {{ states('sensor.flightradar24_current_flight_number') }}({{
+            states('sensor.flightradar24_current_flight_aircraft_registration')
+            }})
+          font: ppb.ttf
+          x: 7
+          "y": 45
+          size: 30
+          color: red
+        - type: text
+          value: "{{ states('sensor.flightradar24_current_airline_short') }}"
+          font: ppb.ttf
+          x: 7
+          "y": 75
+          size: 16
+          color: red
+        - type: rectangle
+          x_start: 5
+          x_end: 390
+          y_start: 41
+          y_end: 100
+          width: 1
+          fill: null
+          outline: black
+        - type: text
+          value: >-
+            {{
+            states('sensor.flightradar24_current_flight_airport_origin_country_code')
+            }}
+          x: 60
+          "y": 105
+          size: 40
+          color: black
+        - type: text
+          value: >-
+            {{ states('sensor.flightradar24_current_flight_airport_origin_city')
+            }}
+          x: 20
+          max_width: 193
+          "y": 135
+          size: 20
+          color: black
+        - type: text
+          value: >-
+            {{
+            states('sensor.flightradar24_current_flight_time_scheduled_departure')
+            }}
+          x: 40
+          max_width: 193
+          "y": 157
+          size: 14
+        - type: icon
+          value: airplane-takeoff
+          x: 20
+          "y": 157
+          size: 20
+          color: red
+        - type: icon
+          value: airplane-clock
+          x: 60
+          "y": 172
+          size: 20
+          color: red
+        - type: rectangle
+          x_start: 5
+          x_end: 193
+          y_start: 101
+          y_end: 200
+          width: 1
+          fill: null
+          outline: black
+        - type: text
+          value: >-
+            {{
+            states('sensor.flightradar24_current_flight_airport_destination_country_code')
+            }}
+          x: 260
+          "y": 105
+          size: 40
+          color: black
+        - type: text
+          value: >-
+            {{
+            states('sensor.flightradar24_current_flight_airport_destination_city')
+            }}
+          x: 230
+          "y": 140
+          size: 20
+          color: black
+        - type: text
+          value: >-
+            {{
+            states('sensor.flightradar24_current_flight_time_scheduled_arrival')
+            }}
+          x: 247
+          "y": 160
+          size: 14
+        - type: icon
+          value: airplane-landing
+          x: 228
+          "y": 157
+          size: 20
+          color: red
+        - type: icon
+          value: airplane-clock
+          x: 260
+          "y": 172
+          size: 20
+          color: red
+        - type: rectangle
+          x_start: 195
+          x_end: 390
+          y_start: 101
+          y_end: 200
+          width: 1
+          fill: null
+          outline: black
+        - type: icon
+          value: shield-airplane
+          x: 10
+          "y": 205
+          size: 40
+          color: red
+        - type: text
+          value: >-
+            TYP: {{ states('sensor.flightradar24_current_flight_aircraft_model')
+            }}
+          x: 50
+          "y": 205
+          size: 16
+          color: black
+        - type: text
+          value: "{{ states('sensor.flightradar24_current_flight_airline_short') }}"
+          x: 50
+          "y": 225
+          size: 20
+          color: black
+        - type: icon
+          value: airplane-takeoff
+          x: 165
+          "y": 105
+          size: 60
+          color: red
+mode: single
