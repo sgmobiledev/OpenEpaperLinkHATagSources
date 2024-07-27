@@ -1,0 +1,408 @@
+alias: OpenEpaperlink_Gewitterwahrscheinlichkeit
+description: ""
+trigger:
+  - platform: time_pattern
+    hours: /4
+condition:
+  - condition: time
+    after: "06:00:00"
+    before: "20:00:00"
+    weekday:
+      - sat
+      - fri
+      - thu
+      - wed
+      - tue
+      - mon
+      - sun
+action:
+  - service: open_epaper_link.drawcustom
+    target:
+      entity_id:
+        - open_epaper_link.780105561c472b00
+    data:
+      background: white
+      rotate: 180
+      payload:
+        - type: text
+          value: Gewitter Wahrscheinlichkeit
+          font: ppb.ttf
+          x: 0
+          "y": 0
+          size: 12
+          color: red
+        - type: text
+          value: Vorhersage 4 Tage
+          font: ppb.ttf
+          x: 5
+          "y": 20
+          size: 18
+          color: red
+        - type: text
+          value: CAPE {{ states('sensor.cape') }} J/kg
+          font: ppb.ttf
+          x: 0
+          "y": 40
+          size: 12
+          color: red
+        - type: text
+          value: LI {{ states('sensor.lifted_index') }} °C
+          font: ppb.ttf
+          x: 125
+          "y": 41
+          size: 12
+          color: red
+        - type: icon
+          value: weather-sunny
+          x: 220
+          "y": 10
+          size: 20
+          color: black
+        - type: icon
+          value: weather-night
+          x: 320
+          "y": 10
+          size: 20
+          color: black
+        - type: text
+          value: "{{ states('sensor.home_gewitterwahrscheinlichkeit_heute') }}%"
+          font: ppb.ttf
+          x: 200
+          "y": 30
+          size: 40
+          color: red
+        - type: text
+          value: "{{ states('sensor.home_gewitterwahrscheinlichkeit_heute_nacht') }}%"
+          font: ppb.ttf
+          x: 300
+          "y": 30
+          size: 40
+          color: red
+        - type: plot
+          x_start: 200
+          y_start: 70
+          x_end: 280
+          y_end: 120
+          duration: 86400
+          low: 0
+          high: 100
+          ylegend:
+            position: right
+            color: red
+          yaxis:
+            grid: 10
+          data:
+            - entity: sensor.home_gewitterwahrscheinlichkeit_heute
+              joint: curve
+              width: 2
+          color: red
+        - type: plot
+          x_start: 300
+          y_start: 70
+          x_end: 380
+          y_end: 120
+          duration: 86400
+          low: 0
+          high: 100
+          ylegend:
+            position: right
+            color: red
+          yaxis:
+            grid: 10
+          data:
+            - entity: sensor.home_gewitterwahrscheinlichkeit_heute_nacht
+              joint: curve
+              width: 2
+          color: red
+        - type: icon
+          value: weather-cloudy-clock
+          x: 0
+          "y": 55
+          size: 20
+          color: red
+        - type: multiline
+          value: 1|2|3|4
+          delimiter: "|"
+          font: ppb.ttf
+          offset_y: 25
+          x: 0
+          y_padding: 25
+          size: 20
+          color: red
+        - type: icon
+          value: weather-sunny
+          x: 30
+          "y": 55
+          size: 20
+          color: black
+        - type: text
+          value: "{{ states('sensor.home_gewitterwahrscheinlichkeit_tag_1') }} %"
+          font: ppb.ttf
+          x: 25
+          "y": 77
+          size: 20
+          color: red
+        - type: icon
+          value: weather-night
+          x: 80
+          "y": 55
+          size: 20
+          color: red
+        - type: icon
+          value: current-ac
+          x: 130
+          "y": 55
+          size: 20
+          color: red
+        - type: icon
+          value: trending-up
+          x: 160
+          "y": 55
+          size: 20
+          color: black
+        - type: text
+          value: "{{ states('sensor.home_gewitterwahrscheinlichkeit_nacht_1') }} %"
+          font: ppb.ttf
+          x: 75
+          "y": 77
+          size: 20
+          color: red
+        - type: icon
+          value: >
+            {% set tag1 = states('sensor.home_gewitterwahrscheinlichkeit_tag_1')
+            | int | round(0) %} {% if tag1 >= 1 and tag1 < 20 %}
+              lightning-bolt-outline
+            {% elif tag1 >= 20 and tag1 < 40 %}
+              flash-outline
+            {% elif tag1 >= 40 and tag1 < 50 %}
+              weather-lightning-rainy
+            {% elif tag1 >= 50 and tag1 < 70 %}
+              flash-outline
+            {% elif tag1 >= 75 %}
+              flash-alert-outline
+            {% else %}
+               weather-cloudy
+            {% endif %}
+          x: 130
+          "y": 72
+          size: 20
+          color: red
+        - type: icon
+          value: >
+            {% set tag1 = states('sensor.home_gewitterwahrscheinlichkeit_tag_1')
+            | int | round(0) %} {% if tag1 >= 1 and tag1 < 20 %}
+              arrow-down-thin-circle-outline
+            {% elif tag1 >= 20 and tag1 < 40 %}
+              arrow-bottom-right-thin-circle-outline
+            {% elif tag1 >= 40 and tag1 < 50 %}
+              arrow-right-thin-circle-outline
+            {% elif tag1 >= 50 and tag1 < 70 %}
+              arrow-top-right-thin-circle-outline
+            {% elif tag1 >= 75 %}
+              arrow-up-thin-circle-outline
+            {% else %}
+               check-circle-outline
+            {% endif %}
+          x: 160
+          "y": 72
+          size: 20
+          color: red
+        - type: text
+          value: "{{ states('sensor.home_gewitterwahrscheinlichkeit_tag_2') }} %"
+          font: ppb.ttf
+          x: 25
+          "y": 103
+          size: 20
+          color: red
+        - type: text
+          value: "{{ states('sensor.home_gewitterwahrscheinlichkeit_nacht_2') }}  %"
+          font: ppb.ttf
+          x: 75
+          "y": 103
+          size: 20
+        - type: icon
+          value: >
+            {% set tag2 = states('sensor.home_gewitterwahrscheinlichkeit_tag_2')
+            | int | round(0) %} {% if tag2 >= 1 and tag2 < 20 %}
+              lightning-bolt-outline
+            {% elif tag2 >= 20 and tag2 < 40 %}
+              flash-outline
+            {% elif tag2 >= 40 and tag2 < 50 %}
+              weather-lightning-rainy
+            {% elif tag2 >= 50 and tag2 < 70 %}
+              flash-outline
+            {% elif tag2 >= 75 %}
+              flash-alert-outline
+            {% else %}
+               weather-cloudy
+            {% endif %}
+          x: 130
+          "y": 100
+          size: 20
+          color: red
+        - type: icon
+          value: >
+            {% set tag2 = states('sensor.home_gewitterwahrscheinlichkeit_tag_2')
+            | int | round(0) %} {% if tag2 >= 1 and tag2 < 20 %}
+              arrow-down-thin-circle-outline
+            {% elif tag2 >= 20 and tag2 < 40 %}
+              arrow-bottom-right-thin-circle-outline
+            {% elif tag2 >= 40 and tag2 < 50 %}
+              arrow-right-thin-circle-outline
+            {% elif tag2 >= 50 and tag2 < 70 %}
+              arrow-top-right-thin-circle-outline
+            {% elif tag2 >= 75 %}
+              arrow-up-thin-circle-outline
+            {% else %}
+               check-circle-outline
+            {% endif %}
+          x: 160
+          "y": 100
+          size: 20
+          color: red
+        - type: text
+          value: "{{ states('sensor.home_gewitterwahrscheinlichkeit_tag_3') }} %"
+          font: ppb.ttf
+          x: 25
+          "y": 128
+          size: 20
+          color: red
+        - type: text
+          value: "{{ states('sensor.home_gewitterwahrscheinlichkeit_nacht_3') }} %"
+          font: ppb.ttf
+          x: 75
+          "y": 128
+          size: 20
+          color: red
+        - type: icon
+          value: >
+            {% set tag3 = states('sensor.home_gewitterwahrscheinlichkeit_tag_3')
+            | int | round(0) %} {% if tag3 >= 1 and tag3 < 20 %}
+              lightning-bolt-outline
+            {% elif tag3 >= 20 and tag3 < 40 %}
+              flash-outline
+            {% elif tag3 >= 40 and tag3 < 50 %}
+              weather-lightning-rainy
+            {% elif tag3 >= 50 and tag3 < 70 %}
+              flash-outline
+            {% elif tag3 >= 75 %}
+              flash-alert-outline
+            {% else %}
+               weather-cloudy
+            {% endif %}
+          x: 130
+          "y": 128
+          size: 20
+          color: red
+        - type: icon
+          value: >
+            {% set tag3 = states('sensor.home_gewitterwahrscheinlichkeit_tag_3')
+            | int | round(0) %} {% if tag3 >= 1 and tag3 < 20 %}
+              arrow-down-thin-circle-outline
+            {% elif tag3 >= 20 and tag3 < 40 %}
+              arrow-bottom-right-thin-circle-outline
+            {% elif tag3 >= 40 and tag3 < 50 %}
+              arrow-right-thin-circle-outline
+            {% elif tag3 >= 50 and tag3 < 70 %}
+              arrow-top-right-thin-circle-outline
+            {% elif tag3 >= 75 %}
+              arrow-up-thin-circle-outline
+            {% else %}
+               check-circle-outline
+            {% endif %}
+          x: 160
+          "y": 128
+          size: 20
+          color: red
+        - type: text
+          value: "{{ states('sensor.home_gewitterwahrscheinlichkeit_tag_4') }} %"
+          font: ppb.ttf
+          x: 25
+          "y": 152
+          size: 20
+          color: red
+        - type: text
+          value: "{{ states('sensor.home_gewitterwahrscheinlichkeit_nacht_4') }} %"
+          font: ppb.ttf
+          x: 75
+          "y": 152
+          size: 20
+          color: red
+        - type: icon
+          value: >
+            {% set tag4 = states('sensor.home_gewitterwahrscheinlichkeit_tag_4')
+            | int | round(0) %} {% if tag4 >= 1 and tag4 < 20 %}
+              lightning-bolt-outline
+            {% elif tag4 >= 20 and tag4 < 40 %}
+              flash-outline
+            {% elif tag4 >= 40 and tag4 < 50 %}
+              weather-lightning-rainy
+            {% elif tag4 >= 50 and tag4 < 70 %}
+              flash-outline
+            {% elif tag4 >= 75 %}
+              flash-alert-outline
+            {% else %}
+               weather-cloudy
+            {% endif %}
+          x: 130
+          "y": 150
+          size: 20
+          color: red
+        - type: icon
+          value: >
+            {% set tag4 = states('sensor.home_gewitterwahrscheinlichkeit_tag_4')
+            | int | round(0) %} {% if tag4 >= 1 and tag4 < 20 %}
+              arrow-down-thin-circle-outline
+            {% elif tag4 >= 20 and tag4 < 40 %}
+              arrow-bottom-right-thin-circle-outline
+            {% elif tag4 >= 40 and tag4 < 50 %}
+              arrow-right-thin-circle-outline
+            {% elif tag4 >= 50 and tag4 < 70 %}
+              arrow-top-right-thin-circle-outline
+            {% elif tag4 >= 75 %}
+              arrow-up-thin-circle-outline
+            {% else %}
+               check-circle-outline
+            {% endif %}
+          color: red
+          x: 160
+          "y": 150
+          size: 20
+        - type: text
+          value: >-
+            {{ states('sensor.780105561c472b00_next_checkin') | as_timestamp() |
+            timestamp_custom('%H:%M') }} Uhr
+          font: ppb.ttf
+          x: 230
+          "y": 128
+          size: 20
+          color: red
+        - type: text
+          value: Updated
+          font: ppb.ttf
+          color: red
+          x: 235
+          "y": 145
+          size: 15
+        - type: text
+          value: >
+            {% set wahrnung = states('sensor.cape') | int %}  {% if wahrnung >=
+            1 and wahrnung < 100 %}
+              Keine Warnungen
+            {% elif wahrnung >= 300 and wahrnung < 1000 %}
+              Schauerbildung
+            {% elif wahrnung >= 1000 and wahrnung < 2000 %}
+              Hagelunwetter
+            {% elif wahrnung >= 2000 and wahrnung < 4000 %}
+              Heftige Gewitter
+            {% elif wahrnung >= 4001  %}
+              Schwere Gewitter          
+            {% else %}
+               Keine Infos
+            {% endif %}
+          font: ppb.ttf
+          color: red
+          x: 200
+          "y": 162
+          size: 12
+mode: single

@@ -23,6 +23,8 @@ Home-Assistant BLE Tags Yaml Scripts for OpenEpaperLink
     Sources only tested with Handshow 3.5 E-Tags.
       - 3.5-dwd-weather-warning.yaml
         Implementation from HACS Integration of DWD Weather Warning.
+      - 3.5-dwd-weather-lighting-warning.yaml
+        Implementation from HACS Integration of DWD Weather based.        
     Sources only tested with Solumn 4.2 E-Tags.
       - 4.2-flight-radar.yaml
         Implementation from HACS Integration of Flightradar24.
@@ -30,8 +32,7 @@ Home-Assistant BLE Tags Yaml Scripts for OpenEpaperLink
         https://github.com/AlexandrErohin/home-assistant-flightradar24?tab=readme-ov-file#flight
       - ha-template-sensors.yaml
         add template sensors to your HomeAssistant configuration.yaml or sensors.yaml
-
-
+        add 2 x template sensors CAPE and LiftedIndex to your HomeAssistant configuration.yaml or sensors.yaml
     # media
 
     The font is currently only required for the Accu Weather Script.

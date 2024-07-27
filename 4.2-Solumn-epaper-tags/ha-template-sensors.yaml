@@ -98,3 +98,20 @@
         {% else %}
           0
         {% endif %}
+
+    cape:
+      friendly_name: "CAPE"
+      value_template: >-
+        {% set t = states('sensor.nuernberg_temperatur') | float %}
+        {% set td = states('sensor.nuernberg_taupunkt') | float %}
+        {% set p = states('sensor.nuernberg_druck') | float %}
+        {% set cape = (t - td) * 0.5 * p %} 
+        {{ cape | round(2) }}
+    lifted_index:
+      friendly_name: "Lifted Index"
+      value_template: >-
+        {% set t = states('sensor.nuernberg_temperatur') | float %}
+        {% set td = states('sensor.nuernberg_taupunkt') | float %}
+        {% set p = states('sensor.nuernberg_druck') | float %}
+        {% set li = t - (td * 0.5) %} 
+        {{ li | round(2) }}
