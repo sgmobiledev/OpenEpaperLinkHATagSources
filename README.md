@@ -5,7 +5,10 @@ Home-Assistant BLE Tags Yaml Scripts for OpenEpaperLink
     # 1.54 Epaper-tags
     Sources only tested with SoluM-1-54 E-Tags.
         - 1.54-weather-wind-compass.yaml
-          Implementation from HACS Integration of Weather Cloudservice Wundergroundpws with my ecowitt weatherstation.    
+          Implementation from HACS Integration of Weather Cloudservice Wundergroundpws with my ecowitt weatherstation.
+        - 1.54-waste-collection-calender.yaml
+          Implementation from HACS Integration of Müllkalender 1.54 E-Tags Version.
+          This integration must config to your region for waste calender.
     # 2.9-Gicisky-epaper-tags
 
     Sources only tested with Gicisky BLE EPD BWR 2.9 E-Tags.
