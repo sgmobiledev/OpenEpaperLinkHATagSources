@@ -7,7 +7,7 @@ Home-Assistant BLE Tags Yaml Scripts for OpenEpaperLink
         - 1.54-weather-wind-compass.yaml
           Implementation from HACS Integration of Weather Cloudservice Wundergroundpws with my ecowitt weatherstation.
         - 1.54-waste-collection-calender.yaml
-<img alt="1.54-waste-collection-calender.png" src="images/1.54-waste-collection-calender.png" width="300"/>
+<img alt="1.54-waste-collection-calender.png" src="/images/1.54-waste-collections-calender.png" width="300"/>
           Implementation from HACS Integration of Müllkalender 1.54 E-Tags Version.
           This integration must config to your region for waste calender.
     # 2.9-Gicisky-epaper-tags
