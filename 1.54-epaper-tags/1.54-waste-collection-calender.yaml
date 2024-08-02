@@ -1,5 +1,5 @@
 alias: OpenEPaperlink_Muell_Mini
-description: Müllkalender Mini 1.54 Tags
+description: Müllkalender Mini 1.54
 trigger:
   - platform: time_pattern
     hours: /6
@@ -70,3 +70,73 @@ action:
               delete-outline
             {% else %}
                delete-sweep-outline
+            {% endif %}                  
+          x: 20
+          "y": 30
+          size: 40
+          color: black
+        - type: text
+          value: Gelber Sack
+          font: ppb.ttf
+          x: 70
+          "y": 20
+          size: 12
+        - type: text
+          value: "{{ states('sensor.gelbetonne') }}"
+          font: ppb.ttf
+          x: 90
+          "y": 70
+          size: 12
+        - type: icon
+          value: >
+            {% set gelbetonne_wert = states('sensor.gelbetonne') | string %} {%
+            if gelbetonne_wert == '1 Tage' %}
+              delete-alert-outline
+            {% elif gelbetonne_wert == '2 Tage' %}
+              delete-clock-outline
+            {% elif gelbetonne_wert == '3 Tage' %}
+              delete-empty-outline
+            {% elif gelbetonne_wert == '4 Tage' %}
+              delete-variant
+            {% elif gelbetonne_wert == '5 Tage' %}
+              delete-outline
+            {% else %}
+               delete-sweep-outline
+            {% endif %}                  
+          x: 95
+          "y": 30
+          size: 40
+          color: black
+        - type: text
+          value: Restmüll
+          font: ppb.ttf
+          x: 40
+          "y": 83
+          size: 12
+        - type: text
+          value: "{{ states('sensor.restabfall') }}"
+          font: ppb.ttf
+          x: 50
+          "y": 140
+          size: 12
+        - type: icon
+          value: >
+            {% set restabfall_wert = states('sensor.restabfall') | string %} {%
+            if restabfall_wert == '1 Tage' %}
+              delete-alert-outline
+            {% elif restabfall_wert == '2 Tage' %}
+              delete-clock-outline
+            {% elif restabfall_wert == '3 Tage' %}
+              delete-empty-outline
+            {% elif restabfall_wert == '4 Tage' %}
+              delete-variant
+            {% elif restabfall_wert == '5 Tage' %}
+              delete-outline
+            {% else %}
+               delete-sweep-outline
+            {% endif %}                  
+          x: 50
+          "y": 95
+          size: 40
+          color: black
+mode: single
