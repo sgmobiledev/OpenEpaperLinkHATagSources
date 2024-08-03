@@ -1,0 +1,150 @@
+alias: OpenEPaperLink_OpenUV_Mini
+description: OpenUV Mini 1.54
+trigger:
+  - platform: time_pattern
+    hours: /3
+condition:
+  - condition: time
+    after: "06:00:00"
+    before: "20:00:00"
+    weekday:
+      - sat
+      - fri
+      - thu
+      - wed
+      - tue
+      - mon
+      - sun
+action:
+  - service: open_epaper_link.drawcustom
+    target:
+      entity_id:
+        - open_epaper_link.000002a961e63418
+    data:
+      background: white
+      rotate: 0
+      payload:
+        - type: text
+          value: "{{ 'OpenUV-Warnung' }}"
+          font: ppb.ttf
+          x: 2
+          "y": 2
+          size: 14
+          color: red
+        - type: rectangle
+          x_start: 2
+          x_end: 152
+          y_start: 14
+          y_end: 145
+          width: 2
+          fill: null
+          outline: black
+        - type: rectangle
+          x_start: 2
+          x_end: 152
+          y_start: 80
+          y_end: 145
+          width: 2
+          fill: null
+          outline: black
+        - type: text
+          value: Ozonwert
+          font: ppb.ttf
+          x: 10
+          "y": 25
+          size: 12
+        - type: icon
+          value: >
+            {% set ozon_wert = states('sensor.openuv_aktueller_ozonwert') |
+            float %}  {% if ozon_wert >= 300.0 %}
+               earth-arrow-right
+            {% else %}
+               earth-off
+            {% endif %}
+          x: 100
+          "y": 20
+          size: 50
+          color: black
+        - type: text
+          value: >
+            {% set ozone_du = states('sensor.openuv_aktueller_ozonwert') | float
+            %} {{ (ozone_du) | round(1) }} DU
+          font: ppb.ttf
+          x: 10
+          "y": 60
+          size: 14
+        - type: text
+          value: UV-Index
+          font: ppb.ttf
+          x: 10
+          "y": 90
+          size: 12
+        - type: icon
+          value: >
+            {% set uv_wert = states('sensor.openuv_aktueller_uv_wert') | string
+            %} {% if uv_wert == 'low' %}
+              alpha-l-circle-outline
+            {% elif uv_wert == 'moderate' %}
+              alpha-m-circle-outline
+            {% elif uv_wert == 'high' %}
+              alpha-h-circle-outline
+            {% elif uv_wert == 'very_high' %}
+              alpha-v-circle-outline
+            {% elif uv_wert == 'extreme' %}
+              alpha-w-circle-outline
+            {% else %}
+               info
+            {% endif %}
+          x: 5
+          "y": 100
+          size: 40
+          color: black
+        - type: text
+          value: >-
+            {{ states('sensor.openuv_aktueller_uv_index') | float | round(0) |
+            string }}
+          font: ppb.ttf
+          x: 50
+          "y": 110
+          size: 28
+        - type: icon
+          value: >
+            {% set uv_index = states('sensor.openuv_aktueller_uv_index') | float
+            | round(0) %} {% if uv_index >= 1 and uv_index < 3 %}
+              sun-snowflake-variant
+            {% elif uv_index >= 3 and uv_index < 6 %}
+              weather-sunny
+            {% elif uv_index >= 6 and uv_index < 8 %}
+              sun-thermometer
+            {% elif uv_index >= 8 and uv_index < 11 %}
+              white-balance-sunny
+            {% elif uv_index == 11 %}
+              weather-sunny-alert
+            {% else %}
+               info
+            {% endif %}
+          x: 65
+          "y": 100
+          size: 40
+          color: red
+        - type: icon
+          value: >
+            {% set uv_index = states('sensor.openuv_aktueller_uv_index') | float
+            | round(0) %} {% if uv_index >= 1 and uv_index < 3 %}
+              emoticon-cool-outline
+            {% elif uv_index >= 3 and uv_index < 6 %}
+              emoticon-neutral-outline
+            {% elif uv_index >= 6 and uv_index < 8 %}
+              emoticon-confused-outline
+            {% elif uv_index >= 8 and uv_index < 11 %}
+              emoticon-sad-outline
+            {% elif uv_index == 11 %}
+              emoticon-frown-outline
+            {% else %}
+               crosshairs-question
+            {% endif %}
+          x: 93
+          "y": 82
+          size: 60
+          color: red
+mode: single

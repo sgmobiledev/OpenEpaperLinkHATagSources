@@ -13,6 +13,11 @@ Home-Assistant BLE Tags Yaml Scripts for OpenEpaperLink
 ![Example of the Yaml script!](/images/1.54-waste-collections-calender.png)
       Implementation from HACS Integration of Müllkalender 1.54 E-Tags Version.
       This integration must config to your region for waste calender.
+
+>    - *1.54-openuvindex_mini.yaml*
+![Example of the Yaml script!](/images/1.54.openuvindex_mini.png)
+      Implementation from HACS Integration OpenUV 1.54 E-Tags Version.
+      This integration must config to your region acording documentation.      
 ### 2.13-Gicisky-epaper-tags
 >- *2.13.dwd-pollen-warning.yaml*
 ![Example of the Yaml script!](/images/2.13.dwd-pollenflug.jpg)        
