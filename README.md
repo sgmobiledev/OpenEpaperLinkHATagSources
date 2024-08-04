@@ -18,6 +18,12 @@ Home-Assistant BLE Tags Yaml Scripts for OpenEpaperLink
 ![Example of the Yaml script!](/images/1.54.openuvindex_mini.png)
       Implementation from HACS Integration OpenUV 1.54 E-Tags Version.
       This integration must config to your region acording documentation.      
+
+>    - *1.54-ecowitt-wh51-soil.yaml*
+![Example of the Yaml script!](/images/1.54.ecowitt_wh51_soil_mini.png)
+      Implementation from Ecowitt-API for WH51 Sensor for 1.54 E-Tags Version.
+      This integration must config sensors in ha-template-sensor.yaml or configuration.yaml .      
+
 ### 2.13-Gicisky-epaper-tags
 >- *2.13.dwd-pollen-warning.yaml*
 ![Example of the Yaml script!](/images/2.13.dwd-pollenflug.jpg)        

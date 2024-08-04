@@ -115,3 +115,92 @@
         {% set p = states('sensor.nuernberg_druck') | float %}
         {% set li = t - (td * 0.5) %} 
         {{ li | round(2) }}
+     #-----Ecowitt PWS via their API-----
+- platform: rest
+  name: pws
+  json_attributes:
+    - code
+    - data
+    - msg
+    - time
+  resource: https://api.ecowitt.net/api/v3/device/real_time?application_key=!secret_application_key&api_key=!secret_api_key&mac=!secret_mac&call_back=all
+  #scan_interval: 10
+  method: GET
+  value_template: "OK"
+- platform: template
+  sensors:
+    pws_outdoor_temp:
+      unit_of_measurement: "ºC"
+      value_template: "{{ ((states.sensor.pws.attributes.data.outdoor.temperature.value|float - 32) * 5 / 9)|round(1)}}"
+    pws_dew_point:
+      unit_of_measurement: "ºC"
+      value_template: "{{ ((states.sensor.pws.attributes.data.outdoor.dew_point.value|float - 32) * 5 / 9)|round(1)}}"
+    pws_feels_like:
+      unit_of_measurement: "ºC"
+      value_template: "{{ ((states.sensor.pws.attributes.data.outdoor.feels_like.value|float - 32) * 5 / 9)|round(1)}}"
+    pws_outdoor_humidity:
+      unit_of_measurement: "%"
+      value_template: "{{ (states.sensor.pws.attributes.data.outdoor.humidity.value|float)|round(0)}}"
+    pws_indoor_temp:
+      unit_of_measurement: "ºC"
+      value_template: "{{ ((states.sensor.pws.attributes.data.indoor.temperature.value|float - 32) * 5 / 9)|round(1)}}"
+    pws_indoor_humidity:
+      unit_of_measurement: "%"
+      value_template: "{{ (states.sensor.pws.attributes.data.indoor.humidity.value|float)|round(0)}}"
+    pws_abs_pressure:
+      unit_of_measurement: "hPa"
+      value_template: "{{ (states.sensor.pws.attributes.data.pressure.absolute.value|float * 33.863886666667)|round(1)}}"
+    pws_rel_pressure:
+      unit_of_measurement: "hPa"
+      value_template: "{{ (states.sensor.pws.attributes.data.pressure.relative.value|float * 33.863886666667)|round(1)}}"
+    pws_hourly_rain:
+      unit_of_measurement: "mm"
+      value_template: "{{ (states.sensor.pws.attributes.data.rainfall.hourly.value|float * 25.4)|round(0)}}"
+    pws_daily_rain:
+      unit_of_measurement: "mm"
+      value_template: "{{ (states.sensor.pws.attributes.data.rainfall.daily.value|float * 25.4)|round(0)}}"
+    pws_weekly_rain:
+      unit_of_measurement: "mm"
+      value_template: "{{ (states.sensor.pws.attributes.data.rainfall.weekly.value|float * 25.4)|round(0)}}"
+    pws_monthly_rain:
+      unit_of_measurement: "mm"
+      value_template: "{{ (states.sensor.pws.attributes.data.rainfall.monthly.value|float * 25.4)|round(0)}}"
+    pws_yearly_rain:
+      unit_of_measurement: "mm"
+      value_template: "{{ (states.sensor.pws.attributes.data.rainfall.yearly.value|float * 25.4)|round(0)}}"
+    pws_rainfall_rate:
+      unit_of_measurement: "mm/h"
+      value_template: "{{ (states.sensor.pws.attributes.data.rainfall.rain_rate.value|float * 25.4)|round(0)}}"
+    pws_solar:
+      unit_of_measurement: "W/m2"
+      value_template: "{{ (states.sensor.pws.attributes.data.solar_and_uvi.solar.value|float * 25.4)|round(0)}}"
+    pws_uvi:
+      unit_of_measurement: "W/m2"
+      value_template: "{{ (states.sensor.pws.attributes.data.solar_and_uvi.uvi.value|float)|round(0)}}"
+    pws_wind_direction:
+      unit_of_measurement: "º"
+      value_template: "{{ (states.sensor.pws.attributes.data.wind.wind_direction.value|float)|round(0)}}"
+    pws_wind_gust:
+      unit_of_measurement: "km/h"
+      value_template: "{{ (states.sensor.pws.attributes.data.wind.wind_gust.value|float * 1.609)|round(0)}}"
+    pws_wind_speed:
+      unit_of_measurement: "km/h"
+      value_template: "{{ (states.sensor.pws.attributes.data.wind.wind_speed.value|float * 1.609)|round(0)}}"
+    pws_soil_ch1:
+      unit_of_measurement: "%"
+      value_template: "{{ (states.sensor.pws.attributes.data.soil_ch1.soilmoisture.value|float)|round(0)}}"
+    pws_soil_ch2:
+      unit_of_measurement: "%"
+      value_template: "{{ (states.sensor.pws.attributes.data.soil_ch2.soilmoisture.value|float)|round(0)}}"
+    pws_soil_ch3:
+      unit_of_measurement: "%"
+      value_template: "{{ (states.sensor.pws.attributes.data.soil_ch3.soilmoisture.value|float)|round(0)}}"
+    pws_ad_ch1:
+      unit_of_measurement: ""
+      value_template: "{{ (states.sensor.pws.attributes.data.soil_ch1.ad.value|float)|round(0)}}"
+    pws_ad_ch2:
+      unit_of_measurement: ""
+      value_template: "{{ (states.sensor.pws.attributes.data.soil_ch2.ad.value|float)|round(0)}}"
+    pws_ad_ch3:
+      unit_of_measurement: ""
+      value_template: "{{ (states.sensor.pws.attributes.data.soil_ch3.ad.value|float)|round(0)}}"

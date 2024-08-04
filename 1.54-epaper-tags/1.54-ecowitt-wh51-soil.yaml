@@ -1,0 +1,191 @@
+alias: OpenEPaperLink_WH51_mini
+description: Ecowitt WH51 Bodenfeuchtesensor Mini 1.54
+trigger:
+  - platform: time_pattern
+    hours: /3
+condition:
+  - condition: time
+    after: "06:00:00"
+    before: "20:00:00"
+    weekday:
+      - sat
+      - fri
+      - thu
+      - wed
+      - tue
+      - mon
+      - sun
+action:
+  - service: open_epaper_link.drawcustom
+    target:
+      entity_id:
+        - open_epaper_link.0000ffffffff3416
+    data:
+      background: white
+      rotate: 0
+      payload:
+        - type: icon
+          value: flower-pollen-outline
+          x: 125
+          "y": 0
+          size: 30
+          color: black
+        - type: text
+          value: "{{ 'Ecowitt WH51' }}"
+          font: ppb.ttf
+          x: 20
+          "y": 2
+          size: 14
+          color: red
+        - type: text
+          value: Bodenfeuchte
+          font: ppb.ttf
+          x: 25
+          "y": 15
+          size: 12
+        - type: icon
+          value: >-
+            {% set soil_ch1 = states('sensor.pws_soil_ch1') | float %} {% if
+            soil_ch1 >= 50 %}
+               sprout-outline
+            {% elif soil_ch1 >= 40 and soil_ch1 <= 50 %}   
+               spray
+            {% elif soil_ch1 >= 20 and soil_ch1 <= 39 %}   
+               sprinkler-variant
+            {% elif soil_ch1 >= 1 and soil_ch1 <= 19 %}   
+               water-pump
+            {% else %}
+               water-alert-outline
+            {% endif %}
+          x: 5
+          "y": 25
+          size: 30
+          color: black
+        - type: icon
+          value: >-
+            {% set soil_ch2 = states('sensor.pws_soil_ch2') | float %} {% if
+            soil_ch2 >= 50 %}
+               sprout-outline
+            {% elif soil_ch2 >= 40 and soil_ch2 <= 50 %}   
+               spray
+            {% elif soil_ch2 >= 20 and soil_ch2 <= 39 %}   
+               sprinkler-variant
+            {% elif soil_ch2 >= 1 and soil_ch2 <= 19 %}   
+               water-pump
+            {% else %}
+               water-alert-outline
+            {% endif %}
+          x: 5
+          "y": 60
+          size: 30
+          color: black
+        - type: icon
+          value: >-
+            {% set soil_ch3 = states('sensor.pws_soil_ch3') | float %} {% if
+            soil_ch3 >= 50 %}
+               sprout-outline
+            {% elif soil_ch3 >= 40 and soil_ch3 <= 50 %}   
+               spray
+            {% elif soil_ch3 >= 20 and soil_ch3 <= 39 %}   
+               sprinkler-variant
+            {% elif soil_ch3 >= 1 and soil_ch3 <= 19 %}   
+               water-pump
+            {% else %}
+               water-alert-outline
+            {% endif %}
+          x: 5
+          "y": 100
+          size: 30
+          color: black
+        - type: text
+          value: >
+            {% set soil_ch1 = states('sensor.pws_soil_ch1') | float %} {{
+            (soil_ch1) | round(0) }} %
+          font: ppb.ttf
+          x: 40
+          "y": 35
+          size: 14
+        - type: text
+          value: >
+            {% set soil_ch2 = states('sensor.pws_soil_ch2') | float %} {{
+            (soil_ch2) | round(0) }} %
+          font: ppb.ttf
+          x: 40
+          "y": 70
+          size: 14
+        - type: text
+          value: >
+            {% set soil_ch3 = states('sensor.pws_soil_ch3') | float %} {{
+            (soil_ch3) | round(0) }} %
+          font: ppb.ttf
+          x: 40
+          "y": 110
+          size: 14
+          fill: red
+        - type: plot
+          x_start: 75
+          y_start: 30
+          x_end: 150
+          y_end: 55
+          ylegend:
+            position: right
+            color: red
+          yaxis:
+            tick_width: 1
+            grid: 10
+          data:
+            - entity: sensor.pws_soil_ch1
+              width: 1
+              joint: curve
+            - entity: sensor.pws_ad_ch1
+              color: red
+              width: 1
+              joint: curve
+        - type: plot
+          x_start: 75
+          y_start: 60
+          x_end: 150
+          y_end: 90
+          ylegend:
+            position: right
+            color: red
+          yaxis:
+            tick_width: 1
+            grid: 10
+          data:
+            - entity: sensor.pws_soil_ch2
+              width: 1
+              joint: curve
+            - entity: sensor.pws_ad_ch2
+              color: red
+              width: 1
+              joint: curve
+        - type: plot
+          x_start: 75
+          y_start: 95
+          x_end: 150
+          y_end: 130
+          ylegend:
+            position: right
+            color: red
+          yaxis:
+            tick_width: 1
+            grid: 10
+          data:
+            - entity: sensor.pws_soil_ch3
+              width: 1
+              joint: curve
+            - entity: sensor.pws_ad_ch3
+              color: red
+              width: 1
+              joint: curve
+        - type: text
+          value: >-
+            {{"Last Update: " + states('sensor.0000ffffffff3416_last_seen') |
+            as_timestamp() | timestamp_custom('%H:%M')}}
+          font: ppb.ttf
+          x: 15
+          "y": 135
+          size: 12
+          color: red
+mode: single
