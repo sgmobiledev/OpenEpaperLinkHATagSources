@@ -1,0 +1,134 @@
+alias: OpenEPaperLink_SmartAir_Mini
+description: Zigbee SmartAir Luftqualitätsensor
+trigger:
+  - platform: time_pattern
+    hours: /1
+condition:
+  - condition: time
+    after: "06:00:00"
+    before: "20:00:00"
+    weekday:
+      - sat
+      - fri
+      - thu
+      - wed
+      - tue
+      - mon
+      - sun
+action:
+  - target:
+      entity_id:
+        - open_epaper_link.000002a961ea3414
+    data:
+      background: white
+      rotate: 0
+      payload:
+        - type: icon
+          value: hvac
+          x: 120
+          "y": 0
+          size: 30
+          color: black
+        - type: text
+          value: "{{ 'SmartAir' }}"
+          font: ppb.ttf
+          x: 25
+          "y": 2
+          size: 14
+          color: red
+        - type: icon
+          value: molecule-co2
+          x: 5
+          "y": 25
+          size: 30
+          color: black
+        - type: icon
+          value: cloud-percent-outline
+          x: 5
+          "y": 60
+          size: 30
+          color: black
+        - type: icon
+          value: temperature-celsius
+          x: 5
+          "y": 100
+          size: 30
+          color: black
+        - type: text
+          value: >
+            {% set co2 = states('sensor.remote_smart_air_co2') | float %} {{
+            (co2) | round(0) }}
+          font: ppb.ttf
+          x: 40
+          "y": 35
+          size: 14
+        - type: text
+          value: >
+            {% set humidity = states('sensor.remote_smart_air_humidity') | float
+            %} {{ (humidity) | round(1) }}
+          font: ppb.ttf
+          x: 40
+          "y": 70
+          size: 14
+        - type: text
+          value: >
+            {% set temperature = states('sensor.remote_smart_air_temperature') |
+            float %} {{ (temperature) | round(1) }}
+          font: ppb.ttf
+          x: 40
+          "y": 110
+          size: 14
+          fill: red
+        - type: icon
+          value: periodic-table
+          x: 75
+          "y": 25
+          size: 30
+          color: black
+        - type: icon
+          value: bacteria-outline
+          x: 75
+          "y": 60
+          size: 30
+          color: black
+        - type: icon
+          value: virus-outline
+          x: 75
+          "y": 100
+          size: 30
+          color: black
+        - type: text
+          value: >
+            {% set formaldehyd = states('sensor.remote_smart_air_formaldehyd') |
+            float %} {{ (formaldehyd) | round(0) }}
+          font: ppb.ttf
+          x: 110
+          "y": 35
+          size: 14
+        - type: text
+          value: >
+            {% set pm25 = states('sensor.remote_smart_air_smart_air_pm25') |
+            float %} {{ (pm25) | round(1) }}
+          font: ppb.ttf
+          x: 110
+          "y": 70
+          size: 14
+        - type: text
+          value: >
+            {% set voc = states('sensor.remote_smart_air_smart_air_voc') | float
+            %} {{ (voc) | round(1) }}
+          font: ppb.ttf
+          x: 110
+          "y": 110
+          size: 14
+        - type: text
+          value: >-
+            {{"Last Update: " + states('sensor.000002a961ea3414_last_seen') |
+            as_timestamp() | timestamp_custom('%H:%M')}}
+          font: ppb.ttf
+          x: 15
+          "y": 135
+          size: 12
+          color: red
+    action: open_epaper_link.drawcustom
+mode: single

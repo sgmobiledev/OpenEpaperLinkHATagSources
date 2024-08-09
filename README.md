@@ -24,6 +24,12 @@ Home-Assistant BLE Tags Yaml Scripts for OpenEpaperLink
       Implementation from Ecowitt-API for WH51 Sensor for 1.54 E-Tags Version.
       This integration must config sensors in ha-template-sensor.yaml or configuration.yaml .      
 
+>    - *1.54-smart-air.yaml*
+![Example of the Yaml script!](/images/1.54-smart_air.png)
+      Implementation Zigbee Air Quality Sensor of SmartAir for 1.54 E-Tags Version.
+      This integration must config sensors in ha-template-sensor.yaml or configuration.yaml .      
+
+
 ### 2.13-Gicisky-epaper-tags
 >- *2.13.dwd-pollen-warning.yaml*
 ![Example of the Yaml script!](/images/2.13.dwd-pollenflug.jpg)        
