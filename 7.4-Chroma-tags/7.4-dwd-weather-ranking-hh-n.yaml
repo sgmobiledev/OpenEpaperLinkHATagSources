@@ -1,0 +1,341 @@
+alias: OpenEPaperLink_DWD_Weather_HH_N
+description: 7.4 Epaper Vergleich Hamburg/Nürnberg
+trigger:
+  - platform: time_pattern
+    hours: /2
+condition:
+  - condition: time
+    after: "06:00:00"
+    before: "20:00:00"
+    weekday:
+      - sat
+      - fri
+      - thu
+      - wed
+      - tue
+      - mon
+      - sun
+action:
+  - target:
+      entity_id:
+        - open_epaper_link.4467090c10116045
+    data:
+      background: white
+      rotate: 0
+      payload:
+        - type: dlimg
+          url: /media/hamburg.png
+          x: 10
+          "y": 10
+          xsize: 70
+          ysize: 70
+          rotate: 0
+          color: black
+        - type: dlimg
+          url: /media/nuernberg.png
+          x: 550
+          "y": 10
+          xsize: 70
+          ysize: 70
+          rotate: 0
+          color: black
+        - type: text
+          value: "{{ 'Wetterdaten' }}"
+          font: ppb.ttf
+          x: 175
+          "y": 2
+          size: 50
+          color: black
+        - type: text
+          value: >-
+            {{ "Wetterbericht: " +
+            states('sensor.hamburg_innenstadt_wetterbericht') + " / " +
+            states('sensor.nuernberg_wetterbericht') }}
+          font: ppb.ttf
+          x: 85
+          "y": 60
+          size: 14
+          color: black
+        - type: icon
+          value: temperature-celsius
+          x: 5
+          "y": 75
+          size: 40
+          color: black
+        - type: text
+          value: Temperatur
+          font: ppb.ttf
+          x: 40
+          "y": 90
+          size: 16
+        - type: text
+          value: >-
+            {{ states('sensor.hamburg_innenstadt_temperatur') | float | round(1)
+            }} °C
+          font: ppb.ttf
+          x: 167
+          "y": 90
+          size: 25
+        - type: icon
+          value: temperature-celsius
+          x: 5
+          "y": 110
+          size: 40
+          color: black
+        - type: text
+          value: Taupunkt
+          font: ppb.ttf
+          x: 40
+          "y": 125
+          size: 16
+        - type: text
+          value: >-
+            {{ states('sensor.hamburg_innenstadt_taupunkt') | float | round(1)
+            }} °C
+          font: ppb.ttf
+          x: 167
+          "y": 120
+          size: 25
+        - type: icon
+          value: gauge
+          x: 5
+          "y": 145
+          size: 37
+          color: black
+        - type: text
+          value: Druck
+          font: ppb.ttf
+          x: 40
+          "y": 160
+          size: 16
+        - type: text
+          value: >-
+            {{ states('sensor.hamburg_innenstadt_druck') | float | round(1) }}
+            hPa
+          font: ppb.ttf
+          x: 148
+          "y": 155
+          size: 25
+        - type: icon
+          value: water-percent
+          x: 5
+          "y": 180
+          size: 40
+          color: black
+        - type: text
+          value: Luftfeuchte
+          font: ppb.ttf
+          x: 40
+          "y": 195
+          size: 16
+        - type: text
+          value: >-
+            {{ states('sensor.hamburg_innenstadt_luftfeuchtigkeit') | float |
+            round(1) }} %
+          font: ppb.ttf
+          x: 167
+          "y": 190
+          size: 25
+        - type: icon
+          value: weather-pouring
+          x: 5
+          "y": 215
+          size: 37
+          color: black
+        - type: text
+          value: Regen
+          font: ppb.ttf
+          x: 42
+          "y": 225
+          size: 16
+        - type: text
+          value: >-
+            {{ states('sensor.hamburg_innenstadt_niederschlag') | float |
+            round(1) }} mm/h
+          font: ppb.ttf
+          x: 170
+          "y": 220
+          size: 25
+        - type: icon
+          value: weather-windy
+          x: 5
+          "y": 255
+          size: 37
+          color: black
+        - type: text
+          value: Wind
+          font: ppb.ttf
+          x: 40
+          "y": 265
+          size: 16
+        - type: text
+          value: >-
+            {{ states('sensor.hamburg_innenstadt_windgeschwindigkeit') | float |
+            round(1) }} km/h
+          font: ppb.ttf
+          x: 170
+          "y": 260
+          size: 25
+        - type: icon
+          value: compass-outline
+          x: 5
+          "y": 295
+          size: 37
+          color: black
+        - type: text
+          value: Windricht.
+          font: ppb.ttf
+          x: 40
+          "y": 310
+          size: 16
+        - type: text
+          value: >-
+            {{ states('sensor.hamburg_innenstadt_windrichtung') | float |
+            round(1) }} °
+          font: ppb.ttf
+          x: 160
+          "y": 305
+          size: 25
+        - type: text
+          value: >-
+            {{"Last Update: " + states('sensor.4467090c10116045_last_seen') |
+            as_timestamp() | timestamp_custom('%H:%M')}}
+          font: ppb.ttf
+          x: 15
+          "y": 370
+          size: 12
+          color: black
+        - type: icon
+          value: temperature-celsius
+          x: 370
+          "y": 75
+          size: 40
+          color: black
+        - type: text
+          value: Temperatur
+          font: ppb.ttf
+          x: 410
+          "y": 90
+          size: 16
+        - type: text
+          value: "{{ states('sensor.nuernberg_temperatur') | float | round(1) }} °C"
+          font: ppb.ttf
+          x: 510
+          "y": 90
+          size: 25
+        - type: icon
+          value: temperature-celsius
+          x: 370
+          "y": 110
+          size: 40
+          color: black
+        - type: text
+          value: Taupunkt
+          font: ppb.ttf
+          x: 410
+          "y": 125
+          size: 16
+        - type: text
+          value: "{{ states('sensor.nuernberg_taupunkt') | float | round(1) }} °C"
+          font: ppb.ttf
+          x: 510
+          "y": 120
+          size: 25
+        - type: icon
+          value: gauge
+          x: 370
+          "y": 145
+          size: 37
+          color: black
+        - type: text
+          value: Druck
+          font: ppb.ttf
+          x: 410
+          "y": 160
+          size: 16
+        - type: text
+          value: "{{ states('sensor.nuernberg_druck') | float | round(1) }} hPa"
+          font: ppb.ttf
+          x: 480
+          "y": 155
+          size: 25
+        - type: icon
+          value: water-percent
+          x: 370
+          "y": 180
+          size: 40
+          color: black
+        - type: text
+          value: Luftfeuchte
+          font: ppb.ttf
+          x: 410
+          "y": 195
+          size: 16
+        - type: text
+          value: >-
+            {{ states('sensor.nuernberg_luftfeuchtigkeit') | float | round(1) }}
+            %
+          font: ppb.ttf
+          x: 510
+          "y": 190
+          size: 25
+        - type: icon
+          value: weather-pouring
+          x: 370
+          "y": 215
+          size: 37
+          color: black
+        - type: text
+          value: Regen
+          font: ppb.ttf
+          x: 410
+          "y": 225
+          size: 16
+        - type: text
+          value: >-
+            {{ states('sensor.nuernberg_niederschlag') | float | round(1) }}
+            mm/h
+          font: ppb.ttf
+          x: 510
+          "y": 220
+          size: 25
+        - type: icon
+          value: weather-windy
+          x: 370
+          "y": 255
+          size: 37
+          color: black
+        - type: text
+          value: Wind
+          font: ppb.ttf
+          x: 410
+          "y": 265
+          size: 16
+        - type: text
+          value: >-
+            {{ states('sensor.nuernberg_windgeschwindigkeit') | float | round(1)
+            }} km/h
+          font: ppb.ttf
+          x: 510
+          "y": 260
+          size: 25
+        - type: icon
+          value: compass-outline
+          x: 370
+          "y": 295
+          size: 37
+          color: black
+        - type: text
+          value: Windricht.
+          font: ppb.ttf
+          x: 410
+          "y": 310
+          size: 16
+        - type: text
+          value: "{{ states('sensor.nuernberg_windrichtung') | float | round(1) }} °"
+          font: ppb.ttf
+          x: 510
+          "y": 305
+          size: 25
+    action: open_epaper_link.drawcustom
+mode: single

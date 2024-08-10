@@ -68,6 +68,14 @@ Home-Assistant BLE Tags Yaml Scripts for OpenEpaperLink
         Implementation from HACS Integration of Flightradar24.
         this ist automation script, you must changed for your usecae.
         https://github.com/AlexandrErohin/home-assistant-flightradar24?tab=readme-ov-file#flight
+
+### Chroma 7.4 E-Tags        
+#### Sources only tested with Chroma 7.5 E-Tags.
+>- *7.4-dwd-weather-ranking-hh-n.yaml*
+        Implementation from HACS Integration DWD Weather between Hamburg and Nürnberg.
+![Example of the Yaml script!](/images/chroma75_dwd_ranking.png)  
+
+# external sensor
 >- ha-template-sensors.yaml
         add template sensors to your HomeAssistant configuration.yaml or sensors.yaml
         add 2 x template sensors CAPE and LiftedIndex to your HomeAssistant configuration.yaml or sensors.yaml
@@ -83,6 +91,8 @@ Home-Assistant BLE Tags Yaml Scripts for OpenEpaperLink
  >   - (2.9")  296x128
  >   - (3.5")  384x184
  >   - (4.2")  400x300
+ >   - (7.4")  640x384
+ 
 ### Installation instructions
     In order to use the font in script, 
     the font file must be copied into the Home Assistant instance used under the following file folder.
