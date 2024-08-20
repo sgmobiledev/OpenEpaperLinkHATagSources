@@ -29,6 +29,11 @@ Home-Assistant BLE Tags Yaml Scripts for OpenEpaperLink
       Implementation Zigbee Air Quality Sensor of SmartAir for 1.54 E-Tags Version.
       This integration must config sensors in ha-template-sensor.yaml or configuration.yaml .      
 
+>    - *1.54-solar-rain-alert.yaml*
+![Example of the Yaml script!](/images/1.54-solar_rain_mini.jpg)
+      Implementation Zigbee Solarpanel based Sensor Rain Alerter for 1.54 E-Tags Version.
+      This integration must configured template Sensors from your zigbee or configuration.yaml.
+      In my usecase must rest template from zigbee instance from zigbeeToMqtt.      
 
 ### 2.13-Gicisky-epaper-tags
 >- *2.13.dwd-pollen-warning.yaml*

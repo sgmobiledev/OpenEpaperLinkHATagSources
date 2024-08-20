@@ -1,0 +1,120 @@
+alias: OpenEpaperLink_SolarRainAlert_Mini
+description: Zigbee Solar Regenmelder
+trigger:
+  - platform: time_pattern
+    hours: /1
+condition:
+  - condition: time
+    after: "06:00:00"
+    before: "20:00:00"
+    weekday:
+      - sat
+      - fri
+      - thu
+      - wed
+      - tue
+      - mon
+      - sun
+action:
+  - target:
+      entity_id:
+        - open_epaper_link.000002a9612a3418
+    data:
+      background: white
+      rotate: 0
+      payload:
+        - type: icon
+          value: weather-rainy
+          x: 125
+          "y": 0
+          size: 20
+          color: black
+        - type: text
+          value: "{{ 'Solar Rain Alert' }}"
+          font: ppb.ttf
+          x: 10
+          "y": 2
+          size: 14
+          color: red
+        - type: dlimg
+          url: /media/solar-rain-senor.png
+          x: 0
+          "y": 25
+          xsize: 120
+          ysize: 130
+          rotate: 0
+        - type: text
+          value: >-
+            {% set wahrnung =
+            states('sensor.remote_solar_rain_alerter_triggered') | string %}  {%
+            if wahrnung == 'off' %}
+               Kein Regen
+             {% else %}
+               Regen
+             {% endif %}
+          font: ppb.ttf
+          x: 20
+          "y": 25
+          size: 14
+          color: red
+        - type: icon
+          value: >
+            {{ 'weather-sunny' if
+            is_state('sensor.remote_solar_rain_alerter_triggered', 'off') else
+            'weather-rainy' }}
+          x: 100
+          "y": 30
+          size: 40
+          color: >
+            {{ 'black' if is_state('sensor.remote_solar_rain_alerter_triggered',
+            'off') else 'red' }}
+        - type: text
+          value: |
+            {{ states('sensor.remote_solar_rain_alerter_battery') }}%
+          font: ppb.ttf
+          x: 100
+          "y": 80
+          size: 12
+          color: red
+        - type: icon
+          value: >
+            {% set batterystatus =
+            states('sensor.remote_solar_rain_alerter_battery') | int %}  {% if
+            batterystatus >50 %}
+               battery-100
+             {% else %}
+               battery-50
+             {% endif %}
+          x: 120
+          "y": 70
+          size: 20
+          color: black
+        - type: text
+          value: >
+            {% set batterylow =
+            states('sensor.remote_solar_rain_alerter_battery_low') | string %} 
+            {% if batterylow == 'off' %}
+               OK
+             {% else %}
+               Solar
+             {% endif %}
+          font: ppb.ttf
+          x: 100
+          "y": 100
+          size: 12
+          color: red
+        - type: icon
+          value: >
+            {% set batterylow =
+            states('sensor.remote_solar_rain_alerter_battery_low') | string %} 
+            {% if batterylow == 'off' %}
+               battery-check
+             {% else %}
+               solar-power-variant-outline
+             {% endif %}
+          x: 120
+          "y": 100
+          size: 20
+          color: black
+    action: open_epaper_link.drawcustom
+mode: single
