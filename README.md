@@ -73,7 +73,10 @@ Home-Assistant BLE Tags Yaml Scripts for OpenEpaperLink
         Implementation from HACS Integration of Flightradar24.
         this ist automation script, you must changed for your usecae.
         https://github.com/AlexandrErohin/home-assistant-flightradar24?tab=readme-ov-file#flight
-
+>- *4.2-dwd-weather.yaml*
+        Implementation from HACS Integration of DWD Weather.
+        this ist automation script, you must changed for your usecae.
+        
 ### Chroma 7.4 E-Tags        
 #### Sources only tested with Chroma 7.5 E-Tags.
 >- *7.4-dwd-weather-ranking-hh-n.yaml*

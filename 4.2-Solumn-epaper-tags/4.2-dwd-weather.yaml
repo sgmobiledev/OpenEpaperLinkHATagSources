@@ -1,0 +1,855 @@
+alias: OpenEpaperlink_DWD_4_2
+description: OpenEpaperlink_DWD_4_2
+trigger:
+  - platform: time_pattern
+    hours: /3
+condition:
+  - condition: time
+    after: "06:00:00"
+    before: "20:00:00"
+    weekday:
+      - sat
+      - fri
+      - thu
+      - wed
+      - tue
+      - mon
+      - sun
+action:
+  - target:
+      entity_id:
+        - open_epaper_link.000001848840411d
+    action: open_epaper_link.drawcustom
+    data:
+      background: white
+      rotate: 0
+      payload:
+        - type: icon
+          value: >
+            {% set cond_moon = states('sensor.moon_phase') %} {% if cond_moon ==
+            'new_moon' %} moon-new {% elif cond_moon == 'full_moon' %} moon-full
+            {% else %} {{ "moon-" + cond_moon | replace("_", "-") }} {%endif%}
+          x: 3
+          "y": 4
+          size: 22
+          color: black
+        - type: icon
+          value: weather-{{ states('sensor.nuernberg_wetterzustand') | string }}
+          x: 3
+          "y": 5
+          size: 115
+          color: black
+        - type: text
+          value: "{{ states('sensor.nuernberg_temperatur') | round | int(0) }} °C"
+          font: ../GothamRnd-Bold.ttf
+          x: 62
+          "y": 138
+          size: 38
+          anchor: mm
+          color: >-
+            {{'black' if states('sensor.nuernberg_temperatur')  | round | int(0)
+            > 3 else 'red' }}
+        - type: icon
+          value: >-
+            {{ "%s" %
+            (["arrow-down","arrow-bottom-left","arrow-left","arrow-top-left","arrow-up","arrow-top-right","arrow-right",
+            "arrow-bottom-right","arrow-down"][(states('sensor.nuernberg_windrichtung')
+            | int /45) | round ]) }}
+          x: 3
+          "y": 155
+          size: 21
+          color: black
+        - type: icon
+          value: gauge
+          x: 3
+          "y": 175
+          size: 20
+          color: black
+        - type: icon
+          value: water-percent
+          x: 3
+          "y": 195
+          size: 20
+          color: black
+        - type: icon
+          value: cloud-percent-outline
+          x: 3
+          "y": 215
+          size: 20
+          color: black
+        - type: icon
+          value: thermometer-water
+          x: 3
+          "y": 235
+          size: 20
+          color: black
+        - type: icon
+          value: weather-sunset-up
+          x: 3
+          "y": 255
+          size: 20
+          color: black
+        - type: icon
+          value: weather-sunset-down
+          x: 3
+          "y": 275
+          size: 20
+          color: black
+        - type: text
+          value: "{{  states('sensor.nuernberg_windgeschwindigkeit') | round }} km/h"
+          font: ../GothamRnd-Bold.ttf
+          x: 118
+          "y": 165
+          size: 20
+          color: >-
+            {{'black' if states('sensor.nuernberg_windgeschwindigkeit') | int <
+            19 else 'red' }}
+          anchor: rm
+        - type: text
+          value: "{{ states('sensor.nuernberg_druck') | round }} hPa"
+          font: ../GothamRnd-Bold.ttf
+          x: 118
+          "y": 185
+          size: 20
+          color: black
+          anchor: rm
+        - type: text
+          value: "{{ states('sensor.nuernberg_luftfeuchtigkeit') | round }}%"
+          font: ../GothamRnd-Bold.ttf
+          x: 118
+          "y": 205
+          size: 20
+          color: black
+          anchor: rm
+        - type: text
+          value: "{{ states('sensor.nuernberg_bewolkungsgrad') | round }}%"
+          font: ../GothamRnd-Bold.ttf
+          x: 118
+          "y": 225
+          size: 20
+          color: black
+          anchor: rm
+        - type: text
+          value: "{{ states('sensor.nuernberg_taupunkt') }} °C"
+          font: ../GothamRnd-Bold.ttf
+          x: 118
+          "y": 245
+          size: 20
+          color: black
+          anchor: rm
+        - type: text
+          value: >-
+            {{ as_timestamp(state_attr("sun.sun", "next_rising")) |
+            timestamp_custom('%-H:%M Uhr') }}
+          font: ../GothamRnd-Bold.ttf
+          x: 118
+          "y": 265
+          size: 20
+          color: black
+          anchor: rm
+        - type: text
+          value: >-
+            {{ as_timestamp(state_attr("sun.sun", "next_setting")) |
+            timestamp_custom('%-H:%M Uhr') }}
+          font: ../GothamRnd-Bold.ttf
+          x: 118
+          "y": 285
+          size: 20
+          color: black
+          anchor: rm
+        - type: text
+          value: >-
+            {{ as_timestamp(state_attr("sensor.nuernberg_temperatur",
+            "data")[0].datetime) | timestamp_custom('%-H') }}
+          font: ../GothamRnd-Bold.ttf
+          x: 155
+          "y": 25
+          size: 18
+          color: black
+          anchor: mb
+        - type: text
+          value: >-
+            {{ as_timestamp(state_attr("sensor.nuernberg_temperatur",
+            "data")[1].datetime) | timestamp_custom('%-H') }}
+          font: ../GothamRnd-Bold.ttf
+          x: 225
+          "y": 25
+          size: 18
+          color: black
+          anchor: mb
+        - type: text
+          value: >-
+            {{ as_timestamp(state_attr("sensor.nuernberg_temperatur",
+            "data")[2].datetime) | timestamp_custom('%-H') }}
+          font: ../GothamRnd-Bold.ttf
+          x: 295
+          "y": 25
+          size: 18
+          color: black
+          anchor: mb
+        - type: text
+          value: >-
+            {{ as_timestamp(state_attr("sensor.nuernberg_temperatur",
+            "data")[3].datetime) | timestamp_custom('%-H') }}
+          font: ../GothamRnd-Bold.ttf
+          x: 365
+          "y": 25
+          size: 18
+          color: black
+          anchor: mb
+        - type: icon
+          value: >
+            {% set rain_scala =
+            state_attr("sensor.nuernberg_niederschlagswahrscheinlichkeit","data")[0].value
+            | int(0) | round(0) %} {% if rain_scala >= 1 and rain_scala < 10 %}
+              weather-sunny
+            {% elif rain_scala >= 11 and rain_scala < 20 %}
+              weather-cloudy
+            {% elif rain_scala >= 21 and rain_scala < 40 %}
+              weather-partly-rainy
+            {% elif rain_scala >= 41 and rain_scala < 60 %}
+              weather-rainy
+            {% elif rain_scala >= 61 %}
+              weather-pouring
+            {% else %}
+               info
+            {% endif %}
+          x: 125
+          "y": 25
+          size: 60
+          color: black
+        - type: icon
+          value: >-
+            {% set rain_scala =
+            state_attr("sensor.nuernberg_niederschlagswahrscheinlichkeit","data")[1].value
+            | int(0) | round(0) %} {% if rain_scala >= 1 and rain_scala < 10 %}
+              weather-sunny
+            {% elif rain_scala >= 11 and rain_scala < 20 %}
+              weather-cloudy
+            {% elif rain_scala >= 21 and rain_scala < 40 %}
+              weather-partly-rainy
+            {% elif rain_scala >= 41 and rain_scala < 60 %}
+              weather-rainy
+            {% elif rain_scala >= 61 %}
+              weather-pouring
+            {% else %}
+               info
+            {% endif %}
+          x: 195
+          "y": 25
+          size: 60
+          color: black
+        - type: icon
+          value: >-
+            {% set rain_scala =
+            state_attr("sensor.nuernberg_niederschlagswahrscheinlichkeit","data")[2].value
+            | int(0) | round(0) %} {% if rain_scala >= 1 and rain_scala < 10 %}
+              weather-sunny
+            {% elif rain_scala >= 11 and rain_scala < 20 %}
+              weather-cloudy
+            {% elif rain_scala >= 21 and rain_scala < 40 %}
+              weather-partly-rainy
+            {% elif rain_scala >= 41 and rain_scala < 60 %}
+              weather-rainy
+            {% elif rain_scala >= 61 %}
+              weather-pouring
+            {% else %}
+               info
+            {% endif %}
+          x: 265
+          "y": 25
+          size: 60
+          color: black
+        - type: icon
+          value: >-
+            {% set rain_scala =
+            state_attr("sensor.nuernberg_niederschlagswahrscheinlichkeit","data")[3].value
+            | int(0) | round(0) %} {% if rain_scala >= 1 and rain_scala < 10 %}
+              weather-sunny
+            {% elif rain_scala >= 11 and rain_scala < 20 %}
+              weather-cloudy
+            {% elif rain_scala >= 21 and rain_scala < 40 %}
+              weather-partly-rainy
+            {% elif rain_scala >= 41 and rain_scala < 60 %}
+              weather-rainy
+            {% elif rain_scala >= 61 %}
+              weather-pouring
+            {% else %}
+               info
+            {% endif %}
+          x: 335
+          "y": 25
+          size: 60
+          color: black
+        - type: text
+          value: >-
+            {{ state_attr("sensor.nuernberg_temperatur","data")[0].value |
+            round}} °C
+          font: ../GothamRnd-Bold.ttf
+          x: 155
+          "y": 90
+          size: 22
+          color: >-
+            {{'black' if
+            state_attr("sensor.nuernberg_temperatur","data")[0].value | int(0) >
+            3 else 'red' }}
+          anchor: mt
+        - type: text
+          value: >-
+            {{ state_attr("sensor.nuernberg_temperatur","data")[1].value |
+            round}} °C
+          font: ../GothamRnd-Bold.ttf
+          x: 225
+          "y": 90
+          size: 20
+          color: >-
+            {{'black' if
+            state_attr("sensor.nuernberg_temperatur","data")[1].value | int(0) >
+            3 else 'red' }}
+          anchor: mt
+        - type: text
+          value: >-
+            {{ state_attr("sensor.nuernberg_temperatur","data")[2].value |
+            round}} °C
+          font: ../GothamRnd-Bold.ttf
+          x: 295
+          "y": 90
+          size: 20
+          color: >-
+            {{'black' if
+            state_attr("sensor.nuernberg_temperatur","data")[2].value | int(0) >
+            3 else 'red' }}
+          anchor: mt
+        - type: text
+          value: >-
+            {{ state_attr("sensor.nuernberg_temperatur","data")[3].value |
+            round}} °C
+          font: ../GothamRnd-Bold.ttf
+          x: 365
+          "y": 90
+          size: 20
+          color: >-
+            {{'black' if
+            state_attr("sensor.nuernberg_temperatur","data")[3].value | int(0) >
+            3 else 'red' }}
+          anchor: mt
+        - type: icon
+          value: >-
+            {{ "%s" %
+            (["arrow-down","arrow-bottom-left","arrow-left","arrow-top-left","arrow-up","arrow-top-right","arrow-right",
+            "arrow-bottom-right","arrow-down"][(state_attr("sensor.nuernberg_windrichtung","data")[0].value
+            | int / 45) | round ]) }}
+          x: 135
+          "y": 107
+          size: 21
+          color: >-
+            {{'black' if
+            state_attr("sensor.nuernberg_windgeschwindigkeit","data")[0].value |
+            int < 19 else 'red' }}
+        - type: text
+          value: >-
+            {{
+            state_attr("sensor.nuernberg_windgeschwindigkeit","data")[0].value |
+            round }}
+          font: ../GothamRnd-Bold.ttf
+          x: 155
+          "y": 117
+          size: 18
+          color: >-
+            {{'black' if
+            state_attr("sensor.nuernberg_windgeschwindigkeit","data")[0].value |
+            int < 19 else 'red' }}
+          anchor: lm
+        - type: text
+          value: "{{ state_attr(\"sensor.nuernberg_niederschlag\",\"data\")[0].value }}mm"
+          font: ../GothamRnd-Bold.ttf
+          x: 141
+          "y": 136
+          size: 13
+          color: >-
+            {{'black' if
+            state_attr("sensor.nuernberg_niederschlag","data")[0].value | int <
+            4 else 'red' }}
+          anchor: lm
+        - type: icon
+          value: >-
+            {{ "%s" %
+            (["arrow-down","arrow-bottom-left","arrow-left","arrow-top-left","arrow-up","arrow-top-right","arrow-right",
+            "arrow-bottom-right","arrow-down"][(state_attr("sensor.nuernberg_windrichtung","data")[1].value
+            | int / 45) | round ]) }}
+          x: 205
+          "y": 107
+          size: 21
+          color: >-
+            {{'black' if
+            state_attr("sensor.nuernberg_windgeschwindigkeit","data")[1].value |
+            int < 19 else 'red' }}
+        - type: text
+          value: >-
+            {{
+            state_attr("sensor.nuernberg_windgeschwindigkeit","data")[1].value |
+            round }}
+          font: ../GothamRnd-Bold.ttf
+          x: 225
+          "y": 117
+          size: 18
+          color: >-
+            {{'black' if
+            state_attr("sensor.nuernberg_windgeschwindigkeit","data")[1].value |
+            int < 19 else 'red' }}
+          anchor: lm
+        - type: icon
+          value: water
+          x: 194
+          "y": 125
+          size: 20
+          color: black
+        - type: text
+          value: "{{ state_attr(\"sensor.nuernberg_niederschlag\",\"data\")[1].value }}mm"
+          font: ../GothamRnd-Bold.ttf
+          x: 211
+          "y": 136
+          size: 13
+          color: >-
+            {{'black' if
+            state_attr("sensor.nuernberg_niederschlag","data")[1].value | int <
+            4 else 'red' }}
+          anchor: lm
+        - type: icon
+          value: >-
+            {{ "%s" %
+            (["arrow-down","arrow-bottom-left","arrow-left","arrow-top-left","arrow-up","arrow-top-right","arrow-right",
+            "arrow-bottom-right","arrow-down"][(state_attr("sensor.nuernberg_windrichtung","data")[2].value
+            | int / 45) | round ]) }}
+          x: 275
+          "y": 107
+          size: 21
+          color: >-
+            {{'black' if
+            state_attr("sensor.nuernberg_windgeschwindigkeit","data")[2].value |
+            int < 19 else 'red' }}
+        - type: text
+          value: >-
+            {{
+            state_attr("sensor.nuernberg_windgeschwindigkeit","data")[2].value |
+            round }}
+          font: ../GothamRnd-Bold.ttf
+          x: 295
+          "y": 117
+          size: 18
+          color: >-
+            {{'black' if
+            state_attr("sensor.nuernberg_windgeschwindigkeit","data")[2].value |
+            int < 19 else 'red' }}
+          anchor: lm
+        - type: icon
+          value: water
+          x: 264
+          "y": 125
+          size: 20
+          color: black
+        - type: text
+          value: "{{ state_attr(\"sensor.nuernberg_niederschlag\",\"data\")[2].value }}mm"
+          font: ../GothamRnd-Bold.ttf
+          x: 281
+          "y": 136
+          size: 13
+          color: >-
+            {{'black' if
+            state_attr("sensor.nuernberg_niederschlag","data")[2].value | int <
+            4 else 'red' }}
+          anchor: lm
+        - type: icon
+          value: >-
+            {{ "%s" %
+            (["arrow-down","arrow-bottom-left","arrow-left","arrow-top-left","arrow-up","arrow-top-right","arrow-right",
+            "arrow-bottom-right","arrow-down"][(state_attr("sensor.nuernberg_windrichtung","data")[3].value
+            | int / 45) | round ]) }}
+          x: 345
+          "y": 107
+          size: 21
+          color: >-
+            {{'black' if
+            state_attr("sensor.nuernberg_windgeschwindigkeit","data")[3].value |
+            int < 19 else 'red' }}
+        - type: text
+          value: >-
+            {{
+            state_attr("sensor.nuernberg_windgeschwindigkeit","data")[3].value |
+            round }}
+          font: ../GothamRnd-Bold.ttf
+          x: 365
+          "y": 117
+          size: 18
+          color: >-
+            {{'black' if
+            state_attr("sensor.nuernberg_windgeschwindigkeit","data")[3].value |
+            int < 19 else 'red' }}
+          anchor: lm
+        - type: icon
+          value: water
+          x: 334
+          "y": 125
+          size: 20
+          color: black
+        - type: text
+          value: "{{ state_attr(\"sensor.nuernberg_niederschlag\",\"data\")[3].value }}mm"
+          font: ../GothamRnd-Bold.ttf
+          x: 351
+          "y": 136
+          size: 13
+          color: >-
+            {{'black' if
+            state_attr("sensor.nuernberg_niederschlag","data")[3].value | int <
+            4 else 'red' }}
+          anchor: lm
+        - type: text
+          value: >-
+            {% set remaining_hours = 23 -
+            (as_timestamp(state_attr("sensor.nuernberg_temperatur",
+            "data")[0].datetime) | timestamp_custom('%-H') | int) %} {{ "%s" %
+            (["SO","MO","DI","MI","DO","FR","SA"][as_timestamp(state_attr("sensor.nuernberg_temperatur",
+            "data")[remaining_hours].datetime) | timestamp_custom('%w') | int])
+            }}
+          font: ../GothamRnd-Bold.ttf
+          x: 148
+          "y": 178
+          size: 18
+          color: black
+          anchor: mb
+        - type: text
+          value: >-
+            {% set remaining_hours = 23 -
+            (as_timestamp(state_attr("sensor.nuernberg_temperatur",
+            "data")[1].datetime) | timestamp_custom('%-H') | int) %} {{ "%s" %
+            (["SO","MO","DI","MI","DO","FR","SA"][as_timestamp(state_attr("sensor.nuernberg_temperatur",
+            "data")[remaining_hours+24].datetime) | timestamp_custom('%w') |
+            int]) }}
+          font: ../GothamRnd-Bold.ttf
+          x: 204
+          "y": 178
+          size: 18
+          color: black
+          anchor: mb
+        - type: text
+          value: >-
+            {% set remaining_hours = 23 -
+            (as_timestamp(state_attr("sensor.nuernberg_temperatur",
+            "data")[2].datetime) | timestamp_custom('%-H') | int) %} {{ "%s" %
+            (["SO","MO","DI","MI","DO","FR","SA"][as_timestamp(state_attr("sensor.nuernberg_temperatur",
+            "data")[remaining_hours+48].datetime) | timestamp_custom('%w') |
+            int]) }}
+          font: ../GothamRnd-Bold.ttf
+          x: 260
+          "y": 178
+          size: 18
+          color: black
+          anchor: mb
+        - type: text
+          value: >-
+            {% set remaining_hours = 23 -
+            (as_timestamp(state_attr("sensor.nuernberg_temperatur",
+            "data")[3].datetime) | timestamp_custom('%-H') | int) %} {{ "%s" %
+            (["SO","MO","DI","MI","DO","FR","SA"][as_timestamp(state_attr("sensor.nuernberg_temperatur",
+            "data")[remaining_hours+72].datetime) | timestamp_custom('%w') |
+            int]) }}
+          font: ../GothamRnd-Bold.ttf
+          x: 316
+          "y": 178
+          size: 18
+          color: black
+          anchor: mb
+        - type: text
+          value: >-
+            {% set remaining_hours = 23 -
+            (as_timestamp(state_attr("sensor.nuernberg_temperatur",
+            "data")[4].datetime) | timestamp_custom('%-H') | int) %} {{ "%s" %
+            (["SO","MO","DI","MI","DO","FR","SA"][as_timestamp(state_attr("sensor.nuernberg_temperatur",
+            "data")[remaining_hours+96].datetime) | timestamp_custom('%w') |
+            int]) }}
+          font: ../GothamRnd-Bold.ttf
+          x: 372
+          "y": 178
+          size: 18
+          color: black
+          anchor: mb
+        - type: text
+          value: >-
+            {% set remaining_hours = 23 -
+            (as_timestamp(state_attr("sensor.nuernberg_temperatur",
+            "data")[0].datetime) | timestamp_custom('%-H') | int) %} {{
+            state_attr("sensor.nuernberg_temperatur","data")[23+remaining_hours].value
+            | round}}
+          font: ../GothamRnd-Bold.ttf
+          x: 147
+          "y": 234
+          size: 13
+          color: black
+          anchor: rt
+        - type: text
+          value: /
+          font: ../GothamRnd-Bold.ttf
+          x: 149
+          "y": 237
+          size: 14
+          color: black
+          anchor: mt
+        - type: text
+          value: >-
+            {% set remaining_hours = 23 -
+            (as_timestamp(state_attr("sensor.nuernberg_taupunkt",
+            "data")[0].datetime) | timestamp_custom('%-H') | int) %} {{
+            state_attr("sensor.nuernberg_taupunkt","data")[23+remaining_hours].value
+            | round}}
+          font: ../GothamRnd-Bold.ttf
+          x: 151
+          "y": 241
+          size: 13
+          color: black
+          anchor: lt
+        - type: text
+          value: >-
+            {% set remaining_hours = 48 -
+            (as_timestamp(state_attr("sensor.nuernberg_temperatur",
+            "data")[1].datetime) | timestamp_custom('%-H') | int) %} {{
+            state_attr("sensor.nuernberg_temperatur","data")[48+remaining_hours].value
+            | round}}
+          font: ../GothamRnd-Bold.ttf
+          x: 203
+          "y": 234
+          size: 13
+          color: black
+          anchor: rt
+        - type: text
+          value: /
+          font: ../GothamRnd-Bold.ttf
+          x: 205
+          "y": 237
+          size: 13
+          color: black
+          anchor: mt
+        - type: text
+          value: >-
+            {% set remaining_hours = 48 -
+            (as_timestamp(state_attr("sensor.nuernberg_taupunkt",
+            "data")[1].datetime) | timestamp_custom('%-H') | int) %} {{
+            state_attr("sensor.nuernberg_taupunkt","data")[48+remaining_hours].value
+            | round}}
+          font: ../GothamRnd-Bold.ttf
+          x: 207
+          "y": 241
+          size: 13
+          color: black
+          anchor: lt
+        - type: text
+          value: >-
+            {% set remaining_hours = 72 -
+            (as_timestamp(state_attr("sensor.nuernberg_temperatur",
+            "data")[2].datetime) | timestamp_custom('%-H') | int) %} {{
+            state_attr("sensor.nuernberg_temperatur","data")[72+remaining_hours].value
+            | round}}
+          font: ../GothamRnd-Bold.ttf
+          x: 259
+          "y": 234
+          size: 13
+          color: black
+          anchor: rt
+        - type: text
+          value: /
+          font: ../GothamRnd-Bold.ttf
+          x: 261
+          "y": 237
+          size: 13
+          color: black
+          anchor: mt
+        - type: text
+          value: >-
+            {% set remaining_hours = 72 -
+            (as_timestamp(state_attr("sensor.nuernberg_taupunkt",
+            "data")[2].datetime) | timestamp_custom('%-H') | int) %} {{
+            state_attr("sensor.nuernberg_taupunkt","data")[72+remaining_hours].value
+            | round}}
+          font: ../GothamRnd-Bold.ttf
+          x: 263
+          "y": 241
+          size: 13
+          color: black
+          anchor: lt
+        - type: text
+          value: >-
+            {% set remaining_hours = 96 -
+            (as_timestamp(state_attr("sensor.nuernberg_temperatur",
+            "data")[3].datetime) | timestamp_custom('%-H') | int) %} {{
+            state_attr("sensor.nuernberg_temperatur","data")[96+remaining_hours].value
+            | round}}
+          font: ../GothamRnd-Bold.ttf
+          x: 315
+          "y": 234
+          size: 13
+          color: black
+          anchor: rt
+        - type: text
+          value: /
+          font: ../GothamRnd-Bold.ttf
+          x: 317
+          "y": 237
+          size: 13
+          color: black
+          anchor: mt
+        - type: text
+          value: >-
+            {% set remaining_hours = 96 -
+            (as_timestamp(state_attr("sensor.nuernberg_taupunkt",
+            "data")[3].datetime) | timestamp_custom('%-H') | int) %} {{
+            state_attr("sensor.nuernberg_taupunkt","data")[96+remaining_hours].value
+            | round}}
+          font: ../GothamRnd-Bold.ttf
+          x: 319
+          "y": 241
+          size: 13
+          color: black
+          anchor: lt
+        - type: text
+          value: >-
+            {% set remaining_hours = 120 -
+            (as_timestamp(state_attr("sensor.nuernberg_temperatur",
+            "data")[4].datetime) | timestamp_custom('%-H') | int) %} {{
+            state_attr("sensor.nuernberg_temperatur","data")[120+remaining_hours].value
+            | round}}
+          font: ../GothamRnd-Bold.ttf
+          x: 371
+          "y": 234
+          size: 13
+          color: black
+          anchor: rt
+        - type: text
+          value: /
+          font: ../GothamRnd-Bold.ttf
+          x: 373
+          "y": 237
+          size: 13
+          color: black
+          anchor: mt
+        - type: text
+          value: >-
+            {% set remaining_hours = 120 -
+            (as_timestamp(state_attr("sensor.nuernberg_taupunkt",
+            "data")[4].datetime) | timestamp_custom('%-H') | int) %} {{
+            state_attr("sensor.nuernberg_taupunkt","data")[120+remaining_hours].value
+            | round}}
+          font: ../GothamRnd-Bold.ttf
+          x: 375
+          "y": 241
+          size: 13
+          color: black
+          anchor: lt
+        - type: icon
+          value: water
+          x: 124
+          "y": 274
+          size: 20
+          color: black
+        - type: text
+          value: >-
+            {% set remaining_hours = 23 -
+            (as_timestamp(state_attr("sensor.nuernberg_niederschlag",
+            "data")[0].datetime) | timestamp_custom('%-H') | int) %} {{
+            state_attr("sensor.nuernberg_niederschlag","data")[23+remaining_hours].value
+            | round}}
+          font: ../GothamRnd-Bold.ttf
+          x: 143
+          "y": 285
+          size: 14
+          color: black
+          anchor: lm
+        - type: icon
+          value: water
+          x: 180
+          "y": 274
+          size: 20
+          color: black
+        - type: text
+          value: >-
+            {% set remaining_hours = 48 -
+            (as_timestamp(state_attr("sensor.nuernberg_niederschlag",
+            "data")[1].datetime) | timestamp_custom('%-H') | int) %} {{
+            state_attr("sensor.nuernberg_niederschlag","data")[48+remaining_hours].value
+            | round}}
+          font: ../GothamRnd-Bold.ttf
+          x: 198
+          "y": 285
+          size: 14
+          color: black
+          anchor: lm
+        - type: icon
+          value: water
+          x: 236
+          "y": 274
+          size: 20
+          color: black
+        - type: text
+          value: >-
+            {% set remaining_hours = 72 -
+            (as_timestamp(state_attr("sensor.nuernberg_niederschlag",
+            "data")[2].datetime) | timestamp_custom('%-H') | int) %} {{
+            state_attr("sensor.nuernberg_niederschlag","data")[72+remaining_hours].value
+            | round}}
+          font: ../GothamRnd-Bold.ttf
+          x: 254
+          "y": 285
+          size: 14
+          color: black
+          anchor: lm
+        - type: icon
+          value: water
+          x: 292
+          "y": 274
+          size: 20
+          color: black
+        - type: text
+          value: >-
+            {% set remaining_hours = 96 -
+            (as_timestamp(state_attr("sensor.nuernberg_niederschlag",
+            "data")[3].datetime) | timestamp_custom('%-H') | int) %} {{
+            state_attr("sensor.nuernberg_niederschlag","data")[96+remaining_hours].value
+            | round}}
+          font: ../GothamRnd-Bold.ttf
+          x: 310
+          "y": 285
+          size: 14
+          color: black
+          anchor: lm
+        - type: icon
+          value: water
+          x: 348
+          "y": 274
+          size: 20
+          color: black
+        - type: text
+          value: >-
+            {% set remaining_hours = 120 -
+            (as_timestamp(state_attr("sensor.nuernberg_niederschlag",
+            "data")[4].datetime) | timestamp_custom('%-H') | int) %} {{
+            state_attr("sensor.nuernberg_niederschlag","data")[120+remaining_hours].value
+            | round}}
+          font: ../GothamRnd-Bold.ttf
+          x: 366
+          "y": 285
+          size: 14
+          color: black
+          anchor: lm
+        - type: line
+          fill: black
+          width: 1
+          x_start: 123
+          y_start: 10
+          x_end: 123
+          y_end: 290
+        - type: line
+          fill: black
+          width: 1
+          x_start: 135
+          y_start: 150
+          x_end: 390
+          y_end: 150
+mode: single
