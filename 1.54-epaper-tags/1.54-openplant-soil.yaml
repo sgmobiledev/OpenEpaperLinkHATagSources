@@ -1,0 +1,127 @@
+alias: OpenEPaperlink_SpathiphyllumFigaro_Mini
+description: Pflanzensensor 1.54
+trigger:
+  - platform: time_pattern
+    hours: /6
+condition:
+  - condition: time
+    after: "06:00:00"
+    before: "20:00:00"
+    weekday:
+      - sat
+      - fri
+      - thu
+      - wed
+      - tue
+      - mon
+      - sun
+action:
+  - target:
+      entity_id:
+        - open_epaper_link.000002A9602A3419
+    data:
+      background: white
+      rotate: 0
+      payload:
+        - type: icon
+          value: flower-pollen-outline
+          x: 125
+          "y": 0
+          size: 30
+          color: black
+        - type: text
+          value: "{{ 'Spathiphyllum' }}"
+          font: ppb.ttf
+          x: 20
+          "y": 2
+          size: 14
+          color: red
+        - type: text
+          value: Figaro
+          font: ppb.ttf
+          x: 20
+          "y": 15
+          size: 14
+        - type: icon
+          value: >-
+            {% set soil_ch1 =
+            states('sensor.ts0601_pflanze_5_bodenfeuchtigkeit') | float %} {% if
+            soil_ch1 >= states('number.ki_topf_max_soil_moisture') | float %}
+               water-alert-outline
+            {% elif soil_ch1 >= states('number.ki_topf_min_soil_moisture') |
+            float  and soil_ch1 <= states('number.ki_topf_max_soil_moisture') |
+            float %}   
+               flower-tulip-outline
+            {% else %}
+               sprinkler-variant
+            {% endif %}
+          x: 5
+          "y": 25
+          size: 30
+          color: black
+        - type: text
+          value: >
+            {% set soil_ch1 =
+            states('sensor.ts0601_pflanze_5_bodenfeuchtigkeit') | float %} {{
+            (soil_ch1) | round(0) }} %
+          font: ppb.ttf
+          x: 40
+          "y": 35
+          size: 14
+        - type: plot
+          x_start: 75
+          y_start: 30
+          x_end: 150
+          y_end: 55
+          ylegend:
+            position: right
+            color: red
+          yaxis:
+            tick_width: 1
+            grid: 10
+          data:
+            - entity: sensor.ts0601_pflanze_5_bodenfeuchtigkeit
+              width: 1
+              joint: curve
+        - type: text
+          value: Bodenfeuchtigkeit
+          font: ppb.ttf
+          x: 15
+          "y": 57
+          size: 12
+          color: red
+        - type: icon
+          value: >-
+            {% set soil_ch1 =
+            states('sensor.ts0601_pflanze_5_bodenfeuchtigkeit') | float %} {% if
+            soil_ch1 >= states('number.ki_topf_max_soil_moisture') | float %}
+               emoticon-neutral-outline 
+            {% elif soil_ch1 >= states('number.ki_topf_min_soil_moisture') |
+            float  and soil_ch1 <= states('number.ki_topf_max_soil_moisture') |
+            float %}   
+               emoticon-kiss-outline
+            {% else %}
+               emoticon-cry-outline
+            {% endif %}
+          x: 50
+          "y": 65
+          size: 60
+          color: black
+        - type: text
+          value: Status
+          font: ppb.ttf
+          x: 60
+          "y": 125
+          size: 12
+          color: red
+        - type: text
+          value: >-
+            {{"Last Update: " + states('sensor.000002A9602A3419_last_seen') |
+            as_timestamp() | timestamp_custom('%H:%M')}}
+          font: ppb.ttf
+          x: 15
+          "y": 135
+          size: 12
+          color: red
+    action: open_epaper_link.drawcustom
+mode: single
