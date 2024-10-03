@@ -36,7 +36,8 @@ Home-Assistant BLE Tags Yaml Scripts for OpenEpaperLink
       In my usecase must rest template from zigbee instance from zigbeeToMqtt.      
 
 >    - *1.54-openplant-soil.yaml*
-![Example of the Yaml script!](/images/1.54.openplant_soil_mini.png)
+![Example of the Yaml script!](/images/1.54-openplant-motion-soil.jpg)
+![Stand!](/images/1.54-openplant-stand.jpg)
       Implementation from zigbee-motion-soil based data and integration openplant for 1.54 E-Tags Version.
       This integration must config sensors in ha-template-sensor.yaml or configuration.yaml.
       I design Sensor and Plant Card for HA, my friend axel design a 3D Printer STL for stick to connect your E-Tag in plant.      
@@ -97,6 +98,8 @@ Home-Assistant BLE Tags Yaml Scripts for OpenEpaperLink
     The font is currently only required for the Accu Weather Script.
 # images
     Result on my existing devices.
+# stl
+    3D Printer Files for Openplant Stand(Stick)    
 ## Instructions and Informations
 
 ### Designed for display size:
