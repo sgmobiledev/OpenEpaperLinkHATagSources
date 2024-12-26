@@ -108,7 +108,7 @@ action:
           size: 16
           color: black
         - type: text
-          value: "{{ states('flightradar24_current_flight_airport_destination_city') }}"
+          value: "{{ states('sensor.flightradar24_current_flight_airport_destination_city') }}"
           x: 5
           max_width: 193
           "y": 50
