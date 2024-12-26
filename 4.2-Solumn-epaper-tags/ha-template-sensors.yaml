@@ -4,10 +4,10 @@
       friendly_name: "Aktueller Flug"
       value_template: >-
         {% set flights = state_attr('sensor.flightradar24_current_in_area', 'flights') %}
-        {% if flights %}
+        {% if flights is not none and flights | length > 0 %}
           {{ flights[0].flight_number }}
         {% else %}
-          Unbekannt
+          Unbek.   
         {% endif %}
     flightradar24_current_flight_aircraft_registration:
       friendly_name: "Flugzeug Register"
@@ -15,20 +15,26 @@
         {% set flights = state_attr('sensor.flightradar24_current_in_area', 'flights') %}
         {% if flights %}
           {{ flights[0].aircraft_registration }}
+        {% else %}
+          Unbek.   
         {% endif %}
     flightradar24_current_flight_airport_origin_country_code:
       friendly_name: "Flughafen(Abflugcode)"
       value_template: >-
         {% set flights = state_attr('sensor.flightradar24_current_in_area', 'flights') %}
-        {% if flights %}
+        {% if flights is not none and flights | length > 0 %}
           {{ flights[0].airport_origin_country_code }}
+        {% else %}
+          ---   
         {% endif %}
     flightradar24_current_flight_airport_destination_country_code:
       friendly_name: "Flughafen(Zielflugcode)"
       value_template: >-
         {% set flights = state_attr('sensor.flightradar24_current_in_area', 'flights') %}
-        {% if flights %}
+        {% if flights is not none and flights | length > 0 %}
           {{ flights[0].airport_destination_country_code }}
+        {% else %}
+          ---   
         {% endif %}
     flightradar24_current_flight_airport_origin_city:
       friendly_name: "Flughafen(Abflugcode)"
@@ -37,7 +43,7 @@
         {% if flights %}
           {{ flights[0].airport_origin_city }}
         {% else %}
-          Unbekannt
+          Unbek.
         {% endif %}
     flightradar24_current_flight_airport_destination_city:
       friendly_name: "Flughafen(Zielflugcode)"
@@ -46,13 +52,13 @@
         {% if flights %}
           {{ flights[0].airport_destination_city }}
         {% else %}
-          Unbekannt
+          Unbek.
         {% endif %}
     flightradar24_current_flight_time_scheduled_departure:
       friendly_name: "Abflug"
       value_template: >-
         {% set flights = state_attr('sensor.flightradar24_current_in_area', 'flights') %}
-        {% if flights %}
+        {% if flights is not none and flights | length > 0 %}
           {{ flights[0].time_scheduled_departure | timestamp_custom('%H:%M') }}
         {% else %}
           00:00
@@ -61,7 +67,7 @@
       friendly_name: "Ankunfszeit"
       value_template: >-
         {% set flights = state_attr('sensor.flightradar24_current_in_area', 'flights') %}
-        {% if flights %}
+        {% if flights is not none and flights | length > 0 %}
           {{ flights[0].time_scheduled_arrival | timestamp_custom('%H:%M') }}
         {% else %}
           00:00
@@ -70,7 +76,7 @@
       friendly_name: "Typ"
       value_template: >-
         {% set flights = state_attr('sensor.flightradar24_current_in_area', 'flights') %}
-        {% if flights %}
+        {% if flights is not none and flights | length > 0 %}
           {{ flights[0].aircraft_model }}
         {% else %}
           Keine Daten
@@ -79,26 +85,29 @@
       friendly_name: "Fluglinie Kurzbez"
       value_template: >-
         {% set flights = state_attr('sensor.flightradar24_current_in_area', 'flights') %}
-        {% if flights %}
+        {% if flights is not none and flights | length > 0 %}
           {{ flights[0].airline_short }}
+        {% else %}
+          Unbek.   
         {% endif %}
     flightradar24_current_airline_short:
       friendly_name: "Flugzeugname (kurz)"
       value_template: >-
         {% set flights = state_attr('sensor.flightradar24_current_in_area', 'flights') %}
-        {% if flights %}
+        {% if flights is not none and flights | length > 0 %}
           {{ flights[0].airline_short }}
+        {% else %}
+          Unbek.   
         {% endif %}
     flightradar24_current_in_area:
       friendly_name: "In Region"
       value_template: >-
         {% set flights = state_attr('sensor.flightradar24_current_in_area', 'flights') %}
-        {% if flights %}
+        {% if flights is not none and flights | length > 0 %}
           {{ flights }}
         {% else %}
           0
         {% endif %}
-
     cape:
       friendly_name: "CAPE"
       value_template: >-

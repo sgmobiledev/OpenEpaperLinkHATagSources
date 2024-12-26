@@ -1,0 +1,155 @@
+alias: OpenEPaperLink_Flightradar_mini
+description: Flightradar Mini 1.54
+triggers:
+  - event_type: flightradar24_entry
+    trigger: event
+conditions:
+  - condition: template
+    value_template: >
+      {% set value = states('sensor.flightradar24_current_flight_airline_short')
+      %} {{ value != 'unknown' }}
+action:
+  - service: open_epaper_link.drawcustom
+    target:
+      device_id: ddec28e9ade8b999e7ae96659830c0d2
+    data:
+      rotate: 0
+      dither: 2
+      ttl: 60
+      dry-run: false
+      background: white
+      payload:
+        - type: text
+          value: FH-Nürnberg
+          font: ppb.ttf
+          x: 5
+          "y": 0
+          size: 16
+          color: red
+        - type: icon
+          value: airport
+          x: 130
+          "y": 0
+          size: 20
+          color: red
+        - type: rectangle
+          x_start: 2
+          x_end: 152
+          y_start: 20
+          y_end: 152
+          width: 2
+          fill: null
+          outline: black
+        - type: rectangle
+          x_start: 2
+          x_end: 154
+          y_start: 80
+          y_end: 138
+          width: 2
+          fill: null
+          outline: black
+        - type: icon
+          value: shield-airplane
+          x: 4
+          "y": 110
+          size: 20
+          color: black
+        - type: text
+          value: >-
+            {{ states('sensor.flightradar24_current_flight_number') }}({{
+            states('sensor.flightradar24_current_flight_aircraft_registration') }})
+          font: ppb.ttf
+          x: 7
+          "y": 90
+          size: 15
+          color: black
+        - type: text
+          value: "{{ states('sensor.flightradar24_current_airline_short') }}"
+          font: ppb.ttf
+          x: 22
+          "y": 114
+          size: 15
+          color: red
+        - type: text
+          value: "{{ states('sensor.flightradar24_current_flight_airport_origin_city') }}"
+          x: 5
+          max_width: 193
+          "y": 24
+          size: 12
+          color: black
+        - type: text
+          value: >-
+            {{
+            states('sensor.flightradar24_current_flight_time_scheduled_departure')
+            }}
+          x: 40
+          max_width: 193
+          "y": 38
+          size: 12
+        - type: icon
+          value: airplane-takeoff
+          x: 10
+          "y": 35
+          size: 14
+          color: black
+        - type: text
+          value: >-
+            {{
+            states('sensor.flightradar24_current_flight_airport_origin_country_code')
+            }}
+          x: 90
+          "y": 30
+          size: 20
+          color: black
+        - type: icon
+          value: flag-variant-outline
+          x: 75
+          "y": 30
+          size: 16
+          color: black
+        - type: text
+          value: "{{ states('flightradar24_current_flight_airport_destination_city') }}"
+          x: 5
+          max_width: 193
+          "y": 50
+          size: 12
+          color: black
+        - type: text
+          value: >-
+            {{ states('sensor.flightradar24_current_flight_time_scheduled_arrival')
+            }}
+          x: 40
+          max_width: 193
+          "y": 65
+          size: 12
+        - type: icon
+          value: airplane-landing
+          x: 10
+          "y": 65
+          size: 14
+          color: black
+        - type: text
+          value: >-
+            {{
+            states('sensor.flightradar24_current_flight_airport_destination_country_code')
+            }}
+          x: 90
+          "y": 60
+          size: 20
+          color: black
+        - type: icon
+          value: flag-variant-outline
+          x: 75
+          "y": 60
+          size: 16
+          color: black
+        - type: text
+          value: >-
+            {{"Last Update: " + states('sensor.000002a95fac341b_last_seen_2') |
+            as_timestamp() | timestamp_custom('%H:%M')}}
+          font: ppb.ttf
+          x: 15
+          "y": 140
+          size: 12
+          color: red
+mode: single

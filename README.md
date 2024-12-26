@@ -41,6 +41,11 @@ Home-Assistant BLE Tags Yaml Scripts for OpenEpaperLink
       Implementation from zigbee-motion-soil based data and integration openplant for 1.54 E-Tags Version.
       This integration must config sensors in ha-template-sensor.yaml or configuration.yaml.
       I design Sensor and Plant Card for HA, my friend axel design a 3D Printer STL for stick to connect your E-Tag in plant.      
+>    - *1.54-flightradar.yaml*
+![Example of the Yaml script!](/images/1.54.flightradar.jpg)
+      Implementation from flightradar data from nuernberg airport based data and integration flightradar for 1.54 E-Tags Version.
+      This integration must config sensors in ha-template-sensor.yaml or configuration.yaml.
+      I design Sensors and Yaml for HA.      
 
 ### 2.13-Gicisky-epaper-tags
 >- *2.13.dwd-pollen-warning.yaml*
