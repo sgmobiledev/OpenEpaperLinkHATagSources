@@ -95,6 +95,12 @@ Home-Assistant BLE Tags Yaml Scripts for OpenEpaperLink
         Implementation from HACS Integration DWD Weather between Hamburg and Nürnberg.
 ![Example of the Yaml script!](/images/chroma75_dwd_ranking.png)  
 
+### Hanshow 7.5 E-Tags        
+#### Sources only tested with Hanshow 7.5 E-Tags.
+>- *7.5-pws-weather.yaml*
+        Implementation from HACS Integration Ecowitt-PWS Weather Nürnberg.
+![Example of the Yaml script!](/images/7.5_hanshow_PWS.jpg)  
+
 # external sensor
 >- ha-template-sensors.yaml
         add template sensors to your HomeAssistant configuration.yaml or sensors.yaml
@@ -114,6 +120,8 @@ Home-Assistant BLE Tags Yaml Scripts for OpenEpaperLink
  >   - (3.5")  384x184
  >   - (4.2")  400x300
  >   - (7.4")  640x384
+ >   - (7.5")  800x480
+  
  
 ### Installation instructions
     In order to use the font in script, 

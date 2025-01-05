@@ -1,0 +1,68 @@
+alias: OpenEpaperlink_PWS_7_5
+description: OpenEpaperlink_PWS_HS_7.5
+triggers:
+  - hours: /2
+    trigger: time_pattern
+conditions:
+  - condition: time
+    after: "06:00:00"
+    before: "20:00:00"
+    weekday:
+      - sat
+      - fri
+      - thu
+      - wed
+      - tue
+      - mon
+      - sun
+actions:
+  - target:
+      device_id:
+        - e0220030fd0771310eb39eec537638b2
+    action: open_epaper_link.drawcustom
+    data:
+      background: white
+      rotate: 0
+      dither: 2
+      ttl: 60
+      dry-run: false
+      payload:
+        - type: text
+          value: >-
+            {{"Last Update: " + states('sensor.62509f3b23f1c625_last_seen_2') |
+            as_timestamp() | timestamp_custom('%H:%M')}}
+          font: ppb.ttf
+          x: 15
+          "y": 10
+          size: 20
+          color: red
+        - type: line
+          x_start: 0
+          x_end: 800
+          y_start: 31
+          y_end: 31
+          width: 1
+          fill: black
+        - type: text
+          value: "{{\"Windböen\"}}"
+          font: ppb.ttf
+          x: 30
+          "y": 40
+          size: 20
+          color: black
+        - type: text
+          value: "{{\"Windgeschwindigkeit\"}}"
+          font: ppb.ttf
+          x: 160
+          "y": 40
+          size: 20
+          color: black
+        - type: text
+          value: "{{\"Innen Temperatur\"}}"
+          font: ppb.ttf
+          x: 550
+          "y": 40
+          size: 20
+          color: black
+        - type: text
+          value: "{{states('sensor.pws_wind_gust')}}"
