@@ -58,6 +58,12 @@ Home-Assistant BLE Tags Yaml Scripts for OpenEpaperLink
 
 >- *2.13-hochwasserportal-pegelstaende.yaml*
         Implementation from HACS Integration of Hochwasserportal Service.
+### 2.2-SoluM - E-Tags
+#### Sources only tested with SoluM 2.2 E-Tags.
+>- *2.2-openplant-soil.yaml*
+![Example of the Yaml script!](/images/2.2.openplant-soil-soluM.jpg)        
+        Implementation from HACS Integration of Openplant.
+
 ### 2.9-Gicisky - E-Tags
 #### Sources only tested with Gicisky BLE EPD BWR 2.9 E-Tags.
 >- *2.9-accu-weather.yaml*

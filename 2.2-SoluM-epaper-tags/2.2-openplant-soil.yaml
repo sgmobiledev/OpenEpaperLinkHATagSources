@@ -1,0 +1,202 @@
+alias: OpenEPaperLink_HatioraGaertneri
+description: Openplant Sensor
+triggers:
+  - hours: /6
+    trigger: time_pattern
+conditions:
+  - condition: time
+    after: "06:00:00"
+    before: "20:00:00"
+    weekday:
+      - sat
+      - fri
+      - thu
+      - wed
+      - tue
+      - mon
+      - sun
+actions:
+  - target:
+      device_id: 694799c95ff0b707df8bf015c2cc27b0
+    data:
+      rotate: 270
+      dither: 2
+      ttl: 60
+      dry-run: false
+      background: white
+      payload:
+        - type: icon
+          value: flower-tulip-outline
+          x: 0
+          "y": 5
+          size: 15
+          color: black
+        - type: text
+          value: Hatiora
+          font: ppb.ttf
+          x: 20
+          "y": 5
+          size: 15
+        - type: icon
+          value: water-sync
+          x: 0
+          "y": 26
+          size: 20
+          color: black
+        - type: progress_bar
+          x_start: 16
+          y_start: 30
+          x_end: 100
+          y_end: 45
+          fill: b
+          outline: black
+          width: 1
+          progress: >-
+            {{ states('sensor.ts0601_pflanze_10_bodenfeuchtigkeit') | round |
+            int(0) }}
+          show_percentage: true
+        - type: icon
+          value: water-percent
+          x: 0
+          "y": 46
+          size: 20
+          color: black
+        - type: progress_bar
+          x_start: 16
+          y_start: 48
+          x_end: 100
+          y_end: 65
+          fill: b
+          outline: black
+          width: 1
+          progress: >-
+            {{ states('sensor.sonoff_snzb_02d_pflanzen_luftfeuchtigkeit_2') |
+            round | int(0) }}
+          show_percentage: true
+        - type: icon
+          value: brightness-6
+          x: 0
+          "y": 66
+          size: 18
+          color: black
+        - type: text
+          value: >
+            {% set lux =
+            states('sensor.lumi_lumi_sen_ill_agl01_beleuchtungsstarke') | float
+            %} {{ (lux) | round(1) }} lx
+          font: ppb.ttf
+          x: 18
+          "y": 68
+          size: 14
+          fill: red
+        - type: icon
+          value: thermometer
+          x: 0
+          "y": 82
+          size: 20
+          color: black
+        - type: text
+          value: >
+            {% set temp = states('sensor.ts0601_pflanze_10_temperatur') | float
+            %} {{ (temp) | round(1) }} °C
+          font: ppb.ttf
+          x: 18
+          "y": 86
+          size: 14
+          fill: red
+        - type: line
+          x_start: 1
+          x_end: 100
+          y_start: 25
+          y_end: 25
+          width: 1
+          fill: black
+        - type: line
+          x_start: 1
+          x_end: 100
+          y_start: 102
+          y_end: 102
+          width: 1
+          fill: black
+        - type: icon
+          value: water-sync
+          x: 0
+          "y": 103
+          size: 20
+          color: black
+        - type: progress_bar
+          x_start: 16
+          y_start: 105
+          x_end: 100
+          y_end: 120
+          fill: b
+          outline: black
+          width: 1
+          progress: >-
+            {{ states('sensor.ts0601_pflanze_11_bodenfeuchtigkeit') | round |
+            int(0) }}
+          show_percentage: true
+        - type: icon
+          value: water-percent
+          x: 0
+          "y": 121
+          size: 20
+          color: black
+        - type: progress_bar
+          x_start: 16
+          y_start: 123
+          x_end: 100
+          y_end: 138
+          fill: b
+          outline: black
+          width: 1
+          progress: >-
+            {{ states('sensor.sonoff_snzb_02d_pflanzen_luftfeuchtigkeit_2') |
+            round | int(0) }}
+          show_percentage: true
+        - type: icon
+          value: thermometer
+          x: 0
+          "y": 140
+          size: 20
+          color: black
+        - type: text
+          value: >
+            {% set temp = states('sensor.ts0601_pflanze_11_temperatur') | float
+            %} {{ (temp) | round(1) }} °C
+          font: ppb.ttf
+          x: 18
+          "y": 143
+          size: 14
+          fill: red
+        - type: line
+          x_start: 1
+          x_end: 100
+          y_start: 160
+          y_end: 160
+          width: 1
+          fill: black
+        - type: text
+          value: Gärtneri
+          font: ppb.ttf
+          x: 20
+          "y": 162
+          size: 15
+        - type: line
+          x_start: 1
+          x_end: 100
+          y_start: 180
+          y_end: 180
+          width: 1
+          fill: black
+        - type: text
+          value: >-
+            Last seen: {{states('sensor.000002d42e96361c_last_seen') |
+            as_timestamp() | timestamp_custom('%H:%M')}}
+          font: ppb.ttf
+          x: 0
+          "y": 184
+          size: 12
+          color: red
+    action: open_epaper_link.drawcustom
+mode: single
