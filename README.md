@@ -63,7 +63,9 @@ Home-Assistant BLE Tags Yaml Scripts for OpenEpaperLink
 >- *2.2-openplant-soil.yaml*
 ![Example of the Yaml script!](/images/2.2.openplant-soil-soluM.jpg)        
         Implementation from HACS Integration of Openplant.
-
+>- *2.2-ecowitt_wh51_soil_4ch.yaml*
+![Example of the Yaml script!](/images/2.2.ecowitt_wh51_soil_4ch.jpg)        
+        Implementation from HACS Integration of Ecowitt Soil WH51 Sensor 4 devices.
 ### 2.9-Gicisky - E-Tags
 #### Sources only tested with Gicisky BLE EPD BWR 2.9 E-Tags.
 >- *2.9-accu-weather.yaml*

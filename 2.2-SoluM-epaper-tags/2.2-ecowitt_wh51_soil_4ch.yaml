@@ -1,0 +1,178 @@
+alias: Ecowitt WH51 Bodenfeuchtesensor SoluM 2.2
+description: Ecowitt WH51 Bodenfeuchtesensor SoluM 2.2
+triggers:
+  - hours: /6
+    trigger: time_pattern
+conditions:
+  - condition: time
+    after: "06:00:00"
+    before: "20:00:00"
+    weekday:
+      - sat
+      - fri
+      - thu
+      - wed
+      - tue
+      - mon
+      - sun
+actions:
+  - target:
+      device_id: 8b1134f803b8b7c8353d9be7295cbbff
+    data:
+      rotate: 0
+      dither: 2
+      ttl: 60
+      dry-run: false
+      background: white
+      payload:
+        - type: arc
+          x: 25
+          "y": 75
+          radius: 20
+          start_angle: 0
+          end_angle: "{{ states('sensor.pws_soil_ch1') | int }}"
+          fill: red
+        - type: arc
+          x: 25
+          "y": 74
+          radius: 20
+          start_angle: "{{ states('sensor.pws_soil_ch1') | int }}"
+          end_angle: 0
+        - type: arc
+          x: 70
+          "y": 74
+          radius: 20
+          start_angle: 0
+          end_angle: "{{ states('sensor.pws_soil_ch2') | int }}"
+          fill: red
+        - type: arc
+          x: 70
+          "y": 74
+          radius: 20
+          start_angle: "{{ states('sensor.pws_soil_ch2') | int }}"
+          end_angle: 0
+        - type: arc
+          x: 140
+          "y": 74
+          radius: 20
+          start_angle: 0
+          end_angle: "{{ states('sensor.pws_soil_ch3') | int }}"
+          fill: red
+        - type: arc
+          x: 140
+          "y": 74
+          radius: 20
+          start_angle: "{{ states('sensor.pws_soil_ch3') | int }}"
+          end_angle: 0
+        - type: arc
+          x: 185
+          "y": 74
+          radius: 20
+          start_angle: 0
+          end_angle: "{{ states('sensor.pws_soil_ch4') | int }}"
+          fill: red
+        - type: arc
+          x: 185
+          "y": 74
+          radius: 20
+          start_angle: "{{ states('sensor.pws_soil_ch4') | int }}"
+          end_angle: 0
+        - type: text
+          value: Ecowitt WH51
+          font: ppb.ttf
+          x: 5
+          "y": 5
+          size: 12
+        - type: icon
+          value: flower-pollen-outline
+          x: 90
+          "y": 55
+          size: 30
+          color: black
+        - type: text
+          value: Bodenfeuchte
+          font: ppb.ttf
+          x: 50
+          "y": 20
+          size: 10
+        - type: text
+          value: >-
+            Last seen: {{states('sensor.0000034775fa3613_last_seen') |
+            as_timestamp() | timestamp_custom('%H:%M')}}
+          font: ppb.ttf
+          x: 112
+          "y": 5
+          size: 12
+          color: red
+        - type: line
+          x_start: 0
+          x_end: 212
+          y_start: 18
+          y_end: 18
+          width: 1
+          fill: red
+        - type: line
+          x_start: 0
+          x_end: 212
+          y_start: 32
+          y_end: 32
+          width: 1
+          fill: red
+        - type: text
+          value: >
+            {% set soil_ch1 = states('sensor.pws_soil_ch1') | float %} {{
+            (soil_ch1) | round(0) }} %
+          font: ppb.ttf
+          x: 15
+          "y": 35
+          size: 14
+        - type: text
+          value: >
+            {% set soil_ch2 = states('sensor.pws_soil_ch2') | float %} {{
+            (soil_ch2) | round(0) }} %
+          font: ppb.ttf
+          x: 60
+          "y": 35
+          size: 14
+        - type: text
+          value: >
+            {% set soil_ch3 = states('sensor.pws_soil_ch3') | float %} {{
+            (soil_ch3) | round(0) }} %
+          font: ppb.ttf
+          x: 130
+          "y": 35
+          size: 14
+        - type: text
+          value: >
+            {% set soil_ch4 = states('sensor.pws_soil_ch4') | float %} {{
+            (soil_ch4) | round(0) }} %
+          font: ppb.ttf
+          x: 175
+          "y": 35
+          size: 14
+        - type: text
+          value: CH1
+          font: ppb.ttf
+          x: 15
+          "y": 95
+          size: 10
+        - type: text
+          value: CH2
+          font: ppb.ttf
+          x: 60
+          "y": 95
+          size: 10
+        - type: text
+          value: CH3
+          font: ppb.ttf
+          x: 130
+          "y": 95
+          size: 10
+        - type: text
+          value: CH4
+          font: ppb.ttf
+          x: 175
+          "y": 95
+          size: 10
+    action: open_epaper_link.drawcustom
+mode: single
