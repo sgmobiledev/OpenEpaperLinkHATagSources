@@ -1,17 +1,26 @@
 alias: OpenEPaperLink_Flightradar_mini
-description: Flightradar Mini 1.54
+description: Flightradar Mini 1.54 V2
 triggers:
   - event_type: flightradar24_entry
     trigger: event
 conditions:
   - condition: template
-    value_template: >
-      {% set value = states('sensor.flightradar24_current_flight_airline_short')
-      %} {{ value != 'unknown' }}
-action:
-  - service: open_epaper_link.drawcustom
-    target:
-      device_id: ddec28e9ade8b999e7ae96659830c0d2
+    value_template: |
+      {% set value = states('sensor.flightradar24_current_in_area') | int(0) %}
+      {{ value > 0 }}
+  - condition: time
+    after: "10:00:00"
+    before: "19:00:00"
+    weekday:
+      - mon
+      - tue
+      - wed
+      - thu
+      - fri
+actions:
+  - target:
+      device_id:
+        - 4e7c6103a0f22ec8b56d8e0f11d8b8a9
     data:
       rotate: 0
       dither: 2
@@ -55,9 +64,9 @@ action:
           size: 20
           color: black
         - type: text
-          value: >-
+          value: |-
             {{ states('sensor.flightradar24_current_flight_number') }}({{
-            states('sensor.flightradar24_current_flight_aircraft_registration') }})
+                   states('sensor.flightradar24_current_flight_aircraft_registration') }})
           font: ppb.ttf
           x: 7
           "y": 90
@@ -71,7 +80,10 @@ action:
           size: 15
           color: red
         - type: text
-          value: "{{ states('sensor.flightradar24_current_flight_airport_origin_city') }}"
+          value: >-
+            {{ states('sensor.flightradar24_current_flight_airport_origin_city')
+            if states('sensor.flightradar24_current_flight_airport_origin_city')
+            not in ['unknown', 'unavailable', None] else 'Unbekannt' }}
           x: 5
           max_width: 193
           "y": 24
@@ -101,6 +113,16 @@ action:
           "y": 30
           size: 20
           color: black
+        - type: dlimg
+          url: >-
+            https://flagsapi.com/{{
+            states('sensor.flightradar24_current_flight_airport_origin_country_code')
+            }}/shiny/16.png
+          x: 120
+          "y": 25
+          xsize: 30
+          ysize: 30
+          rotate: 0
         - type: icon
           value: flag-variant-outline
           x: 75
@@ -108,7 +130,10 @@ action:
           size: 16
           color: black
         - type: text
-          value: "{{ states('sensor.flightradar24_current_flight_airport_destination_city') }}"
+          value: >-
+            {{
+            states('sensor.flightradar24_current_flight_airport_destination_city')
+            }}
           x: 5
           max_width: 193
           "y": 50
@@ -116,7 +141,8 @@ action:
           color: black
         - type: text
           value: >-
-            {{ states('sensor.flightradar24_current_flight_time_scheduled_arrival')
+            {{
+            states('sensor.flightradar24_current_flight_time_scheduled_arrival')
             }}
           x: 40
           max_width: 193
@@ -137,6 +163,16 @@ action:
           "y": 60
           size: 20
           color: black
+        - type: dlimg
+          url: >-
+            https://flagsapi.com/{{
+            states('sensor.flightradar24_current_flight_airport_destination_country_code')
+            }}/shiny/16.png
+          x: 120
+          "y": 50
+          xsize: 30
+          ysize: 30
+          rotate: 0
         - type: icon
           value: flag-variant-outline
           x: 75
@@ -145,11 +181,12 @@ action:
           color: black
         - type: text
           value: >-
-            {{"Last Update: " + states('sensor.000002a95fac341b_last_seen_2') |
+            {{"Last Update: " + states('sensor.000002a95fac341b_last_seen') |
             as_timestamp() | timestamp_custom('%H:%M')}}
           font: ppb.ttf
           x: 15
           "y": 140
           size: 12
           color: red
+    action: open_epaper_link.drawcustom
 mode: single
