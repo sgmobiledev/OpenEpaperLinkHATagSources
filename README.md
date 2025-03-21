@@ -30,10 +30,11 @@ Home-Assistant BLE Tags Yaml Scripts for OpenEpaperLink
       This integration must config sensors in ha-template-sensor.yaml or configuration.yaml .      
 
 >    - *1.54-solar-rain-alert.yaml*
+>    - *1.54-solar-rain-alerter-V2.yaml*
 ![Example of the Yaml script!](/images/1.54-solar_rain_mini.jpg)
       Implementation Zigbee Solarpanel based Sensor Rain Alerter for 1.54 E-Tags Version.
       This integration must configured template Sensors from your zigbee or configuration.yaml.
-      In my usecase must rest template from zigbee instance from zigbeeToMqtt.      
+      In my usecase must rest template from zigbee instance from zigbeeToMqtt.V2 has new device Syntex and update View.
 
 >    - *1.54-openplant-soil.yaml*
 ![Example of the Yaml script!](/images/1.54-openplant-motion-soil.jpg)
