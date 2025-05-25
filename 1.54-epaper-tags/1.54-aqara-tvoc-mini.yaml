@@ -1,0 +1,137 @@
+alias: OpenEpaperLink_Aqara_TVOC_Mini
+description: Aqara TVOC Sensor
+triggers:
+  - hours: /3
+    trigger: time_pattern
+conditions:
+  - condition: time
+    after: "10:00:00"
+    before: "19:00:00"
+    weekday:
+      - mon
+      - tue
+      - wed
+      - thu
+      - fri
+      - sat
+      - sun
+actions:
+  - data:
+      rotate: 0
+      dither: 2
+      ttl: 60
+      dry-run: false
+      background: white
+      payload:
+        - type: icon
+          value: hvac
+          x: 120
+          "y": 0
+          size: 20
+          color: black
+        - type: text
+          value: "{{ 'Aqara TVOC Air' }}"
+          font: ppb.ttf
+          x: 5
+          "y": 2
+          size: 14
+          color: red
+        - type: text
+          value: >
+            {% set ts = states('sensor.000002a96048341d_last_seen') |
+            as_timestamp %} Datum: {{ ts | timestamp_custom('%d.%m.%Y') }}
+          font: ppb.ttf
+          x: 5
+          "y": 22
+          size: 14
+          color: red
+        - type: text
+          value: |
+            TVOC:
+          font: ppb.ttf
+          x: 15
+          "y": 33
+          size: 14
+        - type: text
+          value: >
+            {% set tvoc = states('sensor.lumi_lumi_airmonitor_acn01_voc_teile')
+            | float %} {{ (tvoc) | round(0) }} ppm
+          font: ppb.ttf
+          x: 80
+          "y": 35
+          size: 14
+        - type: text
+          value: >
+            {% set tvoc_ppb =
+            states('sensor.lumi_lumi_airmonitor_acn01_voc_teile') | float %} {%
+            set tvoc_ppm = tvoc_ppb / 1000 %} {% set scaled = ((tvoc_ppm / 250)
+            * 4) + 1 %}
+
+            {% if scaled < 1.5 %}
+              Sehr gut
+            {% elif scaled < 2.5 %}
+              Gut
+            {% elif scaled < 3.5 %}
+              Mäßig
+            {% elif scaled < 4.5 %}
+              Schlecht
+            {% else %}
+              Sehr schlecht
+            {% endif %}
+          font: ppb.ttf
+          x: 40
+          "y": 60
+          size: 14
+        - type: icon
+          value: >
+            {% set tvoc_ppb =
+            states('sensor.lumi_lumi_airmonitor_acn01_voc_teile') | float %} {%
+            set tvoc_ppm = tvoc_ppb / 1000 %} {% set scaled = ((tvoc_ppm / 250)
+            * 4) + 1 %} {% set score = scaled | round(0, 'common') %}
+
+            {% if score == 1 %}
+              emoticon-happy-outline
+            {% elif score == 2 %}
+              emoticon-neutral-outline
+            {% elif score == 3 %}
+              emoticon-sad-outline
+            {% elif score == 4 %}
+              alert-outline
+            {% else %}
+              skull-outline
+            {% endif %}
+          x: 60
+          "y": 75
+          size: 30
+        - type: text
+          value: >
+            {% set humidity =
+            states('sensor.lumi_lumi_airmonitor_acn01_luftfeuchtigkeit') | float
+            %} {{ (humidity) | round(1) }} %
+          font: ppb.ttf
+          x: 5
+          "y": 110
+          size: 14
+        - type: text
+          value: >
+            {% set temperature =
+            states('sensor.lumi_lumi_airmonitor_acn01_temperatur') | float %} {{
+            (temperature) | round(1) }} °C
+          font: ppb.ttf
+          x: 100
+          "y": 110
+          size: 14
+          fill: red
+        - type: text
+          value: >-
+            {{"Last Update: " + states('sensor.000002a96048341d_last_seen') |
+            as_timestamp() | timestamp_custom('%H:%M')}}
+          font: ppb.ttf
+          x: 15
+          "y": 135
+          size: 12
+          color: red
+    action: open_epaper_link.drawcustom
+    target:
+      device_id: 14883e803fb0a2ae8e60cb565c5c09f9
+mode: single

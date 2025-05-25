@@ -6,6 +6,11 @@ Home-Assistant BLE Tags Yaml Scripts for OpenEpaperLink
 ### 1.54 Epaper-tags
 
 #### Sources only tested with SoluM-1-54 E-Tags.
+>- *1.54-aqara-tvoc-mini.yaml*
+![Example of the Yaml script!](/images/1.54-aqara-tvoc-air.jpg)
+      Implementation Zigbee Aqara TVOC AIR senordata for 1.54 E-Tags Version.
+      This integration you must a Aqara Sensor in your Home Assistant.
+
 >- *1.54-weather-wind-compass.yaml*
    Implementation from HACS Integration of Weather Cloudservice Wundergroundpws with my ecowitt weatherstation.
 
