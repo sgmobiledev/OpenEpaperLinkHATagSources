@@ -1,0 +1,165 @@
+alias: OpenEPaperLink_Dreo_Mini
+description: Dreo Turmventilator Status on 1.54 Epaper
+triggers:
+  - type: changed_states
+    device_id: 1036ff193b1a5b93ce41d44c122fcecb
+    entity_id: 974e93a9f1627c5437d54f87d0e340fc
+    domain: fan
+    trigger: device
+conditions:
+  - condition: time
+    after: "06:00:00"
+    before: "20:00:00"
+    weekday:
+      - sat
+      - fri
+      - thu
+      - wed
+      - tue
+      - mon
+      - sun
+actions:
+  - target:
+      device_id:
+        - 6cc3d19a5dc4db6fff0ad21443840cd7
+    data:
+      rotate: 0
+      dither: 2
+      ttl: 60
+      dry-run: false
+      payload:
+        - type: icon
+          value: fan
+          x: 125
+          "y": 0
+          size: 20
+          color: black
+        - type: text
+          value: Dreo Status
+          font: ppb.ttf
+          x: 10
+          "y": 2
+          size: 14
+          color: red
+        - type: dlimg
+          url: /media/dreo_fan.jpg
+          x: 5
+          "y": 25
+          xsize: 100
+          ysize: 100
+          rotate: 0
+        - type: text
+          value: >-
+            {% set status = states('fan.turmventilatoren') | string %}  {% if
+            status == 'off' %}
+               Dreo Aus
+             {% else %}
+               Dreo An
+             {% endif %}
+             
+          font: ppb.ttf
+          x: 20
+          "y": 14
+          size: 14
+          color: red
+        - type: icon
+          value: >
+            {{ 'fan-off' if is_state('fan.turmventilatoren', 'off') else 'fan'
+            }}
+          x: 100
+          "y": 20
+          size: 14
+          color: |
+            {{ 'black' if is_state('fan.turmventilatoren', 'off') else 'red' }}
+        - type: text
+          value: |
+            {{ states('sensor.turmventilatoren_temperature')  }}°C
+          font: ppb.ttf
+          x: 120
+          "y": 40
+          size: 14
+          color: red
+        - type: icon
+          value: thermometer-lines
+          x: 100
+          "y": 40
+          size: 14
+          color: black
+        - type: text
+          value: >-
+            {% set status_panel_sound =
+            states('switch.turmventilatoren_panel_sound') | string %} {% if
+            status == 'off' %}
+              Aus
+            {% else %}
+              An
+            {% endif %}
+          font: ppb.ttf
+          x: 120
+          "y": 60
+          size: 14
+          color: red
+        - type: icon
+          value: volume-high
+          x: 100
+          "y": 60
+          size: 14
+          color: black
+        - type: text
+          value: |
+            {{ states('sensor.dreofanspeednumber') }}
+          font: ppb.ttf
+          x: 120
+          "y": 80
+          size: 14
+          color: red
+        - type: icon
+          value: fan-speed-1
+          x: 100
+          "y": 80
+          size: 14
+          color: black
+        - type: text
+          value: >-
+            {% set status_oscillation =
+            state_attr('fan.turmventilatoren','oscillating') | string %} {% if
+            status_oscillation == "True" %}
+              An
+            {% else %}
+              Aus
+            {% endif %}
+          font: ppb.ttf
+          x: 120
+          "y": 100
+          size: 14
+          color: red
+        - type: icon
+          value: >-
+            {% set status_oscillation =
+            state_attr('fan.turmventilatoren','oscillating') | string  %} {% if
+            status_oscillation == "True" %}
+              cached
+            {% else %}
+              autorenew-off
+            {% endif %}
+          x: 100
+          "y": 100
+          size: 14
+          color: black
+        - type: icon
+          value: update
+          x: 70
+          "y": 130
+          size: 20
+          color: black
+        - type: text
+          value: >-
+            {{ states('sensor.0000021EEE5D3413_last_seen') | as_timestamp() |
+            timestamp_custom('%H:%M')}} Uhr
+          font: ppb.ttf
+          x: 90
+          "y": 135
+          size: 12
+          color: red
+    action: open_epaper_link.drawcustom
+mode: single

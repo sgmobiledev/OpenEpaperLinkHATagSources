@@ -6,6 +6,12 @@ Home-Assistant BLE Tags Yaml Scripts for OpenEpaperLink
 ### 1.54 Epaper-tags
 
 #### Sources only tested with SoluM-1-54 E-Tags.
+>- *1.54-dreo-fan-mini.yaml*
+![Example of the Yaml script!](/images/dreo_fan_mini.jpg)
+      Implementation Dreo Towerfan for 1.54 E-Tags Version.
+      This [Dreo Integration](https://github.com/JeffSteinbok/hass-dreo/tree/main) you must a Dreo fan in your Home Assistant, 
+      and added new background image dreo.jpg into your media folder from HA.
+
 >- *1.54-aqara-tvoc-mini.yaml*
 ![Example of the Yaml script!](/images/1.54-aqara-tvoc-air.jpg)
       Implementation Zigbee Aqara TVOC AIR senordata for 1.54 E-Tags Version.
