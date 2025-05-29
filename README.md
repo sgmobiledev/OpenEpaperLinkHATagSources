@@ -1,153 +1,169 @@
-# OpenEpaperLinkHATagSources
+# 🖼️ OpenEpaperLink BLE Tag Display Scripts
 
-Home-Assistant BLE Tags Yaml Scripts for OpenEpaperLink
+**YAML scripts for Home Assistant displays on BLE E-Paper tags, designed for use with OpenEpaperLink.**
 
-## Folder Structure
-### 1.54 Epaper-tags
+This repository includes preconfigured display layouts for various screen sizes and tag types (SoluM, Gicisky, Hanshow, Chroma), integrating popular Home Assistant sensors and services such as Ecowitt, OpenUV, Flightradar24, DWD, and more.
 
-#### Sources only tested with SoluM-1-54 E-Tags.
->- *1.54-dreo-fan-mini.yaml*
-![Example of the Yaml script!](/images/dreo_fan_mini.jpg)
-      Implementation Dreo Towerfan for 1.54 E-Tags Version.
-      This [Dreo Integration](https://github.com/JeffSteinbok/hass-dreo/tree/main) you must a Dreo fan in your Home Assistant, 
-      and added new background image dreo.jpg into your media folder from HA.
+---
 
->- *1.54-aqara-tvoc-mini.yaml*
-![Example of the Yaml script!](/images/1.54-aqara-tvoc-air.jpg)
-      Implementation Zigbee Aqara TVOC AIR senordata for 1.54 E-Tags Version.
-      This integration you must a Aqara Sensor in your Home Assistant.
+## 📁 Folder Structure
 
->- *1.54-weather-wind-compass.yaml*
-   Implementation from HACS Integration of Weather Cloudservice Wundergroundpws with my ecowitt weatherstation.
+### 🧾 1.54" SoluM E-Paper Tags
 
->    - *1.54-waste-collection-calender.yaml*
-![Example of the Yaml script!](/images/1.54-waste-collections-calender.png)
-      Implementation from HACS Integration of Müllkalender 1.54 E-Tags Version.
-      This integration must config to your region for waste calender.
+Tested with SoluM 1.54" displays (152x152 px).
 
->    - *1.54-openuvindex_mini.yaml*
-![Example of the Yaml script!](/images/1.54.openuvindex_mini.png)
-      Implementation from HACS Integration OpenUV 1.54 E-Tags Version.
-      This integration must config to your region acording documentation.      
+| File | Preview | Description |
+|------|---------|-------------|
+| `1.54-dreo-fan-mini.yaml` | ![](/images/dreo_fan_mini.jpg) | Displays Dreo Tower Fan status.<br>Requires [Dreo HA Integration](https://github.com/JeffSteinbok/hass-dreo) + `media/dreo.jpg`. |
+| `1.54-aqara-tvoc-mini.yaml` | ![](/images/1.54-aqara-tvoc-air.jpg) | Air quality from Aqara TVOC Zigbee sensor. |
+| `1.54-weather-wind-compass.yaml` | – | Weather from WundergroundPWS via Ecowitt. |
+| `1.54-waste-collection-calender.yaml` | ![](/images/1.54-waste-collections-calender.png) | Waste collection schedule (requires region config via Müllkalender integration). |
+| `1.54-openuvindex_mini.yaml` | ![](/images/1.54.openuvindex_mini.png) | UV index display via OpenUV. |
+| `1.54-ecowitt-wh51-soil.yaml` | ![](/images/1.54.ecowitt_wh51_soil_mini.png) | Soil data from WH51 sensor via Ecowitt API. |
+| `1.54-smart-air.yaml` | ![](/images/1.54-smart_air.png) | Air quality sensor display via SmartAir Zigbee. |
+| `1.54-solar-rain-alert.yaml`<br>`1.54-solar-rain-alerter-V2.yaml` | ![](/images/1.54-solar_rain_mini.jpg) | Solar-powered Zigbee rain sensor alert. |
+| `1.54-openplant-soil.yaml` | ![](/images/1.54-openplant-motion-soil.jpg)<br>![](/images/1.54-openplant-stand.jpg) | Soil/motion data with OpenPlant. Includes 3D printable stand (STL in `/stl`). |
+| `1.54-flightradar.yaml` | ![](/images/1.54.flightradar.jpg) | Local air traffic from Flightradar24 (Nuremberg airport example). |
 
->    - *1.54-ecowitt-wh51-soil.yaml*
-![Example of the Yaml script!](/images/1.54.ecowitt_wh51_soil_mini.png)
-      Implementation from Ecowitt-API for WH51 Sensor for 1.54 E-Tags Version.
-      This integration must config sensors in ha-template-sensor.yaml or configuration.yaml .      
+---
 
->    - *1.54-smart-air.yaml*
-![Example of the Yaml script!](/images/1.54-smart_air.png)
-      Implementation Zigbee Air Quality Sensor of SmartAir for 1.54 E-Tags Version.
-      This integration must config sensors in ha-template-sensor.yaml or configuration.yaml .      
+### 🧾 2.13" Gicisky E-Paper Tags
 
->    - *1.54-solar-rain-alert.yaml*
->    - *1.54-solar-rain-alerter-V2.yaml*
-![Example of the Yaml script!](/images/1.54-solar_rain_mini.jpg)
-      Implementation Zigbee Solarpanel based Sensor Rain Alerter for 1.54 E-Tags Version.
-      This integration must configured template Sensors from your zigbee or configuration.yaml.
-      In my usecase must rest template from zigbee instance from zigbeeToMqtt.V2 has new device Syntex and update View.
+Resolution: 250x132 px
 
->    - *1.54-openplant-soil.yaml*
-![Example of the Yaml script!](/images/1.54-openplant-motion-soil.jpg)
-![Stand!](/images/1.54-openplant-stand.jpg)
-      Implementation from zigbee-motion-soil based data and integration openplant for 1.54 E-Tags Version.
-      This integration must config sensors in ha-template-sensor.yaml or configuration.yaml.
-      I design Sensor and Plant Card for HA, my friend axel design a 3D Printer STL for stick to connect your E-Tag in plant.      
->    - *1.54-flightradar.yaml*
-![Example of the Yaml script!](/images/1.54.flightradar.jpg)
-      Implementation from flightradar data from nuernberg airport based data and integration flightradar for 1.54 E-Tags Version.
-      This integration must config sensors in ha-template-sensor.yaml or configuration.yaml.
-      I design Sensors and Yaml for HA.      
+| File | Preview | Description |
+|------|---------|-------------|
+| `2.13.dwd-pollen-warning.yaml` | ![](/images/2.13.dwd-pollenflug.jpg) | Pollen alerts from DWD. |
+| `2.13.openuv-warning.yaml` | ![](/images/2.13.openuv.jpg) | UV warnings via OpenUV. |
+| `2.13-hochwasserportal-pegelstaende.yaml` | – | Flood levels from Hochwasserportal. |
 
-### 2.13-Gicisky-epaper-tags
->- *2.13.dwd-pollen-warning.yaml*
-![Example of the Yaml script!](/images/2.13.dwd-pollenflug.jpg)        
-        Implementation from HACS Integration of Weathercloudservice Deutschen Wetterdienst.
+---
 
->- *2.13.openuv-warning.yaml*
-![Example of the Yaml script!](/images/2.13.openuv.jpg)        
-        Implementation from HACS Integration of Weathercloudservice OPENUV.
+### 🧾 2.2" SoluM E-Paper Tags
 
->- *2.13-hochwasserportal-pegelstaende.yaml*
-        Implementation from HACS Integration of Hochwasserportal Service.
-### 2.2-SoluM - E-Tags
-#### Sources only tested with SoluM 2.2 E-Tags.
->- *2.2-openplant-soil.yaml*
-![Example of the Yaml script!](/images/2.2.openplant-soil-soluM.jpg)        
-        Implementation from HACS Integration of Openplant.
->- *2.2-ecowitt_wh51_soil_4ch.yaml*
-![Example of the Yaml script!](/images/2.2.ecowitt_wh51_soil_4ch.jpg)        
-        Implementation from HACS Integration of Ecowitt Soil WH51 Sensor 4 devices.
-### 2.9-Gicisky - E-Tags
-#### Sources only tested with Gicisky BLE EPD BWR 2.9 E-Tags.
->- *2.9-accu-weather.yaml*
-![Example of the Yaml script!](/images/2.19.accuweather.jpg)        
-        Implementation from HACS Integration of Weathercloudservice Accu Weather.
+Resolution: 250x122 px
 
->- *2.9-hochwasserportal-pegelstaende.yaml*
-![Example of the Yaml script!](/images/Wasserstand.svg)        
-        Implementation from HACS Integration of Hochwasserportal Service.
->- *2.9-waste-collection.yaml*
-        Implementation from HACS Integration of Müllkalender.
-        This integration must config to your region for waste calender.  
+| File | Preview | Description |
+|------|---------|-------------|
+| `2.2-openplant-soil.yaml` | ![](/images/2.2.openplant-soil-soluM.jpg) | OpenPlant soil data. |
+| `2.2-ecowitt_wh51_soil_4ch.yaml` | ![](/images/2.2.ecowitt_wh51_soil_4ch.jpg) | 4-channel WH51 soil display via Ecowitt. |
 
-### Handshow 3.5 E-Tags        
-#### Sources only tested with Handshow 3.5 E-Tags.
->- *3.5-dwd-weather-warning.yaml*
-        Implementation from HACS Integration of DWD Weather Warning.
->- *3.5-dwd-weather-lighting-warning.yaml*
-![Example of the Yaml script!](/images/3.5.dwd-weather-lightning-warn.jpg)        
-        Implementation from HACS Integration of DWD Weather based.        
+---
 
-### Handshow 4.2 E-Tags        
-#### Sources only tested with Solumn 4.2 E-Tags.
->- *4.2-flight-radar.yaml*
-        Implementation from HACS Integration of Flightradar24.
-        this ist automation script, you must changed for your usecae.
-        https://github.com/AlexandrErohin/home-assistant-flightradar24?tab=readme-ov-file#flight
->- *4.2-dwd-weather.yaml*
-        Implementation from HACS Integration of DWD Weather.
-        this ist automation script, you must changed for your usecae.
-        
-### Chroma 7.4 E-Tags        
-#### Sources only tested with Chroma 7.5 E-Tags.
->- *7.4-dwd-weather-ranking-hh-n.yaml*
-        Implementation from HACS Integration DWD Weather between Hamburg and Nürnberg.
-![Example of the Yaml script!](/images/chroma75_dwd_ranking.png)  
+### 🧾 2.9" Gicisky E-Paper Tags
 
-### Hanshow 7.5 E-Tags        
-#### Sources only tested with Hanshow 7.5 E-Tags.
->- *7.5-pws-weather.yaml*
-        Implementation from HACS Integration Ecowitt-PWS Weather Nürnberg.
-![Example of the Yaml script!](/images/7.5_hanshow_PWS.jpg)  
+Resolution: 296x128 px
 
-# external sensor
->- ha-template-sensors.yaml
-        add template sensors to your HomeAssistant configuration.yaml or sensors.yaml
-        add 2 x template sensors CAPE and LiftedIndex to your HomeAssistant configuration.yaml or sensors.yaml
-# media
-    The font is currently only required for the Accu Weather Script.
-# images
-    Result on my existing devices.
-# stl
-    3D Printer Files for Openplant Stand(Stick)    
-## Instructions and Informations
+| File | Preview | Description |
+|------|---------|-------------|
+| `2.9-accu-weather.yaml` | ![](/images/2.19.accuweather.jpg) | Weather from AccuWeather. |
+| `2.9-hochwasserportal-pegelstaende.yaml` | ![](/images/Wasserstand.svg) | Flood levels. |
+| `2.9-waste-collection.yaml` | – | Waste schedule display via Müllkalender. |
 
-### Designed for display size:
- >   - (1.54") 152x152 
- >   - (2.13") 250x132 
- >   - (2.9")  296x128
- >   - (3.5")  384x184
- >   - (4.2")  400x300
- >   - (7.4")  640x384
- >   - (7.5")  800x480
-  
- 
-### Installation instructions
-    In order to use the font in script, 
-    the font file must be copied into the Home Assistant instance used under the following file folder.
+---
 
-#### Source folder: 
->-      /media/
-#### Destination folder: 
->-      /homeassistant/custom_components/open_epaper_link/
+### 🧾 3.5" Handshow E-Paper Tags
+
+Resolution: 384x184 px
+
+| File | Preview | Description |
+|------|---------|-------------|
+| `3.5-dwd-weather-warning.yaml` | – | DWD weather alerts. |
+| `3.5-dwd-weather-lighting-warning.yaml` | ![](/images/3.5.dwd-weather-lightning-warn.jpg) | Lightning warning view. |
+
+---
+
+### 🧾 4.2" Handshow E-Paper Tags
+
+Resolution: 400x300 px
+
+| File | Description |
+|------|-------------|
+| `4.2-flight-radar.yaml` | Flightradar24 integration.<br>Requires modification for your airport and use case.<br>[Integration source](https://github.com/AlexandrErohin/home-assistant-flightradar24) |
+| `4.2-dwd-weather.yaml` | DWD weather integration. Modify YAML for your use case. |
+
+---
+
+### 🧾 7.4" Chroma E-Paper Tags
+
+Resolution: 640x384 px
+
+| File | Preview | Description |
+|------|---------|-------------|
+| `7.4-dwd-weather-ranking-hh-n.yaml` | ![](/images/chroma75_dwd_ranking.png) | Compares weather rankings between Hamburg and Nuremberg. |
+
+---
+
+### 🧾 7.5" Hanshow E-Paper Tags
+
+Resolution: 800x480 px
+
+| File | Preview | Description |
+|------|---------|-------------|
+| `7.5-pws-weather.yaml` | ![](/images/7.5_hanshow_PWS.jpg) | Ecowitt PWS weather display (Nuremberg). |
+
+---
+
+## 🧰 Other Resources
+
+### `ha-template-sensors.yaml`
+
+- Template sensors to extend Home Assistant functionality.
+- Includes CAPE and Lifted Index sensors.
+- Add to your `configuration.yaml` or `sensors.yaml`.
+
+### `/media/`
+
+- Fonts required for certain scripts (e.g., AccuWeather).
+- Copy to:  
+  `/homeassistant/custom_components/open_epaper_link/`
+
+### `/images/`
+
+- Display examples for each YAML script.
+
+### `/stl/`
+
+- 3D printable parts (e.g., OpenPlant stand).
+
+---
+
+## 📐 Supported Display Sizes
+
+| Tag Size | Resolution |
+|----------|------------|
+| 1.54"    | 152x152    |
+| 2.13"    | 250x132    |
+| 2.2"     | 250x122    |
+| 2.9"     | 296x128    |
+| 3.5"     | 384x184    |
+| 4.2"     | 400x300    |
+| 7.4"     | 640x384    |
+| 7.5"     | 800x480    |
+
+---
+
+## 📦 Installation Notes
+
+> To use fonts in scripts (e.g., for AccuWeather):
+1. Place the font file in your `/media/` directory.
+2. Copy the font to your Home Assistant folder:  
+   `/homeassistant/custom_components/open_epaper_link/`
+
+---
+
+## ✅ Contributing
+
+Pull requests are welcome! Please ensure that:
+- YAML is valid and tested.
+- Tags are correctly sized.
+- External dependencies are noted clearly.
+
+---
+
+## 🧾 License
+
+This repository is released under the MIT License.  
+3D models may be subject to separate licenses (see `/stl` folder).
+
+---
