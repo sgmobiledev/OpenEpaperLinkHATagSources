@@ -50,6 +50,17 @@ Resolution: 250x122 px
 
 ---
 
+### 🧾 2.66" SoluM E-Paper Tags
+
+Resolution: 296x152 px
+
+| File | Preview | Description |
+|------|---------|-------------|
+| `2.66-openuv.yaml` | ![](/images/2.66-openuv.jpg) | OpenUV Warning. |
+
+---
+
+
 ### 🧾 2.9" Gicisky E-Paper Tags
 
 Resolution: 296x128 px
@@ -135,6 +146,7 @@ Resolution: 800x480 px
 | 1.54"    | 152x152    |
 | 2.13"    | 250x132    |
 | 2.2"     | 250x122    |
+| 2.66"    | 296x152    |
 | 2.9"     | 296x128    |
 | 3.5"     | 384x184    |
 | 4.2"     | 400x300    |

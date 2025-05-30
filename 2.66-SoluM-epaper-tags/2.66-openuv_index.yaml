@@ -1,0 +1,285 @@
+alias: OpenEPaperLink_OpenUV_2_66
+description: Übersicht von UV Daten basierend auf OpenUV Cloud
+triggers:
+  - platform: time_pattern
+    hours: /1
+conditions:
+  - condition: time
+    after: "06:00:00"
+    before: "20:00:00"
+    weekday:
+      - sat
+      - fri
+      - thu
+      - wed
+      - tue
+      - mon
+      - sun
+actions:
+  - target:
+      device_id:
+        - 8ab90db000ea94ebaf72239d909ccf4a
+    data:
+      rotate: 0
+      dither: 2
+      ttl: 60
+      dry-run: false
+      payload:
+        - type: text
+          value: OpenUV Warnung
+          font: ppb.ttf
+          x: 10
+          "y": 10
+          size: 16
+          color: red
+        - type: icon
+          value: update
+          x: 165
+          "y": 5
+          size: 14
+          color: black
+        - type: text
+          value: >-
+            {{ states('sensor.00000334DA8A3E1D_next_checkin') | as_timestamp() |
+            timestamp_custom('%H:%M')}}
+          font: ppb.ttf
+          x: 190
+          "y": 10
+          size: 10
+          color: red
+        - type: text
+          value: UV-Stufen
+          font: ppb.ttf
+          x: 40
+          "y": 25
+          size: 14
+        - type: text
+          value: "1"
+          font: ppb.ttf
+          x: 20
+          "y": 55
+          size: 20
+        - type: text
+          value: "2"
+          font: ppb.ttf
+          x: 40
+          "y": 55
+          size: 20
+        - type: text
+          value: "3"
+          font: ppb.ttf
+          x: 60
+          "y": 55
+        - type: text
+          value: "4"
+          font: ppb.ttf
+          x: 80
+          "y": 55
+        - type: text
+          value: "5"
+          font: ppb.ttf
+          x: 100
+          "y": 55
+        - type: text
+          value: "6"
+          font: ppb.ttf
+          x: 20
+          "y": 90
+        - type: text
+          value: "7"
+          font: ppb.ttf
+          x: 40
+          "y": 90
+        - type: text
+          value: "8"
+          font: ppb.ttf
+          x: 60
+          "y": 90
+        - type: text
+          value: "9"
+          font: ppb.ttf
+          x: 80
+          "y": 90
+        - type: text
+          value: "10"
+          font: ppb.ttf
+          x: 100
+          "y": 90
+        - type: text
+          value: 11+
+          font: ppb.ttf
+          x: 125
+          "y": 90
+          size: 22
+        - type: text
+          value: Ozonwert
+          font: ppb.ttf
+          x: 190
+          "y": 25
+          size: 12
+        - type: icon
+          value: >
+            {% set ozon_wert = states('sensor.openuv_aktueller_ozonwert') |
+            float %}  {% if ozon_wert >= 300.0 %}
+               earth-arrow-right
+            {% else %}
+               earth-off
+            {% endif %}
+          x: 210
+          "y": 40
+          size: 22
+          color: black
+        - type: text
+          value: >
+            {% set ozone_du = states('sensor.openuv_aktueller_ozonwert') | float
+            %} {{ (ozone_du) | round(1) }} DU
+          font: ppb.ttf
+          x: 190
+          "y": 65
+          size: 16
+        - type: text
+          value: >-
+            {{ states('sensor.openuv_aktueller_uv_index') | float | round(0) |
+            string }}
+          font: ppb.ttf
+          x: 210
+          "y": 87
+          size: 28
+        - type: line
+          x_start: 165
+          x_end: 280
+          y_start: 80
+          y_end: 80
+          width: 2
+          fill: red
+        - type: rectangle
+          x_start: 10
+          x_end: 280
+          y_start: 40
+          y_end: 120
+          width: 2
+          fill: null
+          outline: black
+        - type: rectangle
+          x_start: 165
+          x_end: 280
+          y_start: 20
+          y_end: 120
+          width: 2
+          fill: null
+          outline: black
+        - type: rectangle
+          x_start: 15
+          x_end: 55
+          y_start: 45
+          y_end: 75
+          width: 2
+          fill: null
+          outline: black
+        - type: rectangle
+          x_start: 57
+          x_end: 123
+          y_start: 45
+          y_end: 75
+          width: 2
+          fill: null
+          outline: black
+        - type: rectangle
+          x_start: 15
+          x_end: 55
+          y_start: 85
+          y_end: 115
+          width: 2
+          fill: null
+          outline: black
+        - type: rectangle
+          x_start: 57
+          x_end: 123
+          y_start: 85
+          y_end: 115
+          width: 2
+          fill: null
+          outline: black
+        - type: rectangle
+          x_start: 10
+          x_end: 160
+          y_start: 80
+          y_end: 120
+          width: 2
+          fill: null
+          outline: black
+        - type: icon
+          value: >
+            {% set uv_wert = states('sensor.openuv_aktueller_uv_wert') | string
+            %} {% if uv_wert == 'low' %}
+              alpha-l-circle-outline
+            {% elif uv_wert == 'moderate' %}
+              alpha-m-circle-outline
+            {% elif uv_wert == 'high' %}
+              alpha-h-circle-outline
+            {% elif uv_wert == 'very_high' %}
+              alpha-v-circle-outline
+            {% elif uv_wert == 'extreme' %}
+              alpha-w-circle-outline
+            {% else %}
+               info
+            {% endif %}
+          x: 170
+          "y": 80
+          size: 40
+          color: black
+        - type: icon
+          value: >
+            {% set uv_index = states('sensor.openuv_aktueller_uv_index') | float
+            | round(0) %} {% if uv_index >= 1 and uv_index < 3 %}
+              sun-snowflake-variant
+            {% elif uv_index >= 3 and uv_index < 6 %}
+              weather-sunny
+            {% elif uv_index >= 6 and uv_index < 8 %}
+              sun-thermometer
+            {% elif uv_index >= 8 and uv_index < 11 %}
+              white-balance-sunny
+            {% elif uv_index == 11 %}
+              weather-sunny-alert
+            {% else %}
+               info
+            {% endif %}
+          x: 240
+          "y": 80
+          size: 40
+          color: red
+        - type: icon
+          value: >
+            {{ 'battery-100' if is_state('sensor.00000334DA8A3E1D_battery',
+            '100') else 'battery-50' }}
+          x: 220
+          "y": 5
+          size: 14
+          color: >
+            {{ 'black' if is_state('sensor.00000334DA8A3E1D_battery', '100')
+            else 'red' }}
+        - type: text
+          value: >-
+            {{ (states('sensor.00000334da8a3e1d_battery_voltage') | float / 1000) | round(2) }} V
+          font: ppb.ttf
+          x: 240
+          "y": 7
+          size: 12
+          color: red    
+        - type: text
+          value: >-
+            {% set ts = states('sensor.00000334DA8A3E1D_last_seen') | as_timestamp() %}
+            {% set wochentage = ['Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag', 'Sonntag'] %}
+            {% set monate = ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'] %}
+            {{ wochentage[ts | timestamp_custom('%w') | int - 1] }},
+            {{ ts | timestamp_custom('%d') }}.
+            {{ monate[ts | timestamp_custom('%m') | int - 1] }}
+            {{ ts | timestamp_custom('%Y') }},
+            {{ ts | timestamp_custom('%H:%M') }} Uhr
+          font: ppb.ttf
+          x: 40
+          "y": 135
+          size: 12
+          color: red
+    action: open_epaper_link.drawcustom
+mode: single
