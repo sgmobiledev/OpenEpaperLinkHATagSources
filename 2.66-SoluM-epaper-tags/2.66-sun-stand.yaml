@@ -1,0 +1,196 @@
+alias: OpenEpaperLink_Horizon_2_66
+description: Horizon Stand der Sonne und Mond
+triggers:
+  - hours: /1
+    trigger: time_pattern
+conditions:
+  - condition: time
+    after: "06:00:00"
+    before: "20:00:00"
+    weekday:
+      - sat
+      - fri
+      - thu
+      - wed
+      - tue
+      - mon
+      - sun
+actions:
+  - target:
+      device_id:
+        - 8720d18169e39ad04d41469ce7331f9d
+    data:
+      rotate: 0
+      dither: 2
+      ttl: 60
+      dry-run: false
+      payload:
+        - type: text
+          value: Sonnenverlauf
+          font: roboto-bold.ttf
+          x: 10
+          "y": 5
+          size: 16
+          color: black
+        - type: text
+          value: >-
+            {{ states('sensor.00000334dbbb3e1e_last_seen') | as_timestamp() |
+            timestamp_custom('%H:%M') }} Uhr
+          font: ppb.ttf
+          x: 170
+          "y": 5
+          size: 16
+          color: red
+        - type: icon
+          value: mdi:wallpaper
+          x: 275
+          "y": 5
+          size: 20
+        - type: icon
+          value: mdi:update
+          x: 250
+          "y": 5
+          size: 20
+          color: black
+        - type: text
+          value: Sonnenaufgang
+          font: roboto.ttf
+          x: 10
+          "y": 30
+          size: 12
+          color: black
+        - type: text
+          value: >-
+            {{ state_attr('sun.sun', 'next_rising') | as_timestamp |
+            timestamp_custom('%H:%M') }}
+          font: roboto.ttf
+          x: 40
+          "y": 45
+          size: 12
+          color: black
+        - type: text
+          value: Mittag
+          font: roboto.ttf
+          x: 130
+          "y": 110
+          size: 12
+          color: black
+        - type: text
+          value: >-
+            {{ state_attr('sun.sun', 'next_noon') | as_timestamp |
+            timestamp_custom('%H:%M') }}
+          font: roboto.ttf
+          x: 135
+          "y": 140
+          size: 12
+          color: black
+        - type: text
+          value: Sonnenuntergang
+          font: roboto.ttf
+          x: 150
+          "y": 30
+          size: 12
+          color: black
+        - type: text
+          value: >-
+            {{ state_attr('sun.sun', 'next_setting') | as_timestamp |
+            timestamp_custom('%H:%M') }}
+          font: roboto.ttf
+          x: 180
+          "y": 45
+          size: 12
+          color: black
+        - type: text
+          value: BCMT
+          font: roboto.ttf
+          x: 50
+          "y": 120
+          size: 12
+          color: black
+        - type: text
+          value: >-
+            {{ state_attr('sun.sun', 'next_dawn') | as_timestamp |
+            timestamp_custom('%H:%M') }}
+          font: roboto.ttf
+          x: 50
+          "y": 140
+          size: 12
+          color: black
+        - type: text
+          value: ECET
+          font: roboto.ttf
+          x: 200
+          "y": 120
+          size: 12
+          color: black
+        - type: text
+          value: >-
+            {{ state_attr('sun.sun', 'next_dusk') | as_timestamp |
+            timestamp_custom('%H:%M') }}
+          font: roboto.ttf
+          x: 200
+          "y": 140
+          size: 12
+          color: black
+        - type: line
+          x_start: 20
+          x_end: 270
+          y_start: 90
+          y_end: 90
+          color: black
+          width: 1
+        - type: icon
+          value: mdi:decagram-outline
+          x: |
+            {{ 20 + (state_attr('sun.sun', 'azimuth') | float / 360 * 250) }}
+          "y": |
+            {{ 80 - (state_attr('sun.sun', 'elevation') | float / 90 * 60) }}
+          size: 18
+        - type: line
+          x_start: |
+            {{ 30 + (state_attr('sun.sun', 'azimuth') | float / 360 * 250) }}
+          x_end: |
+            {{ 30 + (state_attr('sun.sun', 'azimuth') | float / 360 * 250) }}
+          y_start: 90
+          y_end: |
+            {{ 100 - (state_attr('sun.sun', 'elevation') | float / 90 * 60) }}
+          color: black
+          width: 1
+        - type: icon
+          value: mdi:weather-sunset-up
+          x: 5
+          "y": 80
+          size: 24
+        - type: icon
+          value: mdi:weather-sunny
+          x: 140
+          "y": 90
+          size: 22
+        - type: icon
+          value: mdi:weather-sunset-down
+          x: 270
+          "y": 80
+          size: 24
+        - type: icon
+          value: >
+            {% set moon_phase = states('sensor.moon_phase') %} {% if moon_phase
+            == 'new_moon' %}
+              moon-new
+            {% elif moon_phase == 'full_moon' %}
+              moon-full
+            {% else %}
+              {{ 'moon-' ~ moon_phase | replace('_', '-') }}
+            {% endif %}
+          x: >
+            {% set azimuth = states('sensor.nuernberg_moon_azimuth') | float(0)
+            %} {% set x_min = 20 %} {% set x_max = 250 %} {{ (x_min + (azimuth /
+            360 * (x_max - x_min))) | round(0) }}
+          "y": >
+            {% set altitude = states('sensor.nuernberg_moon_altitude') |
+            float(0) %} {% set y_horizont = 90 %} {% set y_top = 10 %}  {#
+            Zenitposition, nach oben begrenzen #} {% set clamped_alt =
+            [altitude, 0] | max %} {{ (y_horizont - ((clamped_alt / 90) *
+            (y_horizont - y_top))) | round(0) }}
+          size: 20
+    action: open_epaper_link.drawcustom
+mode: single
