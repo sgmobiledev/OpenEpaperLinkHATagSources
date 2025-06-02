@@ -57,7 +57,7 @@ Resolution: 296x152 px
 | File | Preview | Description |
 |------|---------|-------------|
 | `2.66-openuv.yaml` | ![](/images/2.66-openuv.jpg) | OpenUV Warning. |
-| `2.66-sun-stand.yaml` | ![](/images/2.66-sun-stand.jpg) | Sun and Moon stand. |
+| `2.66-sun-stand.yaml` | ![](/images/2.66-sun-stand.jpg) | Sun and Moon stand.Calculation based on https://github.com/ngocjohn/lunar-phase?tab=readme-ov-file#using-the-home-assistant-ui integration. |
 
 ---
 
