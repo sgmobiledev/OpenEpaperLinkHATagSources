@@ -1,0 +1,9 @@
+type: entities
+entities:
+  - entity: input_boolean.medikament_1_genommen
+  - entity: input_boolean.medikament_2_genommen
+  - entity: input_boolean.medikament_3_genommen
+  - entity: input_boolean.medikament_4_genommen
+title: Medi-Marker
+show_header_toggle: false
+state_color: false

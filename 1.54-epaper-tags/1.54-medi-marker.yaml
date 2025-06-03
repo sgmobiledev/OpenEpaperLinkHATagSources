@@ -1,0 +1,159 @@
+alias: OpenEpaperLink_Medi_Marker_Mini
+description: Medikamenten Tracker
+triggers:
+  - at: "08:00:00"
+    trigger: time
+conditions:
+  - condition: time
+    weekday:
+      - mon
+      - tue
+      - wed
+      - thu
+      - fri
+      - sat
+      - sun
+actions:
+  - target:
+      device_id:
+        - 66c451e557f5397fe61baa202e275308
+    data:
+      rotate: 0
+      dither: 2
+      ttl: 60
+      dry-run: false
+      background: white
+      payload:
+        - type: icon
+          value: mdi:pill-multiple
+          x: 125
+          "y": 0
+          size: 16
+          color: black
+        - type: text
+          value: "{{ 'Medi-Marker' }}"
+          font: ppb.ttf
+          x: 25
+          "y": 2
+          size: 14
+          color: black
+        - type: text
+          value: Med. genommen ?
+          font: ppb.ttf
+          x: 10
+          "y": 15
+          size: 14
+          color: red
+        - type: icon
+          value: >
+            {% set meds = [
+              states('input_boolean.medikament_1_genommen'),
+              states('input_boolean.medikament_2_genommen'),
+              states('input_boolean.medikament_3_genommen')
+            ] %} {% set count_on = meds | select('equalto', 'on') | list |
+            length %} {% if count_on == 3 %}
+              mdi:emoticon-excited-outline
+            {% elif count_on == 2 %}
+              mdi:emoticon-sad-outline
+            {% elif count_on == 0 %}
+              mdi:emoticon-sick-outline
+            {% else %}
+              mdi:emoticon-sick-outline
+            {% endif %}
+          x: 60
+          "y": 110
+          size: 22
+          color: black
+        - type: text
+          value: >
+            {% set entity = states['input_boolean.medikament_1_genommen'] %} 1:
+            {{ 'ja ' ~ entity.last_changed.strftime('%H:%M') + ' Uhr' if
+            entity.state == 'on' else 'nein' }}
+          font: ppb.ttf
+          x: 10
+          "y": 35
+          size: 14
+        - type: icon
+          value: |
+            {% if states('input_boolean.medikament_1_genommen') == 'on' %}
+              mdi:bell-check-outline
+            {% else %}
+              mdi:bell-sleep-outline
+            {% endif %}
+          x: 130
+          "y": 35
+          size: 20
+          color: black
+        - type: text
+          value: >
+            {% set entity = states['input_boolean.medikament_2_genommen'] %} 2:
+            {{ 'ja ' ~ entity.last_changed.strftime('%H:%M') + ' Uhr' if
+            entity.state == 'on' else 'nein' }}
+          font: ppb.ttf
+          x: 10
+          "y": 55
+          size: 14
+        - type: icon
+          value: |
+            {% if states('input_boolean.medikament_2_genommen') == 'on' %}
+              mdi:bell-check-outline
+            {% else %}
+              mdi:bell-sleep-outline
+            {% endif %}
+          x: 130
+          "y": 55
+          size: 20
+          color: black
+        - type: text
+          value: >
+            {% set entity = states['input_boolean.medikament_3_genommen'] %} 3:
+            {{ 'ja ' ~ entity.last_changed.strftime('%H:%M') + ' Uhr' if
+            entity.state == 'on' else 'nein' }}
+          font: ppb.ttf
+          x: 10
+          "y": 75
+          size: 14
+        - type: icon
+          value: |
+            {% if states('input_boolean.medikament_3_genommen') == 'on' %}
+              mdi:bell-check-outline
+            {% else %}
+              mdi:bell-sleep-outline
+            {% endif %}
+          x: 130
+          "y": 75
+          size: 20
+          color: black
+        - type: text
+          value: |
+            {% set heute = now().weekday() %} {% if heute == 6 %}
+              {% set entity = states['input_boolean.medikament_4_genommen'] %}
+              4: {{ 'ja ' ~ entity.last_changed.strftime('%H:%M') + ' Uhr' if entity.state == 'on' else 'nein' }}
+            {% else %}  {% endif %}
+          font: ppb.ttf
+          x: 10
+          "y": 95
+          size: 14
+        - type: icon
+          value: >
+            {% if now().weekday() and
+            states('input_boolean.medikament_4_genommen') == 'on' %}
+              mdi:bell-check-outline
+            {% else %}
+              mdi:bell-outline
+            {% endif %}
+          x: 130
+          "y": 95
+          size: 20
+          color: black
+        - type: text
+          value: >-
+            {{"Last Update: " + states('sensor.0000021FF0583418_last_seen') |
+            as_timestamp() | timestamp_custom('%H:%M')}}
+          font: ppb.ttf
+          x: 15
+          "y": 135
+          size: 12
+          color: red
+    action: open_epaper_link.drawcustom
+mode: single

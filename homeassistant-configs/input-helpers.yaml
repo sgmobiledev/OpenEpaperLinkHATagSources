@@ -1,0 +1,9 @@
+input_boolean:
+  medikament1_genommen:
+    name: Medikament 1 genommen
+  medikament2_genommen:
+    name: Medikament 2 genommen
+  medikament3_genommen:
+    name: Medikament 3 genommen
+  medikament_sonntag_genommen:
+    name: Medikament Sonntag genommen

@@ -24,6 +24,7 @@ Tested with SoluM 1.54" displays (152x152 px).
 | `1.54-solar-rain-alert.yaml`<br>`1.54-solar-rain-alerter-V2.yaml` | ![](/images/1.54-solar_rain_mini.jpg) | Solar-powered Zigbee rain sensor alert. |
 | `1.54-openplant-soil.yaml` | ![](/images/1.54-openplant-motion-soil.jpg)<br>![](/images/1.54-openplant-stand.jpg) | Soil/motion data with OpenPlant. Includes 3D printable stand (STL in `/stl`). |
 | `1.54-flightradar.yaml` | ![](/images/1.54.flightradar.jpg) | Local air traffic from Flightradar24 (Nuremberg airport example). |
+| `1.54-medi-marker.yaml` | ![](/images/1.54.medi-marker.jpg) | Displays Medication Marker. Must add homeassistant helper for my four medi. 
 
 ---
 
@@ -122,8 +123,12 @@ Resolution: 800x480 px
 ### `ha-template-sensors.yaml`
 
 - Template sensors to extend Home Assistant functionality.
-- Includes CAPE and Lifted Index sensors.
-- Add to your `configuration.yaml` or `sensors.yaml`.
+- Includes CAPE and Lifted Index sensors.|
+### `ha-helper`
+- Add to your `\homeassistant-configs\input-helpers.yaml`.
+
+### `medi-marker-card`
+- Add to your `\homeassistant-configs\medi-marker-card.yaml`.
 
 ### `/media/`
 
