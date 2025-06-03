@@ -1,0 +1,161 @@
+alias: OpenEpaperLink_Lunarphase_2_2
+description: Horizon Stand der Sonne und Mond
+triggers:
+  - hours: /1
+    trigger: time_pattern
+conditions:
+  - condition: time
+    after: "06:00:00"
+    before: "20:00:00"
+    weekday:
+      - sat
+      - fri
+      - thu
+      - wed
+      - tue
+      - mon
+      - sun
+actions:
+  - target:
+      device_id:
+        - b0b34d0bc668a267ee366e15807c8550
+    data:
+      rotate: 0
+      dither: 2
+      ttl: 60
+      dry-run: false
+      payload:
+        - type: text
+          value: Mond Phase
+          font: ppb.ttf
+          x: 10
+          "y": 5
+          size: 16
+          color: black
+        - type: text
+          value: >-
+            {{ states('sensor.0000034775FA3613_last_seen') | as_timestamp() |
+            timestamp_custom('%H:%M') }} Uhr
+          font: ppb.ttf
+          x: 120
+          "y": 5
+          size: 14
+          color: red
+        - type: icon
+          value: mdi:telescope
+          x: 192
+          "y": 0
+          size: 16
+        - type: text
+          value: >
+            {% set phase = states('sensor.nuernberg_mondphase') %} {% if phase
+            == 'new_moon' %}
+              Neumond
+            {% elif phase == 'full_moon' %}
+              Vollmond  
+            {% elif phase == 'waxing_crescent' %}
+              Zunehmender Sichelmond
+            {% elif phase == 'first_quarter' %}
+              Zunehmender Halbmond
+            {% elif phase == 'last_quarter' %}
+              Abnehmender Halbmond 
+            {% elif phase == 'waxing_gibbous' %}
+              Zunehmender Dreiviertelmond
+            {% elif phase == 'waning_gibbous' %}
+              Abnehmender Dreiviertelmond
+            {% elif phase == 'waning_crescent' %}
+              Abnehmender Sichelmond
+            {% else %}
+              Unbekannt
+            {% endif %}
+          font: ppb.ttf
+          x: 20
+          "y": 20
+          size: 12
+          color: black
+        - type: icon
+          value: >
+            {% set moon_phase = states('sensor.nuernberg_mondphase') %} {% if
+            moon_phase == 'new_moon' %}
+              moon-new
+            {% elif moon_phase == 'full_moon' %}
+              moon-full
+            {% else %}
+              {{ 'moon-' ~ moon_phase | replace('_', '-') }}
+            {% endif %}
+          x: 10
+          "y": 30
+          size: 70
+        - type: text
+          value: "{{ (states('sensor.nuernberg_moon_age') | float) | round(2) }} Tage"
+          font: ppb.ttf
+          x: 150
+          "y": 35
+          size: 12
+          color: black
+        - type: text
+          value: >-
+            {{ (states('sensor.nuernberg_moon_illumination_fraction') | float) |
+            round(2) }} %
+          font: ppb.ttf
+          x: 155
+          "y": 50
+          size: 12
+          color: black
+        - type: text
+          value: "{{ states('sensor.nuernberg_moon_azimuth') | float | round(1) }}°"
+          font: ppb.ttf
+          x: 155
+          "y": 63
+          size: 12
+          color: black
+        - type: text
+          value: "{{ states('sensor.nuernberg_moon_altitude') | float | round(1) }}°"
+          font: ppb.ttf
+          x: 155
+          "y": 78
+          size: 12
+          color: black
+        - type: text
+          value: >-
+            {{ (states('sensor.nuernberg_moon_distance') | float) | round(2) }}
+            km
+          font: ppb.ttf
+          x: 120
+          "y": 90
+          size: 12
+          color: black
+        - type: line
+          x_start: 100
+          x_end: 100
+          y_start: 35
+          y_end: 90
+          color: black
+          width: 1
+        - type: icon
+          value: mdi:progress-clock
+          x: 105
+          "y": 33
+          size: 16
+        - type: icon
+          value: mdi:theme-light-dark
+          x: 105
+          "y": 49
+          size: 16
+        - type: icon
+          value: mdi:compass
+          x: 105
+          "y": 62
+          size: 16
+        - type: icon
+          value: mdi:angle-acute
+          x: 105
+          "y": 78
+          size: 16
+        - type: icon
+          value: mdi:arrow-left-right
+          x: 105
+          "y": 90
+          size: 16
+    action: open_epaper_link.drawcustom
+mode: single

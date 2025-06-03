@@ -47,6 +47,7 @@ Resolution: 250x122 px
 |------|---------|-------------|
 | `2.2-openplant-soil.yaml` | ![](/images/2.2.openplant-soil-soluM.jpg) | OpenPlant soil data. |
 | `2.2-ecowitt_wh51_soil_4ch.yaml` | ![](/images/2.2.ecowitt_wh51_soil_4ch.jpg) | 4-channel WH51 soil display via Ecowitt. |
+| `2.2-lunar-phase.yaml` | ![](/images/2.22.lunar-phase.jpg) | moon-stand on 2.2 over lunar phase integration [Integration source](https://github.com/ngocjohn/lunar-phase)|
 
 ---
 
