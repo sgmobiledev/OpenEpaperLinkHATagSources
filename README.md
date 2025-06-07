@@ -25,7 +25,7 @@ Tested with SoluM 1.54" displays (152x152 px).
 | `1.54-openplant-soil.yaml` | ![](/images/1.54-openplant-motion-soil.jpg)<br>![](/images/1.54-openplant-stand.jpg) | Soil/motion data with OpenPlant. Includes 3D printable stand (STL in `/stl`). |
 | `1.54-flightradar.yaml` | ![](/images/1.54.flightradar.jpg) | Local air traffic from Flightradar24 (Nuremberg airport example). |
 | `1.54-medi-marker.yaml` | ![](/images/1.54.medi-marker.jpg) | Displays Medication Marker. Must add homeassistant helper for my four medi. 
-
+ `1.54-uv-stufe-dwd.yaml` | ![](/images/1.54-uv-stufe-dwd.jpg) | Displays UV index pyramid. Must add homeassistant HACS Integration [UV-INDEX-CARD](https://github.com/t1gr0u/uv-index-card). 
 ---
 
 ### 🧾 2.13" Gicisky E-Paper Tags

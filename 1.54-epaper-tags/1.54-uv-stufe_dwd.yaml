@@ -1,0 +1,314 @@
+alias: OpenEpaperLink_UV_Stufe_DWD_1_54
+description: DWD UV-index als Pyramidenstatus
+triggers:
+  - hours: /3
+    trigger: time_pattern
+conditions:
+  - condition: time
+    after: "08:00:00"
+    before: "18:00:00"
+    weekday:
+      - mon
+      - tue
+      - wed
+      - thu
+      - fri
+      - sat
+      - sun
+actions:
+  - data:
+      rotate: 0
+      dither: 2
+      ttl: 60
+      dry-run: false
+      background: white
+      payload:
+        - type: icon
+          value: >
+            {% set uv_index = states('sensor.nuernberg_uv_index') | float |
+            round(0) %} {% if uv_index >= 1 and uv_index < 3 %}
+              weather-sunny
+            {% elif uv_index >= 3 and uv_index < 6 %}
+              sun-wireless-outline
+            {% elif uv_index >= 6 and uv_index < 8 %}
+              sun-thermometer-outline
+            {% elif uv_index >= 8 and uv_index < 11 %}
+              weather-sunny-alert
+            {% elif uv_index == 11 %}
+              shield-sun-outline
+            {% else %}
+               help-circle-outline
+            {% endif %}
+          x: 120
+          "y": 0
+          size: 20
+          color: black
+        - type: text
+          value: "{{ 'DWD UV-Index' }}"
+          font: ppb.ttf
+          x: 5
+          "y": 2
+          size: 14
+          color: red
+        - type: text
+          value: >
+            {% set ts = states('sensor.000002a9dac93415_last_seen') |
+            as_timestamp %} Datum: {{ ts | timestamp_custom('%d.%m.%Y') }}
+          font: ppb.ttf
+          x: 5
+          "y": 22
+          size: 14
+          color: red
+          fill: black
+        - type: text
+          value: UV-Index
+          font: ppb.ttf
+          x: 70
+          "y": 40
+          size: 14
+          color: black
+        - type: text
+          value: >
+            {% set uvIndex = states('sensor.nuernberg_uv_index') | float |
+            default(0) | round(0) %} {{ uvIndex  }}
+          font: ppb.ttf
+          x: 100
+          "y": 60
+          size: 14
+          color: black
+        - type: text
+          value: Risiko
+          font: ppb.ttf
+          x: 90
+          "y": 80
+          size: 14
+          color: black
+        - type: text
+          value: >
+            {% set uv = states('sensor.nuernberg_uv_index') | float | round(0) |
+            default(0) %} {% if uv < 3 %}
+              Niedrig
+            {% elif uv < 6 %}
+              Mittel
+            {% elif uv < 8 %}
+              Hoch
+            {% elif uv < 11 %}
+              Sehr Hoch
+            {% else %}
+              Extrem
+            {% endif %}
+          font: ppb.ttf
+          x: 88
+          "y": 100
+          size: 14
+          color: black
+        - type: polygon
+          points:
+            - - 50
+              - 40
+            - - 0
+              - 140
+            - - 100
+              - 140
+          fill: none
+          stroke: black
+          width: 1
+        - type: polygon
+          points:
+            - - 3
+              - 132.31
+            - - 97
+              - 132.31
+            - - 94
+              - 124.62
+            - - 6
+              - 124.62
+          fill: >
+            {% set uv = states('sensor.nuernberg_uv_index') | float %} {% if uv
+            == 1 %}
+              white     {# Low #}
+            {% else %}
+              none     
+            {% endif %}
+        - type: polygon
+          points:
+            - - 6
+              - 124.62
+            - - 94
+              - 124.62
+            - - 90
+              - 116.92
+            - - 10
+              - 116.92
+          fill: >
+            {% set uv = states('sensor.nuernberg_uv_index') | float %} {% if uv
+            == 2 %}
+              white     {# Low #}
+            {% else %}
+              none     
+            {% endif %}
+        - type: polygon
+          points:
+            - - 10
+              - 116.92
+            - - 90
+              - 116.92
+            - - 86
+              - 109.23
+            - - 14
+              - 109.23
+          fill: >
+            {% set uv = states('sensor.nuernberg_uv_index') | float %} {% if uv
+            == 3 %}
+              yellow     {# moderate #}
+            {% else %}
+              none     
+            {% endif %}
+        - type: polygon
+          points:
+            - - 14
+              - 109.23
+            - - 86
+              - 109.23
+            - - 82
+              - 101.54
+            - - 18
+              - 101.54
+          fill: >
+            {% set uv = states('sensor.nuernberg_uv_index') | float %} {% if uv
+            == 4 %}
+              yellow     {# moderate #}
+            {% else %}
+              none     
+            {% endif %}
+        - type: polygon
+          points:
+            - - 18
+              - 101.54
+            - - 82
+              - 101.54
+            - - 78
+              - 93.85
+            - - 22
+              - 93.85
+          fill: >
+            {% set uv = states('sensor.nuernberg_uv_index') | float %} {% if uv
+            == 5 %}
+              yellow     {# moderate #}
+            {% else %}
+              none     
+            {% endif %}
+        - type: polygon
+          points:
+            - - 22
+              - 93.85
+            - - 78
+              - 93.85
+            - - 74
+              - 86.15
+            - - 26
+              - 86.15
+          fill: >
+            {% set uv = states('sensor.nuernberg_uv_index') | float %} {% if uv
+            == 6 %}
+              red     {# high #}
+            {% else %}
+              none     
+            {% endif %}
+        - type: polygon
+          points:
+            - - 26
+              - 86.15
+            - - 74
+              - 86.15
+            - - 70
+              - 78.46
+            - - 30
+              - 78.46
+          fill: >
+            {% set uv = states('sensor.nuernberg_uv_index') | float %} {% if uv
+            == 7 %}
+              red     {# high #}
+            {% else %}
+              none     
+            {% endif %}
+        - type: polygon
+          points:
+            - - 30
+              - 78.46
+            - - 70
+              - 78.46
+            - - 66
+              - 70.77
+            - - 34
+              - 70.77
+          fill: >
+            {% set uv = states('sensor.nuernberg_uv_index') | float %} {% if uv
+            == 8 %}
+              black     {# very high #}
+            {% else %}
+              none     
+            {% endif %}
+        - type: polygon
+          points:
+            - - 34
+              - 70.77
+            - - 66
+              - 70.77
+            - - 62
+              - 63.08
+            - - 38
+              - 63.08
+          fill: >
+            {% set uv = states('sensor.nuernberg_uv_index') | float %} {% if uv
+            == 9 %}
+              black     {# very high #}
+            {% else %}
+              none     
+            {% endif %}
+        - type: polygon
+          points:
+            - - 38
+              - 63.08
+            - - 62
+              - 63.08
+            - - 58
+              - 55.38
+            - - 42
+              - 55.38
+          fill: >
+            {% set uv = states('sensor.nuernberg_uv_index') | float %} {% if uv
+            == 10 %}
+              black     {# very high #}
+            {% else %}
+              none     
+            {% endif %}  
+        - type: polygon
+          points:
+            - - 42
+              - 55.38
+            - - 58
+              - 55.38
+            - - 50
+              - 40
+          fill: >
+            {% set uv = states('sensor.nuernberg_uv_index') | float %} {% if uv
+            == 11 %}
+              black     {# very high #}
+            {% else %}
+              none     
+            {% endif %}
+        - type: text
+          value: >-
+            {{"Last Update: " + states('sensor.000002a9dac93415_last_seen') |
+            as_timestamp() | timestamp_custom('%H:%M')}}
+          font: ppb.ttf
+          x: 15
+          "y": 141
+          size: 12
+          color: red
+    action: open_epaper_link.drawcustom
+    target:
+      device_id:
+        - 3445a558b0587a72605cd9fe392eea31
+mode: single
