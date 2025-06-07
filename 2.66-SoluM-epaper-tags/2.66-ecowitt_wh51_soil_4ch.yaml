@@ -1,0 +1,314 @@
+alias: OpenEpaperLink_Ecowitt_WH51_2_66
+description: Ecowitt WH51 Bodenfeuchtesensor SoluM 2.66
+triggers:
+  - hours: /3
+    trigger: time_pattern
+conditions:
+  - condition: time
+    after: "07:00:00"
+    before: "20:00:00"
+    weekday:
+      - sat
+      - fri
+      - thu
+      - wed
+      - tue
+      - mon
+      - sun
+actions:
+  - target:
+      device_id: 3d7977cd069247927d2438d45b50b597
+    data:
+      rotate: 0
+      dither: 2
+      ttl: 60
+      dry-run: false
+      background: white
+      payload:
+        - type: arc
+          x: 25
+          "y": 75
+          radius: 20
+          start_angle: 0
+          end_angle: "{{ (states('sensor.gw1100a_soil_moisture_1') | float * 3.6) | int }}"
+          fill: red
+        - type: arc
+          x: 25
+          "y": 74
+          radius: 20
+          start_angle: "{{ states('sensor.gw1100a_soil_moisture_1') | int }}"
+          end_angle: 0
+        - type: arc
+          x: 70
+          "y": 74
+          radius: 20
+          start_angle: 0
+          end_angle: "{{ (states('sensor.gw1100a_soil_moisture_2') | float * 3.6) | int }}"
+          fill: red
+        - type: arc
+          x: 70
+          "y": 74
+          radius: 20
+          start_angle: "{{ states('sensor.gw1100a_soil_moisture_2') | int }}"
+          end_angle: 0
+        - type: arc
+          x: 140
+          "y": 74
+          radius: 20
+          start_angle: 0
+          end_angle: "{{ (states('sensor.gw1100a_soil_moisture_3') | float * 3.6) | int }}"
+          fill: red
+        - type: arc
+          x: 140
+          "y": 74
+          radius: 20
+          start_angle: "{{ states('sensor.gw1100a_soil_moisture_3') | int }}"
+          end_angle: 0
+        - type: arc
+          x: 185
+          "y": 74
+          radius: 20
+          start_angle: 0
+          end_angle: "{{ (states('sensor.gw1100a_soil_moisture_4') | float * 3.6) | int }}"
+          fill: red
+        - type: arc
+          x: 185
+          "y": 74
+          radius: 20
+          start_angle: "{{ states('sensor.gw1100a_soil_moisture_4') | int }}"
+          end_angle: 0
+        - type: text
+          value: Ecowitt WH51
+          font: ppb.ttf
+          x: 5
+          "y": 5
+          size: 12
+        - type: icon
+          value: flower-pollen-outline
+          x: 90
+          "y": 55
+          size: 30
+          color: black
+        - type: text
+          value: Bodenfeuchte
+          font: ppb.ttf
+          x: 50
+          "y": 20
+          size: 10
+        - type: text
+          value: >-
+            Last seen: {{states('sensor.000003350DCA3E12_last_seen') |
+            as_timestamp() | timestamp_custom('%H:%M')}}
+          font: ppb.ttf
+          x: 200
+          "y": 5
+          size: 12
+          color: red
+        - type: line
+          x_start: 0
+          x_end: 296
+          y_start: 18
+          y_end: 18
+          width: 1
+          fill: red
+        - type: line
+          x_start: 0
+          x_end: 296
+          y_start: 32
+          y_end: 32
+          width: 1
+          fill: red
+        - type: progress_bar
+          x_start: 240
+          y_start: 35
+          x_end: 290
+          y_end: 55
+          fill: red
+          outline: black
+          width: 1
+          progress: >
+            {% set soil_bat1 = states('sensor.gw1100a_soil_battery_1') | float
+            %} {{ ((soil_bat1 / 1.5 ) * 100 ) | float(1) | round(1)}}
+          direction: right
+          show_percentage: true
+          font: ppb.ttf
+        - type: progress_bar
+          x_start: 240
+          y_start: 65
+          x_end: 290
+          y_end: 85
+          fill: red
+          outline: black
+          width: 1
+          progress: >
+            {% set soil_bat2 = states('sensor.gw1100a_soil_battery_2') | float
+            %} {{ ((soil_bat2 / 1.5 ) * 100 ) | float(1) | round(1)}}
+          direction: right
+          show_percentage: true
+          font: ppb.ttf
+        - type: progress_bar
+          x_start: 240
+          y_start: 95
+          x_end: 290
+          y_end: 115
+          fill: red
+          outline: black
+          width: 1
+          progress: >
+            {% set soil_bat3 = states('sensor.gw1100a_soil_battery_3') |
+            float(1) %} {{ ((soil_bat3 / 1.5 ) * 100 ) | float(1) | round(1)}}
+          direction: right
+          show_percentage: true
+          font: ppb.ttf
+        - type: progress_bar
+          x_start: 240
+          y_start: 125
+          x_end: 290
+          y_end: 145
+          fill: red
+          outline: black
+          width: 1
+          progress: >
+            {% set soil_bat4 = states('sensor.gw1100a_soil_battery_4') |
+            float(1) %} {{ ((soil_bat4 / 1.5 ) * 100 ) | float(1)  | round(1)}}
+          direction: right
+          show_percentage: true
+          font: ppb.ttf
+        - type: text
+          value: >
+            {% set soil_ch1 = states('sensor.gw1100a_soil_moisture_1') | float
+            %} {{ (soil_ch1) | round(0) }} %
+          font: ppb.ttf
+          x: 15
+          "y": 35
+          size: 14
+        - type: text
+          value: >
+            {% set soil_ch2 = states('sensor.gw1100a_soil_moisture_2') | float
+            %} {{ (soil_ch2) | round(0) }} %
+          font: ppb.ttf
+          x: 60
+          "y": 35
+          size: 14
+        - type: text
+          value: >
+            {% set soil_ch3 = states('sensor.gw1100a_soil_moisture_3') | float
+            %} {{ (soil_ch3) | round(0) }} %
+          font: ppb.ttf
+          x: 130
+          "y": 35
+          size: 14
+        - type: text
+          value: >
+            {% set soil_ch4 = states('sensor.gw1100a_soil_moisture_4') | float
+            %} {{ (soil_ch4) | round(0) }} %
+          font: ppb.ttf
+          x: 175
+          "y": 35
+          size: 14
+        - type: text
+          value: CH1
+          font: ppb.ttf
+          x: 15
+          "y": 100
+          size: 10
+        - type: text
+          value: CH2
+          font: ppb.ttf
+          x: 60
+          "y": 100
+          size: 10
+        - type: text
+          value: CH3
+          font: ppb.ttf
+          x: 130
+          "y": 100
+          size: 10
+        - type: text
+          value: CH4
+          font: ppb.ttf
+          x: 175
+          "y": 100
+          size: 10
+        - type: text
+          value: >
+            {% set soil_ad1 = states('sensor.gw1100a_soil_ad_1') | float %} {{
+            (soil_ad1) | round(0) }}
+          font: ppb.ttf
+          x: 15
+          "y": 120
+          size: 14
+        - type: text
+          value: >
+            {% set soil_ad2 = states('sensor.gw1100a_soil_ad_2') | float %} {{
+            (soil_ad2) | round(0) }}
+          font: ppb.ttf
+          x: 60
+          "y": 120
+          size: 14
+        - type: text
+          value: >
+            {% set soil_ad3 = states('sensor.gw1100a_soil_ad_3') | float %} {{
+            (soil_ad3) | round(0) }}
+          font: ppb.ttf
+          x: 130
+          "y": 120
+          size: 14
+        - type: text
+          value: >
+            {% set soil_ad4 = states('sensor.gw1100a_soil_ad_4') | float %} {{
+            (soil_ad4) | round(0) }}
+          font: ppb.ttf
+          x: 175
+          "y": 120
+          size: 14
+        - type: text
+          value: AD1
+          font: ppb.ttf
+          x: 15
+          "y": 140
+          size: 10
+        - type: text
+          value: AD2
+          font: ppb.ttf
+          x: 60
+          "y": 140
+          size: 10
+        - type: text
+          value: AD3
+          font: ppb.ttf
+          x: 130
+          "y": 140
+          size: 10
+        - type: text
+          value: AD4
+          font: ppb.ttf
+          x: 175
+          "y": 140
+          size: 10
+        - type: icon
+          value: mdi:battery-high
+          x: 210
+          "y": 35
+          size: 20
+          color: black
+        - type: icon
+          value: mdi:battery-high
+          x: 210
+          "y": 65
+          size: 20
+          color: black
+        - type: icon
+          value: mdi:battery-high
+          x: 210
+          "y": 95
+          size: 20
+          color: black
+        - type: icon
+          value: mdi:battery-high
+          x: 210
+          "y": 125
+          size: 20
+          color: black
+    action: open_epaper_link.drawcustom
+mode: single
