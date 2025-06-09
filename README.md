@@ -115,6 +115,7 @@ Resolution: 800x480 px
 | File | Preview | Description |
 |------|---------|-------------|
 | `7.5-pws-weather.yaml` | ![](/images/7.5_hanshow_PWS.jpg) | Ecowitt PWS weather display (Nuremberg). |
+| `7.5-dwd-pollenflug.yaml` | ![](/images/7.5_handshow_dwd_pollenflug.jpg) | DWD Pollenflug for Nuremberg.  |
 
 ---
 
