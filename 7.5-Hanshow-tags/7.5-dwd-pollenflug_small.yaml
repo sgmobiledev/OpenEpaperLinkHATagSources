@@ -1,0 +1,341 @@
+alias: OpenEpaperLink_Pollen_Card_7_5
+description: Pollen Warnung analog zum Pollencard, logo from dwd website, small version
+triggers:
+  - hours: /3
+    trigger: time_pattern
+conditions:
+  - condition: time
+    after: "08:00:00"
+    before: "19:00:00"
+    weekday:
+      - mon
+      - tue
+      - wed
+      - thu
+      - fri
+      - sat
+      - sun
+actions:
+  - data:
+      rotate: 180
+      dither: 2
+      ttl: 60
+      dry-run: false
+      background: white
+      payload:
+        - type: icon
+          value: mdi:flower-pollen-outline
+          x: 20
+          "y": 5
+          size: 50
+          color: black
+        - type: text
+          value: |
+            DWD Pollenflug Warnung
+          font: /config/www/fonts/DS-DIGIT.TTF
+          x: 200
+          "y": 30
+          size: 30
+          fill: black
+        - type: text
+          value: >
+            {{ states('sensor.6250af2a23f1c595_last_seen') | as_timestamp() |
+            timestamp_custom('%H:%M')}} Uhr  
+          font: /config/www/fonts/DS-DIGIT.TTF
+          x: 570
+          "y": 25
+          size: 30
+          fill: black
+        - type: text
+          value: >
+            {{ states('sensor.6250af2a23f1c595_last_seen') | as_timestamp() |
+            timestamp_custom('%d/%m') }}
+          font: /config/www/fonts/DS-DIGIT.TTF
+          x: 700
+          "y": 25
+          size: 30
+          fill: black
+        - type: line
+          x_start: 20
+          x_end: 780
+          y_start: 60
+          y_end: 60
+          width: 1
+          fill: black
+        - type: text
+          value: |
+            Ambrosia
+          font: /config/www/fonts/DS-DIGIT.TTF
+          x: 40
+          "y": 215
+          size: 30
+          fill: black
+        - type: dlimg
+          url: /config/www/pollen_png/ambrosia_0.png
+          x: 80
+          "y": 130
+          xsize: 80
+          ysize: 80
+          rotate: 0
+        - type: text
+          value: >
+            {{ state_attr('sensor.pollenflug_ambrosia_124', 'state_today_desc')
+            }}
+          font: /config/www/fonts/DS-DIGIT.TTF
+          x: 20
+          "y": 70
+          size: 20
+          fill: red
+          max_width: >-
+            {% set s = states('sensor.pollenflug_ambrosia_124') | float %} {% if
+            s in [0.5, 1.5, 2.5] %}
+              80
+            {% else %}
+              150
+            {% endif %}
+        - type: text
+          value: |
+            Bleifuss
+          font: /config/www/fonts/DS-DIGIT.TTF
+          x: 260
+          "y": 215
+          size: 30
+          fill: black
+        - type: text
+          value: >
+            {{ state_attr('sensor.pollenflug_beifuss_124', 'state_today_desc')
+            }}
+          font: /config/www/fonts/DS-DIGIT.TTF
+          x: 240
+          "y": 70
+          size: 20
+          fill: red
+          max_width: >-
+            {% set s = states('sensor.pollenflug_beifuss_124') | float %} {% if
+            s in [0.5, 1.5, 2.5] %}
+              80
+            {% else %}
+              150
+            {% endif %}
+        - type: dlimg
+          url: /config/www/pollen_png/beifuss_0.png
+          x: 290
+          "y": 130
+          xsize: 80
+          ysize: 80
+          rotate: 0
+        - type: text
+          value: |
+            Birke
+          font: /config/www/fonts/DS-DIGIT.TTF
+          x: 500
+          "y": 215
+          size: 30
+          fill: black
+        - type: text
+          value: |
+            {{ state_attr('sensor.pollenflug_birke_124', 'state_today_desc') }}
+          font: /config/www/fonts/DS-DIGIT.TTF
+          x: 480
+          "y": 70
+          size: 20
+          fill: red
+          max_width: >-
+            {% set s = states('sensor.pollenflug_birke_124') | float %} {% if s
+            in [0.5, 1.5, 2.5] %}
+              80
+            {% else %}
+              150
+            {% endif %}
+        - type: dlimg
+          url: /config/www/pollen_png/birke_0.png
+          x: 500
+          "y": 130
+          xsize: 80
+          ysize: 80
+          rotate: 0
+        - type: text
+          value: |
+            Erle
+          font: /config/www/fonts/DS-DIGIT.TTF
+          x: 660
+          "y": 215
+          size: 30
+          fill: black
+        - type: text
+          value: |
+            {{ state_attr('sensor.pollenflug_erle_124', 'state_today_desc') }}
+          font: /config/www/fonts/DS-DIGIT.TTF
+          x: 640
+          "y": 70
+          size: 20
+          fill: red
+          max_width: >-
+            {% set s = states('sensor.pollenflug_erle_124') | float %} {% if s
+            in [0.5, 1.5, 2.5] %}
+              80
+            {% else %}
+              150
+            {% endif %}
+        - type: dlimg
+          url: /config/www/pollen_png/erle_0.png
+          x: 650
+          "y": 130
+          xsize: 80
+          ysize: 80
+          rotate: 0
+        - type: text
+          value: |
+            Hasel
+          font: /config/www/fonts/DS-DIGIT.TTF
+          x: 40
+          "y": 400
+          size: 30
+          fill: black
+        - type: text
+          value: |
+            {{ state_attr('sensor.pollenflug_hasel_124', 'state_today_desc') }}
+          font: /config/www/fonts/DS-DIGIT.TTF
+          x: 20
+          "y": 250
+          size: 20
+          fill: red
+          max_width: >-
+            {% set s = states('sensor.pollenflug_hasel_124') | float %} {% if s
+            in [0.5, 1.5, 2.5] %}
+              80
+            {% else %}
+              150
+            {% endif %}
+        - type: dlimg
+          url: /config/www/pollen_png/hasel_0.png
+          x: 40
+          "y": 310
+          xsize: 80
+          ysize: 80
+          rotate: 0
+        - type: text
+          value: |
+            Esche
+          font: /config/www/fonts/DS-DIGIT.TTF
+          x: 260
+          "y": 400
+          size: 30
+          fill: black
+        - type: text
+          value: |
+            {{ state_attr('sensor.pollenflug_esche_124', 'state_today_desc') }}
+          font: /config/www/fonts/DS-DIGIT.TTF
+          x: 240
+          "y": 250
+          size: 20
+          fill: red
+          max_width: >-
+            {% set s = states('sensor.pollenflug_esche_124') | float %} {% if s
+            in [0.5, 1.5, 2.5] %}
+              80
+            {% else %}
+              150
+            {% endif %}
+        - type: dlimg
+          url: /config/www/pollen_png/esche_0.png
+          x: 270
+          "y": 310
+          xsize: 80
+          ysize: 80
+          rotate: 0
+        - type: text
+          value: |
+            Roggen
+          font: /config/www/fonts/DS-DIGIT.TTF
+          x: 440
+          "y": 400
+          size: 30
+          fill: black
+        - type: text
+          value: |
+            {{ state_attr('sensor.pollenflug_roggen_124', 'state_today_desc') }}
+          font: /config/www/fonts/DS-DIGIT.TTF
+          x: 420
+          "y": 250
+          size: 20
+          fill: red
+          max_width: >-
+            {% set s = states('sensor.pollenflug_roggen_124') | float %} {% if s
+            in [0.5, 1.5, 2.5] %}
+              80
+            {% else %}
+              150
+            {% endif %}
+        - type: dlimg
+          url: /config/www/pollen_png/roggen_0.png
+          x: 470
+          "y": 310
+          xsize: 80
+          ysize: 80
+          rotate: 0
+        - type: text
+          value: |
+            Graeser
+          font: /config/www/fonts/DS-DIGIT.TTF
+          x: 620
+          "y": 400
+          size: 30
+          fill: black
+        - type: text
+          value: >
+            {{ state_attr('sensor.pollenflug_graeser_124', 'state_today_desc')
+            }}
+          font: /config/www/fonts/DS-DIGIT.TTF
+          x: 600
+          "y": 250
+          size: 20
+          fill: red
+          max_width: >-
+            {% set s = states('sensor.pollenflug_graeser_124') | float %} {% if
+            s in [0.5, 1.5, 2.5] %}
+              80
+            {% else %}
+              150
+            {% endif %}
+        - type: dlimg
+          url: /config/www/pollen_png/graeser_0.png
+          x: 650
+          "y": 310
+          xsize: 80
+          ysize: 80
+          rotate: 0
+        - type: text
+          value: >
+            Aktueller Stand: {{ state_attr('sensor.pollenflug_hasel_124',
+            'last_update') | as_timestamp() |
+
+            timestamp_custom('%d/%m') }}
+          font: /config/www/fonts/DS-DIGIT.TTF
+          x: 20
+          "y": 440
+          size: 20
+          fill: black
+        - type: dlimg
+          url: /config/www/pollen_png/dwd-logo.png
+          x: 250
+          "y": 430
+          xsize: 280
+          ysize: 50
+          rotate: 0
+        - type: text
+          value: >
+            Stand Zukunft: {{ state_attr('sensor.pollenflug_hasel_124',
+            'next_update') | as_timestamp() |
+
+            timestamp_custom('%d/%m') }}
+          font: /config/www/fonts/DS-DIGIT.TTF
+          x: 600
+          "y": 440
+          size: 20
+          fill: black
+    action: open_epaper_link.drawcustom
+    target:
+      device_id:
+        - fc458673a8f4b6d7c5ccae7ff772b640
+mode: single
