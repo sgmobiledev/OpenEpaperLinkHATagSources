@@ -1,0 +1,121 @@
+alias: OpenEPaperLink_Zigbee_SoilMolsture_Mini
+description: Zigbee Bodensensor
+triggers:
+  - hours: /3
+    trigger: time_pattern
+    minutes: /5
+conditions:
+  - condition: time
+    after: "08:00:00"
+    before: "18:00:00"
+    weekday:
+      - mon
+      - tue
+      - wed
+      - thu
+      - fri
+      - sat
+      - sun
+actions:
+  - data:
+      rotate: 0
+      dither: 2
+      ttl: 60
+      dry-run: false
+      background: white
+      payload:
+        - type: icon
+          value: mdi:flower-outline
+          x: 120
+          "y": 0
+          size: 20
+          color: black
+        - type: text
+          value: "{{ 'Solar Garten' }}"
+          font: ppb.ttf
+          x: 5
+          "y": 2
+          size: 14
+          color: red
+        - type: text
+          value: >
+            {% set ts = states('sensor.0000FFFFFFFF3416_last_seen') |
+            as_timestamp %} Datum: {{ ts | timestamp_custom('%d.%m.%Y') }}
+          font: ppb.ttf
+          x: 5
+          "y": 22
+          size: 14
+          color: red
+          fill: black
+        - type: text
+          value: Feuchte
+          font: ppb.ttf
+          x: 5
+          "y": 40
+          size: 14
+          color: black
+        - type: text
+          value: >
+            {% set bodenfeuchte =
+            states('sensor.tze284_rqcuwlsa_ts0601_outdoor_bodenfeuchtigkeit') |
+            float | default(0) %} {{ bodenfeuchte  }} %
+          font: ppb.ttf
+          x: 100
+          "y": 40
+          size: 14
+          color: black
+        - type: text
+          value: EC( µS/cm)
+          font: ppb.ttf
+          x: 5
+          "y": 60
+          size: 14
+          color: black
+        - type: text
+          value: >
+            {% set leitfaehigkeit =
+            states('sensor.tze284_rqcuwlsa_ts0601_outdoor_leitfahigkeit') |
+            float | default(0) %} {{ leitfaehigkeit  }}
+          font: ppb.ttf
+          x: 100
+          "y": 60
+          size: 14
+          color: black
+        - type: text
+          value: Temperatur
+          font: ppb.ttf
+          x: 5
+          "y": 80
+          size: 14
+          color: black
+        - type: text
+          value: >
+            {% set temperatur =
+            states('sensor.tze284_rqcuwlsa_ts0601_outdoor_temperatur') | float |
+            default(0) %} {{ temperatur  }} °C
+          font: ppb.ttf
+          x: 100
+          "y": 80
+          size: 14
+          color: black
+        - type: plot
+          x_start: 5
+          y_start: 100
+          x_end: 150
+          y_end: 150
+          duration: 43200
+          ylegend:
+            position: right
+            color: red
+          yaxis:
+            grid: 5
+          data:
+            - entity: sensor.tze284_rqcuwlsa_ts0601_outdoor_bodenfeuchtigkeit
+              smooth: true
+              width: 1
+              color: red
+    action: open_epaper_link.drawcustom
+    target:
+      device_id:
+        - f0e9d081c600aa28d783d8b8378dec0c
+mode: single

@@ -20,12 +20,14 @@ Tested with SoluM 1.54" displays (152x152 px).
 | `1.54-waste-collection-calender.yaml` | ![](/images/1.54-waste-collections-calender.png) | Waste collection schedule (requires region config via Müllkalender integration). |
 | `1.54-openuvindex_mini.yaml` | ![](/images/1.54.openuvindex_mini.png) | UV index display via OpenUV. |
 | `1.54-ecowitt-wh51-soil.yaml` | ![](/images/1.54.ecowitt_wh51_soil_mini.png) | Soil data from WH51 sensor via Ecowitt API. |
+| `1.54-ecowitt-w57-lighting.yaml` | ![](/images/1.54.ecowitt_w57_lighting_mini.png) | Weather Lighting from W57 sensor via Ecowitt API. |
 | `1.54-smart-air.yaml` | ![](/images/1.54-smart_air.png) | Air quality sensor display via SmartAir Zigbee. |
 | `1.54-solar-rain-alert.yaml`<br>`1.54-solar-rain-alerter-V2.yaml` | ![](/images/1.54-solar_rain_mini.jpg) | Solar-powered Zigbee rain sensor alert. |
 | `1.54-openplant-soil.yaml` | ![](/images/1.54-openplant-motion-soil.jpg)<br>![](/images/1.54-openplant-stand.jpg) | Soil/motion data with OpenPlant. Includes 3D printable stand (STL in `/stl`). |
 | `1.54-flightradar.yaml` | ![](/images/1.54.flightradar.jpg) | Local air traffic from Flightradar24 (Nuremberg airport example). |
 | `1.54-medi-marker.yaml` | ![](/images/1.54.medi-marker.jpg) | Displays Medication Marker. Must add homeassistant helper for my four medi. 
- `1.54-uv-stufe-dwd.yaml` | ![](/images/1.54-uv-stufe-dwd.jpg) | Displays UV index pyramid. Must add homeassistant HACS Integration [UV-INDEX-CARD](https://github.com/t1gr0u/uv-index-card). 
+ `1.54-uv-stufe-dwd.yaml` | ![](/images/1.54-uv-stufe-dwd.jpg) | Displays UV index pyramid. Must add homeassistant HACS Integration [UV-INDEX-CARD](https://github.com/t1gr0u/uv-index-card).
+| `1.54-zigbee-soil-molsture.yaml` | ![](/images/1.54.zigbee_soil_molsture_mini.png) | Solarbased Zigbee Soil Mosture Sensor. |  
 ---
 
 ### 🧾 2.13" Gicisky E-Paper Tags

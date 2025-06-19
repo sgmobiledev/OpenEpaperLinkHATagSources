@@ -1,0 +1,108 @@
+alias: OpenEpaperLink_Ecowitt_W57_Mini
+description: Ecowitt W57 Gewittermelder für 1.54 Epaper
+triggers:
+  - hours: /3
+    trigger: time_pattern
+conditions:
+  - condition: time
+    after: "08:00:00"
+    before: "18:00:00"
+    weekday:
+      - mon
+      - tue
+      - wed
+      - thu
+      - fri
+      - sat
+      - sun
+actions:
+  - data:
+      rotate: 0
+      dither: 2
+      ttl: 60
+      dry-run: false
+      background: white
+      payload:
+        - type: icon
+          value: weather-lightning
+          x: 120
+          "y": 0
+          size: 20
+          color: black
+        - type: text
+          value: "{{ 'Ecowitt W57' }}"
+          font: ppb.ttf
+          x: 5
+          "y": 2
+          size: 14
+          color: red
+        - type: text
+          value: >
+            {% set ts = states('sensor.gw1100a_last_lightning_strike_2') |
+            as_timestamp %} Datum: {{ ts | timestamp_custom('%d.%m.%Y') }}
+          font: ppb.ttf
+          x: 5
+          "y": 22
+          size: 14
+          color: red
+          fill: black
+        - type: icon
+          value: mdi:signal-distance-variant
+          x: 5
+          "y": 35
+          size: 30
+          color: black
+        - type: icon
+          value: mdi:weather-lightning-rainy
+          x: 5
+          "y": 70
+          size: 30
+          color: black
+        - type: icon
+          value: mdi:history
+          x: 5
+          "y": 105
+          size: 30
+          color: black
+        - type: text
+          value: >
+            {% set distance =
+            states('sensor.gw1100a_lightning_strike_distance_2') | float |
+            default(0) | round(0) %} {{ distance  }} KM
+          font: ppb.ttf
+          x: 50
+          "y": 45
+          size: 14
+          color: black
+        - type: text
+          value: >
+            {% set strikesCount = states('sensor.gw1100a_lightning_strikes_2') |
+            int | default(0) | round(0) %} {{ strikesCount }} Blitze
+          font: ppb.ttf
+          x: 50
+          "y": 80
+          size: 14
+          color: black
+        - type: text
+          value: >
+            {% set ts = states('sensor.gw1100a_last_lightning_strike_2') |
+            as_timestamp %} {{ ts | timestamp_custom('%H:%M') }} Update
+          font: ppb.ttf
+          x: 50
+          "y": 115
+          size: 14
+          color: black
+        - type: text
+          value: >-
+            {{"Last Update: " + states('sensor.000002a9dfb73419_last_seen') |
+            as_timestamp() | timestamp_custom('%H:%M')}}
+          font: ppb.ttf
+          x: 15
+          "y": 141
+          size: 12
+          color: red
+    action: open_epaper_link.drawcustom
+    target:
+      device_id:
+        - eeb473f7aafb2c9b5fc330ef7ee56fb4
+mode: single
