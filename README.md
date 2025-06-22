@@ -27,7 +27,8 @@ Tested with SoluM 1.54" displays (152x152 px).
 | `1.54-flightradar.yaml` | ![](/images/1.54.flightradar.jpg) | Local air traffic from Flightradar24 (Nuremberg airport example). |
 | `1.54-medi-marker.yaml` | ![](/images/1.54.medi-marker.jpg) | Displays Medication Marker. Must add homeassistant helper for my four medi. 
  `1.54-uv-stufe-dwd.yaml` | ![](/images/1.54-uv-stufe-dwd.jpg) | Displays UV index pyramid. Must add homeassistant HACS Integration [UV-INDEX-CARD](https://github.com/t1gr0u/uv-index-card).
-| `1.54-zigbee-soil-molsture.yaml` | ![](/images/1.54.zigbee_soil_molsture_mini.png) | Solarbased Zigbee Soil Mosture Sensor. |  
+| `1.54-zigbee-soil-molsture.yaml` | ![](/images/1.54.zigbee_soil_molsture_mini.png) | Solarbased Zigbee Soil Mosture Sensor. |
+| `1.54-bsh-tide.yaml` | ![](/images/1.54-bsh-tide.jpg) | BSH Tide sensor via BSH API. Must add Hacs Integration [BSH](https://github.com/EnlightningMan/ha-bsh_tides) |  
 ---
 
 ### 🧾 2.13" Gicisky E-Paper Tags

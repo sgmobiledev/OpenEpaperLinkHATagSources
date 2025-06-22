@@ -1,0 +1,161 @@
+alias: OpenEPaperLink_BSH_Tide_Mini
+description: BSH Wasserstand
+triggers:
+  - hours: /2
+    trigger: time_pattern
+conditions:
+  - condition: time
+    after: "10:00:00"
+    before: "19:00:00"
+    weekday:
+      - mon
+      - tue
+      - wed
+      - thu
+      - fri
+actions:
+  - data:
+      rotate: 0
+      dither: 2
+      ttl: 60
+      dry-run: false
+      background: white
+      payload:
+        - type: icon
+          value: mdi:waterfall
+          x: 1
+          "y": 1
+          size: 20
+          color: black
+        - type: text
+          value: "{{ 'St.Pauli' }}"
+          font: ppb.ttf
+          x: 25
+          "y": 2
+          size: 14
+          color: red
+        - type: icon
+          value: >
+            {{ 'mdi:waves-arrow-right' if
+            is_state('sensor.bsh_hamburg_st_pauli_elbe_nachstes_tide_ereignis',
+            'high_tide') else 'mdi:waves-arrow-left' }}
+          x: 10
+          "y": 15
+          size: 20
+          color: black
+        - type: text
+          value: >
+            {% set nextTide =
+            states('sensor.bsh_hamburg_st_pauli_elbe_nachster_pegelstand') | int
+            | default(0) | round(0) %} {{ nextTide }}cm
+          font: ppb.ttf
+          x: 40
+          "y": 20
+          size: 14
+          color: red
+        - type: text
+          value: >-
+            {{states('sensor.bsh_hamburg_st_pauli_elbe_nachste_gezeitenzeit') |
+            as_timestamp() | timestamp_custom('%H:%M')}}
+          font: ppb.ttf
+          x: 100
+          "y": 20
+          size: 14
+          color: red
+        - type: icon
+          value: mdi:waves
+          x: 10
+          "y": 35
+          size: 20
+          color: black
+        - type: text
+          value: >
+            {% set nextHighTide =
+            states('sensor.bsh_hamburg_st_pauli_elbe_nachster_hochwasser_pegelstand')
+            | int | default(0) | round(0) %} {{ nextHighTide }}cm
+          font: ppb.ttf
+          x: 40
+          "y": 40
+          size: 14
+          color: red
+        - type: text
+          value: >-
+            {{states('sensor.bsh_hamburg_st_pauli_elbe_nachstes_hochwasser') |
+            as_timestamp() | timestamp_custom('%H:%M')}}
+          font: ppb.ttf
+          x: 100
+          "y": 40
+          size: 14
+          color: red
+        - type: icon
+          value: mdi:wave
+          x: 10
+          "y": 55
+          size: 20
+          color: black
+        - type: text
+          value: >
+            {% set nextLowTide =
+            states('sensor.bsh_hamburg_st_pauli_elbe_nachster_niedrigwasser_pegelstand')
+            | int | default(0) | round(0) %} {{ nextLowTide }}cm
+          font: ppb.ttf
+          x: 40
+          "y": 60
+          size: 14
+          color: red
+        - type: text
+          value: >-
+            {{states('sensor.bsh_hamburg_st_pauli_elbe_nachstes_niedrigwasser')
+            | as_timestamp() | timestamp_custom('%H:%M')}}
+          font: ppb.ttf
+          x: 100
+          "y": 60
+          size: 14
+          color: red
+        - type: text
+          value: >-
+            Prognose: {{states('sensor.bsh_hamburg_st_pauli_elbe_prognose_von')
+            | as_timestamp() | timestamp_custom('%H:%M')}}Uhr
+          font: ppb.ttf
+          x: 10
+          "y": 75
+          size: 14
+          color: red
+        - type: icon
+          value: mdi:chart-waterfall
+          x: 10
+          "y": 90
+          size: 20
+          color: black
+        - type: text
+          value: >
+            {% set middleHighTide =
+            states('sensor.bsh_hamburg_st_pauli_elbe_mittleres_hochwasser') |
+            int | default(0) | round(0) %} {% set middleLowTide =
+            states('sensor.bsh_hamburg_st_pauli_elbe_mittleres_niedrigwasser') |
+            int | default(0) | round(0) %} {{ middleHighTide }} / {{
+            middleLowTide }}cm
+          font: ppb.ttf
+          x: 40
+          "y": 90
+          size: 14
+          color: black
+        - type: text
+          value: Mittlere Pegelstände
+          font: ppb.ttf
+          x: 1
+          "y": 120
+          size: 14
+          color: black
+        - type: text
+          value: "Region: {{states('sensor.bsh_hamburg_st_pauli_elbe_region') }}"
+          font: ppb.ttf
+          x: 10
+          "y": 135
+          size: 14
+          color: black
+    action: open_epaper_link.drawcustom
+    target:
+      device_id:
+        - 0538e76278675c81b172b817bb78cbb4
+mode: single
